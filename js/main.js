@@ -4,6 +4,11 @@
   var S = window.SITE;
   var root = document.documentElement;
 
+  // always land on the desk: no restored scroll position, no #section in the address
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  if (location.hash && history.replaceState) history.replaceState(null, "", location.pathname + location.search);
+  window.scrollTo(0, 0);
+
   var params = new URLSearchParams(location.search);
   var MODE = params.get("drawers") || S.drawerMode || "stack";
   if (MODE !== "scroll") MODE = "stack";
@@ -113,8 +118,14 @@
 
   /* ==========================================================
      Drawers
+     "stack" mode works like a real cabinet: every part sits at a fixed spot, an open
+     drawer slides out OVER the ones below it, and closing it just uncovers them again.
+     The stage's height follows whatever is showing.
      ========================================================== */
   var slots = $$(".slot");
+  var stage = $("#stage");
+  var GAP = 16;
+  var yPos = [];
   var drawers = $$("[data-drawer]").map(function (el) {
     return {
       el: el, open: false, opened: false,
@@ -143,6 +154,36 @@
       if (drawers[i] && drawers[i].open) anyOpen = true;
     });
   }
+  function layoutStage(animate) {
+    if (MODE !== "stack") return;
+    var closedH = [], ext = [], acc = 0, i, d;
+    for (i = 0; i < slots.length; i++) {
+      d = drawers[i];
+      if (d) {
+        closedH[i] = d.front.offsetHeight;
+        ext[i] = closedH[i] + d.tray.firstElementChild.offsetHeight;
+      } else {
+        closedH[i] = $(".base", slots[i]).offsetHeight;
+        ext[i] = closedH[i];
+      }
+      yPos[i] = acc;
+      acc += closedH[i] + GAP;
+      slots[i].style.setProperty("--y", yPos[i] + "px");
+      slots[i].style.setProperty("--z", String(slots.length - i));
+    }
+    var last = slots.length - 1, floor = yPos[last] + closedH[last], H;
+    if (drawers[0] && drawers[0].open) H = yPos[0] + ext[0];
+    else if (drawers[1] && drawers[1].open) H = yPos[1] + ext[1];
+    else H = floor;
+    H = Math.max(H, floor);
+    if (animate) {
+      stage.style.transitionDelay = H < stage.offsetHeight ? ".3s" : "0s";
+    } else {
+      stage.style.transition = "none";
+    }
+    stage.style.height = H + "px";
+    if (!animate) { void stage.offsetHeight; stage.style.transition = ""; }
+  }
   function setOpen(d, open, instant) {
     if (instant) noAnim();
     d.open = open;
@@ -152,21 +193,20 @@
     if (open) d.tray.removeAttribute("inert"); else d.tray.setAttribute("inert", "");
     d.cue.textContent = cueText(d);
     updateCover();
+    layoutStage(!instant);
     setTimeout(updateTabs, instant ? 30 : 950);
   }
-  // Closing keeps the drawer front under the finger while the tray slides in
   function toggle(d) {
-    var willOpen = !d.open;
+    var willOpen = !d.open, i = drawers.indexOf(d);
     d.pull.classList.remove("nudge");
-    if (!willOpen && !reduced) {
-      var top0 = d.front.getBoundingClientRect().top, t0 = performance.now();
-      (function step() {
-        var dy = d.front.getBoundingClientRect().top - top0;
-        if (Math.abs(dy) > 0.5) window.scrollBy(0, dy);
-        if (performance.now() - t0 < 1000) requestAnimationFrame(step);
-      })();
-    }
     setOpen(d, willOpen);
+    if (MODE === "stack") {
+      // bring the drawer's front to the top of the screen so you see what slid out / got uncovered
+      var top = stage.getBoundingClientRect().top + window.pageYOffset + yPos[i] - NAV_H - 14;
+      if (willOpen || window.pageYOffset > top) {
+        window.scrollTo({ top: Math.max(0, top), behavior: reduced ? "auto" : "smooth" });
+      }
+    }
   }
   drawers.forEach(function (d) {
     d.pull.addEventListener("click", function (e) { e.stopPropagation(); toggle(d); });
@@ -176,6 +216,15 @@
   // starting state
   if (MODE === "stack") {
     drawers.forEach(function (d) { setOpen(d, true, true); });
+    layoutStage(false);
+    var relayout = function () { layoutStage(true); };
+    if ("ResizeObserver" in window) {
+      var ro = new ResizeObserver(relayout);
+      $$(".tray-bed, .drawer-front, .base").forEach(function (el) { ro.observe(el); });
+    }
+    window.addEventListener("resize", relayout);
+    window.addEventListener("load", relayout);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
     // cards drop in the first time the drawer scrolls into view
     if (!reduced && "IntersectionObserver" in window) {
       cardsEl.classList.add("reveal-pending");
@@ -229,16 +278,11 @@
     var target = id === "top" ? null : document.getElementById(id);
     var y = target ? target.getBoundingClientRect().top + window.pageYOffset - NAV_H - 10 : 0;
     window.scrollTo({ top: Math.max(0, y), behavior: reduced ? "auto" : "smooth" });
-    if (history.replaceState) { history.replaceState(null, "", (id === "top" ? location.pathname : "#" + id) + (id === "top" ? location.search : "")); }
   }
   $$("[data-goto]").forEach(function (a) {
     a.addEventListener("click", function (e) { e.preventDefault(); goTo(a.getAttribute("data-goto")); });
   });
   $(".skip").addEventListener("click", function (e) { e.preventDefault(); goTo("work"); });
-
-  if (location.hash && /^#(work|about|contact)$/.test(location.hash)) {
-    window.addEventListener("load", function () { setTimeout(function () { goTo(location.hash.slice(1)); }, 150); });
-  }
 
   /* current tab highlight (only counts sections you can actually see) */
   var tabLinks = {};
@@ -264,8 +308,28 @@
     $$("[data-close]", dlg).forEach(function (b) { b.addEventListener("click", function () { dlg.close(); }); });
   });
 
-  /* project dialog */
-  var pd = $("#project-dialog");
+  /* project dialog: section list on the left, write-up on the right */
+  var pd = $("#project-dialog"), pdMain = $("#pd-main"), pdNav = $("#pd-nav"), secEls = [];
+  function fill(t, p) {
+    return String(t).replace(/\{blurb\}/g, p.blurb || "").replace(/\{role\}/g, (p.role || "designer").toLowerCase()).replace(/\{tools\}/g, (p.tools || []).join(", ") || "my usual tools");
+  }
+  function spy() {
+    var st = pdMain.scrollTop + 90, cur = 0;
+    secEls.forEach(function (el, k) { if (el.offsetTop <= st) cur = k; });
+    if (secEls.length && pdMain.scrollTop + pdMain.clientHeight >= pdMain.scrollHeight - 4) cur = secEls.length - 1;
+    $$("button", pdNav).forEach(function (b, k) {
+      var on = k === cur;
+      b.setAttribute("aria-current", on ? "true" : "false");
+      if (on && pdNav.scrollWidth > pdNav.clientWidth) { pdNav.scrollLeft = b.offsetLeft - pdNav.clientWidth / 2 + b.offsetWidth / 2; }
+    });
+  }
+  pdMain.addEventListener("scroll", spy, { passive: true });
+  pdNav.addEventListener("click", function (e) {
+    var b = e.target.closest("button");
+    if (!b) return;
+    var el = document.getElementById(b.getAttribute("data-target"));
+    if (el) pdMain.scrollTo({ top: Math.max(0, el.offsetTop - 12), behavior: reduced ? "auto" : "smooth" });
+  });
   cardsEl.addEventListener("click", function (e) {
     var btn = e.target.closest(".card");
     if (!btn) return;
@@ -273,16 +337,33 @@
     $("#pd-thumb").innerHTML = thumbHtml(p, i);
     wireImgFallback($("#pd-thumb"));
     $("#pd-title").textContent = p.title;
-    $("#pd-meta").textContent = [p.role, p.year].filter(Boolean).join(" · ");
-    $("#pd-blurb").textContent = p.blurb || "";
+    $("#pd-meta").textContent = [p.role, p.year].filter(Boolean).join(" \u00b7 ");
     $("#pd-tools").innerHTML = (p.tools || []).map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
-    $("#pd-links").innerHTML = (p.links || []).map(function (l, k) {
+    var links = (p.links || []).map(function (l, k) {
       return '<a class="btn' + (k ? " btn-ghost" : "") + '" href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label) + " &#8599;</a>";
     }).join("");
+    $("#pd-links").innerHTML = links;
+    $("#pd-links-end").innerHTML = links;
+    var secs = p.sections || S.projectSections || [];
+    pdNav.innerHTML = secs.map(function (sc, k) {
+      return '<li><button type="button" data-target="pd-s-' + k + '"><span class="n">' + (k < 9 ? "0" : "") + (k + 1) + "</span><span>" + esc(sc.title) + "</span></button></li>";
+    }).join("");
+    $("#pd-sections").innerHTML = secs.map(function (sc, k) {
+      var h = '<section class="pd-sec" id="pd-s-' + k + '" aria-labelledby="pd-s-' + k + '-h"><h4 id="pd-s-' + k + '-h">' + esc(sc.title) + "</h4>";
+      (sc.text || []).forEach(function (t) { h += "<p>" + esc(fill(t, p)) + "</p>"; });
+      if (sc.bullets && sc.bullets.length) h += '<ul class="pd-list">' + sc.bullets.map(function (b) { return "<li>" + esc(fill(b, p)) + "</li>"; }).join("") + "</ul>";
+      if (sc.image) h += '<figure class="pd-fig"><img src="' + esc(sc.image) + '" alt="" loading="lazy" data-art="' + (i + k + 1) + '"></figure>';
+      else if (sc.art) h += '<figure class="pd-fig">' + artSvg(i + k + 1) + "</figure>";
+      return h + "</section>";
+    }).join("");
+    wireImgFallback($("#pd-sections"));
+    secEls = $$(".pd-sec", pdMain);
     openDialog(pd);
+    pdMain.scrollTop = 0;
+    spy();
   });
 
-  /* skills: hover (mouse) or tap (touch) shows chips, click / second tap opens details */
+  /* skills: hovering the pen (mouse) previews the chips, clicking opens the details */
   $("#sk-intro").textContent = S.skillsIntro || "";
   $("#skill-list").innerHTML = S.skills.map(function (s) {
     var dots = "";
@@ -290,22 +371,10 @@
     return '<li><div class="sk-top"><span class="sk-name">' + esc(s.name) + '</span><span class="sk-cat">' + esc(s.cat) + "</span></div>" +
       '<div class="sk-dots" role="img" aria-label="' + s.level + ' out of 5">' + dots + '</div><p class="sk-note">' + esc(s.note) + "</p></li>";
   }).join("");
-  var penSlot = $("#pen-slot"), penHint = $("#pen-hint"), pen = $("#open-skills");
-  if (!canHover()) penHint.textContent = "tap the pen";
-  pen.addEventListener("click", function (e) {
+  // one click (or tap) opens the details; the pen wiggles by itself so people know to try it
+  $("#open-skills").addEventListener("click", function (e) {
     e.stopPropagation();
-    if (!canHover() && !penSlot.classList.contains("show")) {
-      penSlot.classList.add("show");
-      penHint.textContent = "tap again for details";
-      return;
-    }
     openDialog($("#skills-dialog"));
-  });
-  document.addEventListener("click", function (e) {
-    if (penSlot.classList.contains("show") && !penSlot.contains(e.target)) {
-      penSlot.classList.remove("show");
-      penHint.textContent = canHover() ? "hover the pen, then click it" : "tap the pen";
-    }
   });
 
   /* sketchbook dialog */
@@ -322,7 +391,7 @@
     spread.classList.remove("is-open");
     openDialog(book);
     clearTimeout(flipTimer);
-    flipTimer = setTimeout(function () { spread.classList.add("is-open"); }, reduced ? 0 : 380);
+    flipTimer = setTimeout(function () { spread.classList.add("is-open"); }, reduced ? 0 : 300);
   });
   book.addEventListener("close", function () { clearTimeout(flipTimer); spread.classList.remove("is-open"); });
 })();

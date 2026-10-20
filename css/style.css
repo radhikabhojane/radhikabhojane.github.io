@@ -127,9 +127,13 @@ img, svg { max-width: 100%; }
   transform: perspective(1100px) rotateX(28deg);
   background:
     repeating-linear-gradient(to bottom, transparent 0 146px, var(--desk-seam) 146px 150px),
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1400' height='300'><filter id='w' x='0' y='0' width='100%25' height='100%25'><feTurbulence type='fractalNoise' baseFrequency='0.003 0.22' numOctaves='2' seed='9' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.86  0 0 0 0 0.6  0 0 0 0 0.38  2.2 0 0 0 -0.9'/></filter><rect width='100%25' height='100%25' filter='url(%23w)'/></svg>"),
     repeating-linear-gradient(to bottom, var(--desk) 0 150px, var(--desk-2) 150px 300px);
-  background-size: auto, 1400px 300px, auto;
+}
+/* the wood-grain streaks sit on their own layer so they can be dialled down (--wood-tex: 0 to 1) */
+.desk-plane::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1400' height='300'><filter id='w' x='0' y='0' width='100%25' height='100%25'><feTurbulence type='fractalNoise' baseFrequency='0.003 0.22' numOctaves='2' seed='9' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.86  0 0 0 0 0.6  0 0 0 0 0.38  2.2 0 0 0 -0.9'/></filter><rect width='100%25' height='100%25' filter='url(%23w)'/></svg>") 0 0 / 1400px 300px;
+  opacity: var(--wood-tex, 1);
 }
 /* the pool of lamp light (switches on when the page loads) */
 .lamp-light {
@@ -293,7 +297,15 @@ img, svg { max-width: 100%; }
 .slot { display: grid; grid-template-rows: 1fr; opacity: 1; transition: grid-template-rows .8s cubic-bezier(.22, .8, .2, 1), opacity .5s .1s; }
 .slot-inner { min-height: 0; overflow: hidden; }
 .slot-inner > * { margin-top: 16px; }
-.mode-stack .slot.is-covered { grid-template-rows: 0fr; opacity: 0; pointer-events: none; transition: grid-template-rows .8s cubic-bezier(.22, .8, .2, 1), opacity .25s; }
+.cab-stage { display: flex; flex-direction: column; }
+
+/* STACK MODE: like a real cabinet, every part sits at a fixed spot. An open drawer slides
+   out over the ones below it; closing it just uncovers them again (nothing below moves). */
+.mode-stack .cab-stage { display: block; position: relative; overflow: hidden; margin-top: 16px; transition: height .9s cubic-bezier(.22, .8, .2, 1); }
+.mode-stack .slot { position: absolute; left: 0; right: 0; top: var(--y, 0px); z-index: var(--z, 1); display: block; opacity: 1; transition: none; }
+.mode-stack .slot-inner { overflow: visible; }
+.mode-stack .slot-inner > * { margin-top: 0; }
+.mode-stack .drawer.is-open { box-shadow: 0 0 0 3px var(--cab-dark), 0 14px 0 rgba(0, 0, 0, .3); }
 
 .drawer { display: flex; flex-direction: column; background: var(--cab-dark); border-radius: 10px; overflow: hidden; box-shadow: 0 0 0 3px var(--cab-dark); }
 
@@ -376,7 +388,7 @@ img, svg { max-width: 100%; }
 
 /* ---------- About: the drawing pad ---------- */
 .pad {
-  position: relative; display: flex;
+  position: relative; display: flex; width: 100%; max-width: 700px; margin-inline: auto;
   padding: 18px 18px 18px 14px; border-radius: 18px;
   background: #3d3a78;
   box-shadow: inset 0 -10px 0 var(--indigo-2), 9px 13px 0 rgba(12, 6, 14, .4);
@@ -385,7 +397,7 @@ img, svg { max-width: 100%; }
 .pad-keys { display: grid; align-content: center; gap: 14px; padding: 0 12px 0 4px; }
 .pad-keys i { width: 18px; height: 34px; border-radius: 6px; background: #5a5799; box-shadow: 0 3px 0 var(--indigo-2); }
 .pad-area {
-  flex: 1; min-width: 0; min-height: 380px;
+  flex: 1; min-width: 0; min-height: 400px;
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center;
   padding: 26px; border-radius: 8px;
   background:
@@ -393,7 +405,7 @@ img, svg { max-width: 100%; }
     var(--lav);
   box-shadow: inset 0 5px 0 rgba(47, 44, 102, .2);
 }
-.pad-slot { position: relative; display: flex; flex-direction: column; align-items: center; gap: 18px; min-width: 0; }
+.pad-slot { position: relative; display: flex; flex-direction: column; align-items: center; gap: 26px; min-width: 0; }
 .hint { font-family: var(--font-pencil); font-size: 1.75rem; line-height: 1; color: #4a4590; transform: rotate(-2deg); text-align: center; }
 
 .sketchbook {
@@ -420,14 +432,14 @@ img, svg { max-width: 100%; }
 .sb-doodle { position: absolute; left: 14%; right: 26%; bottom: 14%; }
 
 .pen-slot { min-height: 340px; justify-content: center; }
-.pen-slot .hint { position: absolute; left: 0; right: 0; bottom: 0; }
 .pen {
   position: relative; z-index: 2; cursor: pointer; padding: 0; border: 0; background: none;
   width: min(340px, 100%); transform: rotate(-26deg);
   filter: drop-shadow(7px 11px 0 rgba(47, 44, 102, .3));
   transition: transform .35s cubic-bezier(.3, 1.4, .5, 1);
 }
-.pen svg { display: block; width: 100%; height: auto; }
+.pen svg { display: block; width: 100%; height: auto; transform-origin: 50% 50%; animation: wiggle 6s 2.5s ease-in-out infinite; }
+.pen:hover svg, .pen:focus-visible svg { animation: none; }
 .pen:hover, .pen:focus-visible { transform: rotate(-22deg) translateY(-5px); }
 
 /* skill chips that pop out around the pen */
@@ -444,7 +456,7 @@ img, svg { max-width: 100%; }
 }
 .orbit li:nth-child(3n) { background: #ecd29a; }
 .orbit li:nth-child(3n+1) { background: #bcd3c9; }
-.pen:focus-visible ~ .orbit li, .pen-slot.show .orbit li {
+.pen:focus-visible ~ .orbit li {
   opacity: 1;
   transform: translate(calc(-50% + var(--ux) * var(--rx)), calc(-50% + var(--uy) * var(--ry))) rotate(var(--tilt)) scale(1);
 }
@@ -454,7 +466,7 @@ img, svg { max-width: 100%; }
     transform: translate(calc(-50% + var(--ux) * var(--rx)), calc(-50% + var(--uy) * var(--ry))) rotate(var(--tilt)) scale(1);
   }
 }
-.pen-slot { --rx: 158px; --ry: 134px; }
+.pen-slot { --rx: 118px; --ry: 128px; }
 
 /* ---------- Contact: base of the cabinet ---------- */
 .base {
@@ -499,14 +511,44 @@ dialog[open]::backdrop { animation: fade .3s both; }
 .x:hover { transform: rotate(90deg) scale(1.05); }
 .x-float { top: -16px; right: -8px; background: var(--paper); color: var(--ink); box-shadow: 3px 4px 0 rgba(0, 0, 0, .4); }
 
-.pd-thumb { aspect-ratio: 16 / 8.5; background: #d8ccb4; border-radius: 10px 10px 0 0; overflow: hidden; }
-.pd-thumb > * { display: block; width: 100%; height: 100%; object-fit: cover; }
-.pd-body { padding: 22px 28px 28px; display: grid; gap: 12px; }
-.pd-body h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.85rem; line-height: 1.1; }
-.pd-meta { color: var(--soft-ink); font-size: .92rem; font-weight: 600; margin-top: -6px; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chips li { padding: 3px 13px; border-radius: 999px; background: #e8d6a8; font-size: .84rem; font-weight: 700; }
-.pd-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+.pd-links { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* ---------- Project dialog: section index on the left, the write-up on the right ---------- */
+.project-dialog { width: min(1180px, calc(100vw - 24px)); }
+.modal-project { width: 100%; display: grid; grid-template-columns: 272px minmax(0, 1fr); height: min(90svh, 860px); max-height: none; overflow: hidden; }
+.modal-project .x { top: 12px; right: 14px; }
+.pd-side {
+  min-width: 0; display: flex; flex-direction: column; gap: 12px; min-height: 0; overflow-y: auto;
+  padding: 30px 20px 22px 26px; background: #e3d4b4; border-right: 2px solid rgba(43, 34, 48, .16);
+}
+.pd-side h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.6rem; line-height: 1.1; }
+.pd-meta { color: var(--soft-ink); font-size: .9rem; font-weight: 600; margin-top: -6px; }
+.pd-side .chips li { background: #f3e8cd; }
+.pd-nav { margin-top: 10px; }
+.pd-nav ol { position: relative; display: grid; gap: 2px; list-style: none; margin: 0; padding: 0; }
+.pd-nav button {
+  display: flex; align-items: baseline; gap: 12px; width: 100%; padding: 9px 12px; border: 0; border-radius: 8px; cursor: pointer; text-align: left;
+  background: none; color: var(--soft-ink); font-family: var(--font-display); font-weight: 500; font-size: 1rem; line-height: 1.2;
+  transition: background .2s, color .2s;
+}
+.pd-nav .n { font-size: .78rem; font-variant-numeric: tabular-nums; opacity: .65; }
+.pd-nav button:hover { background: rgba(43, 34, 48, .09); color: var(--ink); }
+.pd-nav button[aria-current="true"] { background: var(--ink); color: var(--cream); }
+.pd-side .pd-links { margin-top: auto; padding-top: 14px; }
+.pd-links-end { display: none; }
+.pd-main { position: relative; min-width: 0; min-height: 0; overflow-y: auto; padding-bottom: 56px; overscroll-behavior: contain; }
+.pd-thumb { aspect-ratio: 16 / 7; background: #d8ccb4; overflow: hidden; }
+.pd-thumb > * { display: block; width: 100%; height: 100%; object-fit: cover; }
+.pd-sec { max-width: 800px; padding: 38px 48px 0; }
+.pd-sec h4 { font-family: var(--font-display); font-weight: 500; font-size: 1.7rem; line-height: 1.15; margin-bottom: 10px; }
+.pd-sec p { margin: 0 0 12px; max-width: 64ch; }
+.pd-list { display: grid; gap: 8px; margin: 4px 0 14px 4px; }
+.pd-list li { position: relative; padding-left: 22px; }
+.pd-list li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 8px; height: 8px; border-radius: 2px; background: var(--coral); transform: rotate(45deg); }
+.pd-fig { margin: 16px 0 6px; aspect-ratio: 16 / 8.5; overflow: hidden; border-radius: 6px; background: #d8ccb4; box-shadow: 5px 7px 0 rgba(43, 34, 48, .22); }
+.pd-fig > * { display: block; width: 100%; height: 100%; object-fit: cover; }
 .btn {
   display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: 999px;
   background: var(--teal); color: #fff; text-decoration: none; font-family: var(--font-display); font-weight: 500; font-size: 1rem;
@@ -530,7 +572,9 @@ dialog[open]::backdrop { animation: fade .3s both; }
 .sk-dots i.on { background: var(--coral); }
 .sk-note { font-size: .92rem; color: #4a3d46; }
 
-/* ---------- Sketchbook (about me) ---------- */
+/* ---------- Sketchbook (about me) ----------
+   The closed book is just its cover, centred. Opening swings the cover away, then the
+   left page swings in from the spine, then the book slides to the middle. */
 .book-dialog { width: min(940px, calc(100vw - 24px)); }
 .spread {
   position: relative; width: 100%; height: min(600px, calc(100svh - 40px));
@@ -546,20 +590,19 @@ dialog[open]::backdrop { animation: fade .3s both; }
     var(--paper);
   color: var(--ink);
 }
-.page-r { right: 0; border-radius: 0 10px 10px 0; box-shadow: 9px 13px 0 rgba(0, 0, 0, .4), inset 14px 0 0 -8px rgba(60, 30, 20, .2); }
-.leaf { position: absolute; top: 0; bottom: 0; left: 50%; width: 50%; transform-origin: left center; transform-style: preserve-3d; transition: transform 1.1s cubic-bezier(.5, 0, .2, 1); }
-.spread.is-open .leaf { transform: rotateY(-180deg); }
-.face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
-.leaf-front {
-  border-radius: 3px 10px 10px 3px;
+.page-r { right: 0; border-radius: 0 10px 10px 0; box-shadow: 9px 13px 0 rgba(0, 0, 0, .4), inset 14px 0 0 -8px rgba(60, 30, 20, .2); opacity: 0; }
+.spread.is-open .page-r { opacity: 1; transition: opacity .01s .3s; }
+.page-l { left: 0; border-radius: 10px 0 0 10px; box-shadow: inset -14px 0 0 -8px rgba(60, 30, 20, .2); transform-origin: right center; visibility: hidden; }
+.spread.is-open .page-l { animation: page-swing .55s .62s cubic-bezier(.2, .7, .3, 1) both; }
+.leaf {
+  position: absolute; top: 0; bottom: 0; left: 50%; width: 50%; z-index: 3; transform-origin: left center;
+  display: grid; place-items: center; border-radius: 3px 10px 10px 3px;
   background: linear-gradient(90deg, var(--teal-2) 0 4%, transparent 4%), var(--teal);
   box-shadow: 9px 13px 0 rgba(0, 0, 0, .4);
-  display: grid; place-items: center;
 }
+.spread.is-open .leaf { animation: cover-swing .6s .08s cubic-bezier(.5, 0, .8, .5) both; }
 .cover-band { position: absolute; top: 0; bottom: 0; right: 10%; width: 14px; background: var(--coral); }
-.cover-title { font-family: var(--font-display); font-weight: 500; font-size: 2.1rem; transform: rotate(-3deg); background: var(--paper); color: var(--ink); padding: 6px 20px; box-shadow: 4px 5px 0 rgba(0, 0, 0, .25); }
-.leaf-back { transform: rotateY(180deg); }
-.page-l { left: 0; width: 100%; border-radius: 10px 0 0 10px; box-shadow: inset -14px 0 0 -8px rgba(60, 30, 20, .2); }
+.cover-title { position: relative; font-family: var(--font-display); font-weight: 500; font-size: 2.1rem; transform: rotate(-3deg); background: var(--paper); color: var(--ink); padding: 6px 20px; box-shadow: 4px 5px 0 rgba(0, 0, 0, .25); }
 .page h3 { font-family: var(--font-display); font-weight: 500; font-size: 2rem; line-height: 1.1; margin-bottom: 20px; }
 .page p { margin-bottom: 14px; line-height: 32px; }
 .page .glance { display: grid; margin-bottom: 20px; }
@@ -583,6 +626,9 @@ dialog[open]::backdrop { animation: fade .3s both; }
 @keyframes ring { 0% { transform: scale(.85); opacity: .7; } 70%, 100% { transform: scale(1.55); opacity: 0; } }
 @keyframes bob { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(3px); } }
 @keyframes bob-up { 0%, 100% { transform: rotate(180deg) translateY(-2px); } 50% { transform: rotate(180deg) translateY(3px); } }
+@keyframes cover-swing { from { transform: rotateY(0); visibility: visible; } 99% { visibility: visible; } to { transform: rotateY(-90deg); visibility: hidden; } }
+@keyframes page-swing { from { transform: rotateY(90deg); visibility: visible; } to { transform: rotateY(0); visibility: visible; } }
+@keyframes wiggle { 0%, 14%, 100% { transform: none; } 2% { transform: rotate(-7deg) translateY(-4px); } 4.5% { transform: rotate(6deg) translateY(-2px); } 7% { transform: rotate(-4deg); } 9.5% { transform: rotate(3deg); } 12% { transform: rotate(-1deg); } }
 @keyframes pop { from { opacity: 0; transform: translateY(20px) scale(.94); } to { opacity: 1; transform: none; } }
 
 .no-anim *, .no-anim *::before, .no-anim *::after { transition-duration: 0s !important; transition-delay: 0s !important; animation-duration: 0s !important; animation-delay: 0s !important; }
@@ -633,22 +679,36 @@ dialog[open]::backdrop { animation: fade .3s both; }
   .pen-slot { min-height: 370px; --rx: min(132px, 35vw); --ry: 138px; }
   .pen { width: min(280px, 84%); }
   .orbit li { font-size: .88rem; padding: 4px 11px 5px; box-shadow: 2px 3px 0 rgba(47, 44, 102, .4); }
-  .pen-slot .hint { bottom: -6px; }
 
   .base { padding: 26px 14px 28px; }
   .pills { gap: 10px; }
   .pill { padding: 9px 20px; }
   .modal { border-radius: 10px; }
-  .pd-body, .modal-skills { padding-inline: 20px; }
+  .modal-skills { padding-inline: 20px; }
+}
+@media (max-width: 760px) {
+  .project-dialog { width: calc(100vw - 16px); }
+  .modal-project { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); height: min(92svh, 800px); }
+  .pd-side { overflow: visible; gap: 6px; padding: 16px 52px 10px 16px; border-right: 0; border-bottom: 2px solid rgba(43, 34, 48, .16); }
+  .pd-side h3 { font-size: 1.3rem; }
+  .pd-meta { margin-top: -2px; }
+  .pd-side .chips, .pd-side .pd-links { display: none; }
+  .pd-nav { margin: 4px -52px 0 -16px; }
+  .pd-nav ol { display: flex; gap: 6px; overflow-x: auto; padding: 4px 16px 6px; scrollbar-width: none; }
+  .pd-nav ol::-webkit-scrollbar { display: none; }
+  .pd-nav button { width: auto; flex: none; white-space: nowrap; padding: 7px 14px; border-radius: 999px; box-shadow: inset 0 0 0 2px rgba(43, 34, 48, .3); font-size: .92rem; }
+  .pd-nav button[aria-current="true"] { box-shadow: none; }
+  .pd-nav .n { display: none; }
+  .pd-thumb { aspect-ratio: 16 / 9; }
+  .pd-sec { padding: 26px 18px 0; }
+  .pd-sec h4 { font-size: 1.4rem; }
+  .pd-links-end { display: flex; padding: 24px 18px 0; }
 }
 @media (max-width: 720px) {
   .book-dialog { width: min(480px, calc(100vw - 20px)); }
-  .spread, .spread.is-open { transform: none; height: auto; max-height: calc(100svh - 40px); perspective: none; display: flex; flex-direction: column; overflow: auto; background: var(--grain-soft), var(--paper); border-radius: 10px; box-shadow: 8px 11px 0 rgba(0, 0, 0, .4); }
-  .leaf { position: static; width: 100%; transform: none !important; transform-style: flat; }
-  .leaf-front { display: none; }
-  .face { position: static; }
-  .leaf-back { transform: none; }
-  .page, .page-l, .page-r { position: static; width: 100%; overflow: visible; padding: 26px 22px; box-shadow: none; border-radius: 0; background: none; }
+  .spread, .spread.is-open { transform: none; transition: none; height: auto; max-height: calc(100svh - 40px); perspective: none; display: flex; flex-direction: column; overflow: auto; background: var(--grain-soft), var(--paper); border-radius: 10px; box-shadow: 8px 11px 0 rgba(0, 0, 0, .4); }
+  .leaf { display: none; }
+  .page, .page-l, .page-r { position: static; width: 100%; overflow: visible; padding: 26px 22px; box-shadow: none; border-radius: 0; background: none; opacity: 1; visibility: visible; transform: none; animation: none !important; }
   .page-r { padding-top: 0; padding-bottom: 34px; }
   .page p, .glance li { line-height: 1.6; }
   .x-float { top: -12px; right: -6px; }

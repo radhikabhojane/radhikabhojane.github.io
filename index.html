@@ -92,6 +92,7 @@
     <!-- ============ 2. THE CABINET ============ -->
     <div class="cabinet">
       <div class="cabinet-frame">
+        <div class="cab-stage" id="stage">
 
         <!-- Drawer 1: Work -->
         <div class="slot"><div class="slot-inner">
@@ -149,7 +150,6 @@
                           <span class="sr">Open the details of the software and skills I use</span>
                         </button>
                         <ul class="orbit" id="orbit" aria-hidden="true"></ul>
-                        <p class="hint" id="pen-hint" aria-hidden="true">hover the pen, then click it</p>
                       </div>
                     </div>
                   </div>
@@ -173,6 +173,7 @@
           </section>
         </div></div>
 
+        </div><!-- /stage -->
       </div>
       <footer class="foot">&copy; <span id="year">2026</span> Radhika Bhojane</footer>
     </div>
@@ -181,16 +182,20 @@
   <noscript><p class="noscript">This portfolio needs JavaScript to open its drawers. Email me instead, see the contact details in js/content.js.</p></noscript>
 
   <!-- ===== Dialogs ===== -->
-  <dialog id="project-dialog" aria-labelledby="pd-title">
-    <article class="modal">
+  <dialog id="project-dialog" class="project-dialog" aria-labelledby="pd-title">
+    <article class="modal modal-project">
       <button class="x" type="button" data-close aria-label="Close project">&times;</button>
-      <div class="pd-thumb" id="pd-thumb"></div>
-      <div class="pd-body">
+      <aside class="pd-side">
         <h3 id="pd-title"></h3>
         <p class="pd-meta" id="pd-meta"></p>
-        <p id="pd-blurb"></p>
         <ul class="chips" id="pd-tools"></ul>
+        <nav class="pd-nav" aria-label="Project sections"><ol id="pd-nav"></ol></nav>
         <div class="pd-links" id="pd-links"></div>
+      </aside>
+      <div class="pd-main" id="pd-main" tabindex="-1">
+        <div class="pd-thumb" id="pd-thumb"></div>
+        <div id="pd-sections"></div>
+        <div class="pd-links pd-links-end" id="pd-links-end"></div>
       </div>
     </article>
   </dialog>
@@ -207,14 +212,12 @@
   <dialog id="book-dialog" class="book-dialog" aria-label="About me, in my sketchbook">
     <button class="x x-float" type="button" data-close aria-label="Close sketchbook">&times;</button>
     <div class="spread" id="spread">
-      <div class="leaf" id="leaf">
-        <div class="face leaf-front" aria-hidden="true">
-          <span class="cover-band"></span>
-          <span class="cover-title">sketchbook</span>
-        </div>
-        <div class="face leaf-back"><div class="page page-l" id="page-l"></div></div>
-      </div>
+      <div class="page page-l" id="page-l"></div>
       <div class="page page-r" id="page-r"></div>
+      <div class="leaf" id="leaf" aria-hidden="true">
+        <span class="cover-band"></span>
+        <span class="cover-title">sketchbook</span>
+      </div>
     </div>
   </dialog>
 

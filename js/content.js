@@ -94,6 +94,23 @@ window.SITE = {
     }
   ],
 
+  /* What opens when someone clicks a project card: a write-up with a clickable section list.
+     Every project uses these sections unless it has its own "sections" array (copy this
+     shape into a project to customise it). Tokens {blurb} {role} {tools} fill themselves in.
+       text:    paragraphs      bullets: short list      art: true shows placeholder art
+       image:   "assets/projects/xyz.jpg" shows your own picture under the text            */
+  projectSections: [
+    { title: "Overview", text: ["{blurb}"], art: true },
+    { title: "My role", text: ["I worked as {role}, using {tools}. Say what you owned from start to finish."],
+      bullets: ["Something you designed end to end", "Something you tested or balanced", "Something you shipped or documented"] },
+    { title: "Goals & pillars", text: ["What was the player supposed to feel? State the two or three design pillars that every decision was checked against."],
+      bullets: ["Pillar one: a short sentence", "Pillar two: a short sentence", "Pillar three: a short sentence"] },
+    { title: "Design process", text: ["Walk through how it came together: early sketches, the first prototype, what you cut and why. Screenshots, flowcharts and level maps work well here."], art: true },
+    { title: "Playtesting & iteration", text: ["Who tested it, what surprised you, and what you changed because of it."],
+      bullets: ["Finding: what players actually did", "Change: what you did about it", "Result: how the next test went"] },
+    { title: "Outcome", text: ["What shipped, what you would do differently, and what you learned."] }
+  ],
+
   /* The sketchbook (About) */
   about: {
     greeting: "Hi, I'm Radhika.",
