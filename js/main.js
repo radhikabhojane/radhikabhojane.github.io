@@ -334,7 +334,9 @@
      loop diagram, video, YouTube, pictures */
   function figHtml(f, layout) {
     var cap = f.caption ? "<figcaption>" + esc(f.caption) + "</figcaption>" : "";
-    return '<figure class="pd-shot"><img src="' + esc(f.src) + '" alt="' + esc(f.alt || f.caption || "") + '" loading="lazy" data-zoom="1">' + cap + "</figure>";
+    /* span: [columns, rows] places a picture in a collage */
+    var span = f.span ? ' style="--c:' + (+f.span[0]) + ";--r:" + (+f.span[1]) + '"' : "";
+    return '<figure class="pd-shot"' + span + '><img src="' + esc(f.src) + '" alt="' + esc(f.alt || f.caption || "") + '" loading="lazy" data-zoom="1">' + cap + "</figure>";
   }
   /* a loop of up to 6 steps drawn as a ring: 1 2 3 across the top, 4 5 6 back along the bottom */
   function loopHtml(lp) {

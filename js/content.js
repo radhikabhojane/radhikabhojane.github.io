@@ -280,13 +280,83 @@ window.SITE = {
       ]
     },
     {
-      title: "Project Title 03",
-      role: "Systems Designer",
-      year: "2025",
-      tools: ["Unity", "Spreadsheets"],
-      thumb: "",
-      blurb: "Describe the economy, progression or combat system you designed and how you balanced it.",
-      links: [{ label: "Case study", url: "#" }]
+      /* Project 3: stop motion game trailer (group project) */
+      title: "St. Marks Street",
+      role: "Stop Motion Game Trailer",
+      year: "",
+      duration: "3 weeks",
+      tools: [],
+      thumb: "assets/projects/st-marks-street/set-finished.jpg",
+      thumbPos: "50% 35%",
+      blurb: "A stop motion trailer for a game called St. Marks Street. As a team of five, we wrote the story, storyboarded every shot, built a miniature set and props, made the puppet by hand and shot it frame by frame in a dark room.",
+      links: [],
+      sections: [
+        { title: "Overview",
+          text: ["This is the trailer for St. Marks Street, a game with a dark, tense story. It is made entirely in stop motion: every movement on screen is a real puppet, moved by hand a tiny bit at a time and photographed."],
+          facts: [
+            { k: "Duration", v: "3 weeks" },
+            { k: "Team", v: "Group project, 5 members" },
+            { k: "Design brief", v: "Create a stop motion trailer for a game. We first wrote the narrative for the game and its trailer, then storyboarded it, built the set, props and puppet by hand, and shot it." },
+            { k: "Format", v: "Stop motion animation" }
+          ] },
+
+        { title: "Trailer",
+          youtube: { url: "https://www.youtube.com/watch?v=FPnXwiPxqvA", title: "St. Marks Street stop motion game trailer" } },
+
+        { title: "My role",
+          text: ["I worked across almost every stage of the production. I helped build the narrative for the game and the trailer, and worked on the storyboard that planned each shot. I made the puppet and built props for the set, then handled the camera work and the shoot. Alongside this I looked after art direction, keeping the colours, lighting and the look of the set, props and puppet consistent with the dark, tense mood of the story."] },
+
+        { title: "The story",
+          text: ["On a stormy night, a man at home talks on the phone while he cooks. Lightning strikes and the lights go out. As he feels around in the dark for his phone, a shadow moves past the window, a cat screeches outside and someone knocks on the door. He opens it slowly to an empty porch under a flickering light, and finds his cat lying dead. The trailer cuts to the game's title."] },
+
+        { title: "Storyboard",
+          text: ["Each frame plans a shot of the trailer: what we see, how the camera moves, and the sounds that build the tension."],
+          figures: [
+            { src: "assets/projects/st-marks-street/storyboard-1.jpg", alt: "Storyboard frames 1 to 12: the house at night, the phone call, cooking, the lights going out and a shadow at the window", caption: "Frames 1–12" },
+            { src: "assets/projects/st-marks-street/storyboard-2.jpg", alt: "Storyboard frames 13 to 19: opening the door, the empty porch, a flickering light, the dead cat and the game title", caption: "Frames 13–19" }
+          ], figLayout: "stack" },
+
+        { title: "Character design",
+          text: ["The main character, drawn from the front, side and back so the puppet could be built to match from every angle."],
+          figures: [{ src: "assets/projects/st-marks-street/character-design.jpg", alt: "Line drawing turnaround of the main character from the front, three-quarter, side and back, with face sketches", caption: "Character turnaround" }],
+          figLayout: "stack" },
+
+        { title: "Process",
+          steps: [
+            { title: "Narrative", text: "We started by writing the story of the game and of its trailer, so every later decision had a clear direction." },
+            { title: "Storyboard", text: "We drew every shot of the trailer, with its camera angle and movement, so we knew exactly what to build and what to shoot." },
+            { title: "Set & props", text: "We built a miniature house to scale: the living room, the kitchen and the front gate, along with the furniture and small props that fill them." },
+            { title: "Character design", text: "We designed the main character and drew him from every side, as a guide for building the puppet." },
+            { title: "Puppet making", text: "The puppet has a wire skeleton so it can hold any pose. We bulked the body out with sponge and masking tape, sculpted the head and hands in clay, and stitched its clothes by hand." },
+            { title: "Shooting", text: "The story happens in the dark, so we shot in a dark room. We set the camera manually and raised the ISO (how sensitive the camera is to light) so it could pick up the dim scene. Between each photo the puppet was moved very slightly; played one after another, the photos make it move." }
+          ] },
+
+        { title: "Process work",
+          blocks: [
+            { heading: "Building the set", figLayout: "collage", figures: [
+              { src: "assets/projects/st-marks-street/set-finished.jpg", alt: "The finished living room set with a yellow wall, a red sofa, a kitchen and the puppet sitting on the sofa", span: [4, 4] },
+              { src: "assets/projects/st-marks-street/set-1.jpg", alt: "Early cardboard walls and furniture of the set on a table", span: [2, 4] },
+              { src: "assets/projects/st-marks-street/set-team.jpg", alt: "Two team members making props at a table", span: [3, 3] },
+              { src: "assets/projects/st-marks-street/set-2.jpg", alt: "The unpainted set with walls, kitchen counter, sofa and table", span: [3, 3] },
+              { src: "assets/projects/st-marks-street/set-exterior.jpg", alt: "The front of the house with a brick wall, a black gate and a door", span: [2, 3] },
+              { src: "assets/projects/st-marks-street/set-finished-2.jpg", alt: "The painted set from the front, with the TV, sofa and kitchen", span: [2, 3] },
+              { src: "assets/projects/st-marks-street/set-finished-3.jpg", alt: "The finished set with the puppet lying on the sofa", span: [2, 3] }
+            ] },
+            { heading: "Making the puppet", figLayout: "collage", figures: [
+              { src: "assets/projects/st-marks-street/puppet-head.jpg", alt: "Sculpting the details of the puppet's clay face with a tool", span: [4, 4] },
+              { src: "assets/projects/st-marks-street/puppet-armature.jpg", alt: "The puppet's wire and tape body lying on the sofa before it was dressed", span: [2, 4] },
+              { src: "assets/projects/st-marks-street/puppet-dressed.jpg", alt: "The puppet in its stitched shirt and trousers, before its hair was added", span: [2, 4] },
+              { src: "assets/projects/st-marks-street/puppet-1.jpg", alt: "Close-up of the finished puppet lying on the red sofa with a black cat", span: [2, 4] },
+              { src: "assets/projects/st-marks-street/puppet-2.jpg", alt: "The finished puppet sitting on the sofa", span: [2, 4] }
+            ] },
+            { heading: "Shooting in the dark", figLayout: "collage", figures: [
+              { src: "assets/projects/st-marks-street/shoot-1.jpg", alt: "The set lit only by small lamps in a dark room", span: [4, 4] },
+              { src: "assets/projects/st-marks-street/shoot-2.jpg", alt: "The camera and a light set up in front of the set in the dark", span: [2, 4] },
+              { src: "assets/projects/st-marks-street/shoot-4.jpg", alt: "Shooting the doorstep scene from above, with the camera screen showing the shot", span: [2, 4] },
+              { src: "assets/projects/st-marks-street/shoot-3.jpg", alt: "The camera framing the living room set, with its screen showing the shot", span: [4, 4] }
+            ] }
+          ] }
+      ]
     },
     {
       /* Project 4: board game (from Killer_Buzz_boardgame.pptx; pictures cropped as on the slides) */

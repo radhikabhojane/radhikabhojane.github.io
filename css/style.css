@@ -570,6 +570,10 @@ dialog[open]::backdrop { animation: fade .3s both; }
 .pd-gal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; align-items: start; }
 .pd-gal-row { display: flex; gap: 14px; align-items: flex-start; max-width: none; }
 .pd-gal-row .pd-shot { flex: 1 1 0; min-width: 0; }
+/* collage: a 6-column grid; each picture's span: [columns, rows] in content.js sets its size */
+.pd-gal-collage { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); grid-auto-rows: 64px; gap: 8px; }
+.pd-gal-collage .pd-shot { grid-column: span var(--c, 3); grid-row: span var(--r, 3); box-shadow: 3px 4px 0 rgba(43, 34, 48, .18); }
+.pd-gal-collage .pd-shot img { height: 100%; object-fit: cover; }
 .pd-links-inline { margin: 4px 0 16px; }
 .pd-video { margin: 12px 0 6px; max-width: 640px; }
 .pd-yt { aspect-ratio: 16 / 9; background: #000; max-width: none; }
@@ -758,6 +762,10 @@ dialog[open]::backdrop { animation: fade .3s both; }
   .pd-gal-masonry .pd-shot { margin-bottom: 10px; }
   .pd-gal-side { grid-template-columns: minmax(0, .6fr) minmax(0, 1.4fr); gap: 10px; }
   .pd-gal-pair, .pd-gal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .pd-gal-collage { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: auto; gap: 6px; }
+  .pd-gal-collage .pd-shot { grid-column: auto; grid-row: auto; aspect-ratio: 1; }
+  /* with an odd number of pictures, the first one goes full width so the squares pair up */
+  .pd-gal-collage .pd-shot:first-child:nth-last-child(odd) { grid-column: span 2; aspect-ratio: 16 / 10; }
   .pd-gal-row { flex-direction: column; gap: 10px; }
   .pd-gal-row .pd-shot { width: 100%; }
   /* the loop becomes one column, each step pointing down to the next */
