@@ -493,13 +493,191 @@ window.SITE = {
       ]
     },
     {
-      title: "Project Title 05",
-      role: "UI / UX Designer",
-      year: "2025",
-      tools: ["Figma", "Photoshop"],
-      thumb: "",
-      blurb: "A menu, HUD or onboarding flow you designed, and how you tested that players understood it.",
-      links: [{ label: "Case study", url: "#" }]
+      /* Project 5: mobile game for the Dainik Bhaskar Game Jam (from Chatak_GDD _DB_GameJam.pptx) */
+      title: "Chatak!",
+      role: "Game Jam",
+      year: "",
+      duration: "1 week",
+      tools: [],
+      thumb: "assets/projects/chatak/chatak-cover.webp",
+      thumbPos: "50% 18%",
+      blurb: "Survive the night shift. Zap till dawn. A mobile arcade survival game made for the Dainik Bhaskar Game Jam: a tired office worker, an empty office at midnight, and an electric mosquito bat to last until 6 AM.",
+      links: [],
+      sections: [
+        { title: "Overview",
+          links: [{ label: "Play on itch.io", url: "https://radhika9.itch.io/chatak" }],
+          text: [
+            "It's 11:58 PM. The deadline is tomorrow. The office is empty, the AC is off, and the mosquitoes have found you.",
+            "You play a tired office employee working late on a huge office floor. Armed only with an electric mosquito bat, you have to survive the night until the sun comes up at 6 AM. The mosquitoes get bolder as the night goes on, and they are at their worst just before dawn. Each level is a different floor of the building, and each floor is harder than the one below."
+          ],
+          facts: [
+            { k: "Duration", v: "1 week" },
+            { k: "Event", v: "Dainik Bhaskar Game Jam" },
+            { k: "Brief", v: "Design a mobile-first game with mass appeal for Indian audiences: easy to learn, rewarding to master, and able to become a healthy daily habit." },
+            { k: "Genre", v: "Top-down arcade survival / action" },
+            { k: "Platform", v: "Mobile-first (Android); web prototype for the jam" },
+            { k: "Audience", v: "Indian players aged 22–44 in Tier 2–3 cities, office workers" },
+            { k: "Hook", v: "Every Indian has fought mosquitoes with an electric bat at night" },
+            { k: "Controls", v: "One-thumb movement joystick + one swing button" },
+            { k: "Level length", v: "3–5 minutes; every level is one night, 12 AM → 6 AM" },
+            { k: "Levels", v: "20 planned, 4 in the prototype" },
+            { k: "AI disclosure", v: "Use of AI was encouraged to build the game and for visuals." }
+          ] },
+
+        { title: "Gameplay",
+          links: [{ label: "Play on itch.io", url: "https://radhika9.itch.io/chatak" }],
+          /* paste the YouTube link into url once the gameplay video is recorded */
+          youtube: { url: "", title: "Chatak! gameplay video" } },
+
+        { title: "Design pillars",
+          facts: [
+            { k: "Relatable", v: "Late-night office life" },
+            { k: "Satisfying", v: "The chatak of a clean zap" },
+            { k: "Tense", v: "The battery is always running out" }
+          ] },
+
+        { title: "Core loop",
+          loop: {
+            center: "Reach 6 AM before the itch bar fills",
+            steps: [
+              { title: "Move", text: "Run around the floor with the joystick" },
+              { title: "Zap", text: "Tap swing; it auto-aims at the nearest mosquito" },
+              { title: "Manage", text: "Each swing costs battery; empty means overheat" },
+              { title: "Collect", text: "Grab power-ups before they disappear" },
+              { title: "Survive", text: "Make it through the night's waves" }
+            ]
+          },
+          blocks: [{ text: ["Moment-to-moment tension: swing too much and the bat overheats when you need it most. During overheat you can only run, dodge, and swat with a newspaper if you picked one up."] }] },
+
+        { title: "Controls & HUD",
+          facts: [
+            { k: "Left thumb: joystick", v: "A floating joystick anywhere on the left half of the screen. Movement speed is constant." },
+            { k: "Right thumb: swing", v: "Tap to swing. It auto-aims at the nearest mosquito within a 100° arc. When the bat is overheated and you have a newspaper, it becomes SWAT." },
+            { k: "HUD", v: "Itch bar with star marks at 50% and 75%, night clock (12 AM → 6 AM), battery %, kills, plus fullscreen and pause buttons. Off-screen arrows point to swarms." }
+          ],
+          figures: [{ src: "assets/projects/chatak/controls-hud.png", alt: "Phone screen mock-up: itch bar at 24%, clock at 3:42 AM, battery at 64%, two mosquitoes, the player, a joystick on the left and a yellow zap button on the right", caption: "Controls and HUD layout" }],
+          figLayout: "stack" },
+
+        { title: "Win, lose & stars",
+          facts: [
+            { k: "Win", v: "The night clock reaches 6:00 AM before your itch bar fills up." },
+            { k: "Lose", v: "The itch bar reaches 100%. There are no lives: every bite counts. Levels 10+ have a 3 AM checkpoint." }
+          ],
+          blocks: [
+            { heading: "Stars: itch at dawn + kill target", facts: [
+              { k: "★★★", v: "Itch under 50% at dawn" },
+              { k: "★★", v: "Itch 50–74% at dawn" },
+              { k: "★", v: "Itch 75% or more at dawn" }
+            ], text: ["Missing the floor's kill target costs one star (minimum 1). Stars unlock floors."] }
+          ] },
+
+        { title: "Electric bat: battery & overheat",
+          facts: [
+            { k: "Starting charge", v: "100%" },
+            { k: "Swing that hits", v: "−6%" },
+            { k: "Swing that misses", v: "−10%" },
+            { k: "Passive recharge", v: "+3% per second" }
+          ],
+          blocks: [
+            { heading: "Overheat (battery hits 0%)", bullets: [
+              "The bat is locked while it recharges from 0 to 100%: 8 s on Level 1, up to 12 s on Level 10+.",
+              "Have a newspaper? It comes out automatically, and the zap button becomes SWAT.",
+              "The newspaper is weak: 2 swats to kill even a regular mosquito.",
+              "Battery packs can't be picked up while overheated." ] },
+            { heading: "Why this design", text: ["Passive recharge means players never need to hoard charge. Missed swings cost more, so careful aim is rewarded and button-mashing is punished. Overheat is short enough to be tense, not boring."] }
+          ] },
+
+        { title: "Health: one itch bar, no lives",
+          facts: [
+            { k: "Bite", v: "0.4 s of contact is a bite: +12% itch (+20% from a fat mosquito)" },
+            { k: "Soothe", v: "Itch slowly drops (−1.5% per second) after 4 s without a bite" },
+            { k: "Itch full", v: "At 100% itch the night is over. Game over." },
+            { k: "Stars", v: "Itch at dawn sets the stars: under 50% ★★★, under 75% ★★" }
+          ],
+          text: ["Why one bar: with lives, dodging alone kept players safe. Now every bite counts twice, toward game over and against the star rating, so players have to zap, not just run."] },
+
+        { title: "Mosquito types",
+          facts: [
+            { k: "Regular", v: "Wanders, then homes in on the player. 1 zap (2 swats), normal speed. From Level 1." },
+            { k: "Striped (fast)", v: "Darts in quick zig-zags, harder to aim at. 1 zap (2 swats), fast. From Level 2." },
+            { k: "Fat (tank)", v: "Slow and full of blood; a bite adds 20% itch. 2 zaps (4 swats), slow. From Level 3." },
+            { k: "Swarm cluster", v: "A group of 5–6 moving together. 1 zap each, normal speed. From Level 4." },
+            { k: "Dawn Queen (mini-boss)", v: "Arrives in the last 30 s of a level, spawns babies and needs 6 hits. Slow. From Level 8 (full game)." }
+          ],
+          text: ["Readability rule: mosquitoes are drawn larger than life with a soft glow and shadow, so they are visible on small, low-brightness screens. The whine sound helps but is never required."] },
+
+        { title: "Power-ups",
+          facts: [
+            { k: "Battery pack", v: "+30% charge. Rare (1–2 per floor) and can't be grabbed while overheated. From Floor 1." },
+            { k: "Newspaper", v: "Kept until the bat overheats, then swat until it recharges. 2 swats per kill. From Floor 1." },
+            { k: "Mosquito coil", v: "A 10 s smoke zone where it's picked up; slows and kills mosquitoes. From Floor 2." },
+            { k: "Durmos", v: "Repellent cream: 8 s of no bites (\"dur\" means far away). From Floor 3." },
+            { k: "Power bank", v: "Full 100% charge and ends overheat instantly. Rare. From Floor 4." },
+            { k: "UV killer", v: "Fixed in one corner. Activate once: it pulls every mosquito toward it for 8 s and zaps them. From Level 5." }
+          ],
+          blocks: [
+            { heading: "Spawn rules", steps: [
+              { title: "Fixed schedule", text: "Each floor has hand-placed drop times, with one new power-up type per floor." },
+              { title: "Timed drops", text: "A power-up appears at a random spot away from the player and glows for 6 s." },
+              { title: "Second chance", text: "If missed, it reappears 5 s later somewhere else, visible for only 4 s." },
+              { title: "Last chance", text: "One final reappearance for 3 s. Missed three times, it's gone for this level." }
+            ] },
+            { heading: "Why", bullets: [
+              "Players can't \"store\" power-ups by ignoring them, because each miss shortens the window.",
+              "Drops keep the player moving across the floor, which stops corner camping.",
+              "Batteries are rare, so overheats stay a real threat and dodging matters.",
+              "An arrow at the screen edge points to any power-up that is off-screen." ] }
+          ] },
+
+        { title: "Hazards & night events",
+          facts: [
+            { k: "Power cut", v: "Lights go out for 10 s. Only window light and the bat's glow remain, mosquitoes show only as glowing dots, and the bat stops recharging. Lights flicker 2 s before as a warning." },
+            { k: "AC trips off", v: "The office heats up and mosquitoes move 25% faster for about 20 s (one wave). A red thermometer icon shows on the HUD while it lasts." },
+            { k: "Security guard round", v: "A friendly event. The night guard walks a fixed path with a spray can for 12 s and clears mosquitoes near him. Lead swarms into his path for easy kills." }
+          ],
+          text: ["Hazards stack. Each floor keeps every hazard from earlier floors and adds one: the guard on Level 2, the AC on Level 3 and the power cut on Level 4. Each has a 2 s warning and never starts in the final 30 s dawn rush."] },
+
+        { title: "Levels & difficulty",
+          blocks: [
+            { heading: "Difficulty curve: waves that peak at dawn",
+              figures: [{ src: "assets/projects/chatak/difficulty-curve.png", alt: "Line chart of mosquito pressure from 12 AM to 6 AM: levels 1–9 rise steadily to 90, levels 10+ rise and fall in waves and peak at 100 at dawn", caption: "Mosquito pressure over one night (0–100)" }],
+              figLayout: "stack",
+              facts: [
+                { k: "Early levels", v: "Pressure rises steadily all night and peaks in the dawn rush. Easy to learn." },
+                { k: "Later levels", v: "Waves rise and fall, giving breathers to recharge and collect drops. Each peak is higher than the last." },
+                { k: "Dawn rush", v: "The final 30 s of every level is the hardest moment, matching the theme." }
+              ] },
+            { heading: "Prototype levels (4 floors)", facts: [
+              { k: "1 · Open Workspace", v: "2:00 · rising waves + dawn · regular mosquitoes · 1 battery, 1 newspaper · no hazards · kill target 25 · 8 s overheat" },
+              { k: "2 · Cabins & Meeting Rooms", v: "2:30 · 2 waves + dawn · + striped · 1 battery, 1 newspaper, + coil · guard · kill target 35 · 9 s overheat" },
+              { k: "3 · Pantry & Server Room", v: "3:00 · 2 waves + dawn · + fat · 1 battery, 2 newspapers, 1 coil, + Durmos · guard + AC · kill target 45 · 10 s overheat" },
+              { k: "4 · Top Floor (Boss's Wing)", v: "3:30 · 3 waves + dawn · + swarms · 2 batteries, 2 newspapers, 1 coil, 1 Durmos, + power bank · guard + AC + power cut · kill target 60 · 10 s overheat" }
+            ], text: ["\"+\" marks what is new on that floor. Length is real playing time for 12 AM → 6 AM. The UV killer arrives from Level 5."] },
+            { heading: "Night schedule: when drops and hazards happen",
+              figures: [{ src: "assets/projects/chatak/night-schedule.png", alt: "Timelines for the four prototype floors showing when the newspaper, battery, coil, Durmos and power bank drop, and when the guard, AC-off and power-cut events happen, each ending in a 30 second dawn rush", caption: "The orange end of each track is the 30 s dawn rush, with no hazards" }],
+              figLayout: "stack" },
+            { heading: "Full game progression (20 levels)", facts: [
+              { k: "Levels 1–4: Learn", v: "2–3.5 min. One new power-up and one new hazard per floor." },
+              { k: "Levels 5–9: Pressure", v: "3.5–4 min. Mixed mosquito types. UV killer from Level 5, Dawn Queen from Level 8." },
+              { k: "Levels 10–15: Waves", v: "4–5 min. 4–5 rising and falling waves. 3 AM checkpoint. 12 s overheat." },
+              { k: "Levels 16–20: Mastery", v: "5 min. Highest wave peaks. All hazards stack, up to 3 newspapers and 2 UV killers." }
+            ], text: ["Every mechanic, once introduced, stays in all later floors. Scaling levers: real length, wave count, mosquito types, max mosquitoes on screen, overheat time, hazards and the power-up budget. Floors reuse 4 layouts, so new levels are cheap."] }
+          ] },
+
+        { title: "Art & audio direction",
+          blocks: [
+            { heading: "Art", bullets: [
+              "2D top-down, flat shapes, bold outlines. Readable on 5\" screens.",
+              "Night palette: deep indigo floors, warm desk lamps, zap yellow.",
+              "The sky through the windows shifts from black to dawn orange as the clock runs.",
+              "Indian office details: chai cups, files, plants, water cooler, ID cards." ] },
+            { heading: "Audio", bullets: [
+              "The \"chatak\" zap is the hero sound: crisp, satisfying, with slight pitch variation.",
+              "The mosquito whine gets louder as they get closer.",
+              "Ambient: ceiling fan hum, distant traffic, a clock ticking near dawn.",
+              "Every sound has a visual cue, since many players play muted." ] }
+          ] }
+      ]
     },
     {
       title: "Project Title 06",

@@ -77,7 +77,7 @@
     return '<button class="card" type="button" data-i="' + i + '" style="--r:' + tilts[i % tilts.length] + "deg;--i:" + i + '" aria-haspopup="dialog">' +
       '<span class="card-thumb">' + thumbHtml(p, i) + "</span>" +
       '<span class="card-title">' + esc(p.title) + "</span>" +
-      '<span class="card-meta">' + esc([p.role, p.year, p.duration].filter(Boolean).join(" · ")) + "</span>" +
+      '<span class="card-meta">' + esc([p.role, p.year].filter(Boolean).join(" · ")) + "</span>" +
       "</button>";
   }).join("");
   wireImgFallback(cardsEl);
@@ -340,7 +340,7 @@
   }
   /* a loop of up to 6 steps drawn as a ring: 1 2 3 across the top, 4 5 6 back along the bottom */
   function loopHtml(lp) {
-    var h = '<div class="pd-loop" role="img" aria-label="' + esc(lp.steps.map(function (st, n) { return (n + 1) + ". " + st.title; }).join(", ") + ", then " + (lp.center || "repeat")) + '">';
+    var h = '<div class="pd-loop pd-loop-' + lp.steps.length + '" role="img" aria-label="' + esc(lp.steps.map(function (st, n) { return (n + 1) + ". " + st.title; }).join(", ") + ", then " + (lp.center || "repeat")) + '">';
     lp.steps.forEach(function (st, n) {
       h += '<div class="pd-loop-node pd-loop-n' + (n + 1) + '" aria-hidden="true"><span class="pd-loop-num">' + (n + 1) + "</span><b>" + esc(st.title) + "</b><span>" + esc(st.text) + "</span></div>";
     });
@@ -367,9 +367,11 @@
     if (b.youtube) {
       /* accepts a youtu.be / youtube.com link or the bare video id */
       var yt = (b.youtube.url.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/) || [])[1] || b.youtube.url;
+      /* no link yet: hold the video's place */
+      if (!yt) h += '<figure class="pd-shot pd-video pd-yt pd-yt-soon"><span>' + esc(b.youtube.placeholder || "Gameplay video coming soon") + "</span></figure>";
       /* opened by double-clicking index.html there is no web address to send, and YouTube
          refuses to play embeds without one (Error 153), so link out to YouTube instead */
-      if (location.protocol === "file:") h += '<figure class="pd-shot pd-video pd-yt"><a class="pd-yt-link" href="https://www.youtube.com/watch?v=' + esc(yt) + '" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi/' + esc(yt) + '/hqdefault.jpg" alt="' + esc(b.youtube.title || "Video") + '"><span>Watch on YouTube &#8599;</span></a></figure>';
+      else if (location.protocol === "file:") h += '<figure class="pd-shot pd-video pd-yt"><a class="pd-yt-link" href="https://www.youtube.com/watch?v=' + esc(yt) + '" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi/' + esc(yt) + '/hqdefault.jpg" alt="' + esc(b.youtube.title || "Video") + '"><span>Watch on YouTube &#8599;</span></a></figure>';
       else h += '<figure class="pd-shot pd-video pd-yt"><iframe src="https://www.youtube-nocookie.com/embed/' + esc(yt) + '?rel=0" title="' + esc(b.youtube.title || "Video") + '" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe></figure>';
     }
     if (b.image) h += '<figure class="pd-fig"><img src="' + esc(b.image) + '" alt="" loading="lazy" data-art="' + (i + k + 1) + '"></figure>';
