@@ -330,18 +330,35 @@
     var el = document.getElementById(b.getAttribute("data-target"));
     if (el) pdMain.scrollTo({ top: Math.max(0, el.offsetTop - 12), behavior: reduced ? "auto" : "smooth" });
   });
-  /* one block of a project section: optional heading, paragraphs, bullets, facts, steps, video, YouTube, pictures */
+  /* one block of a project section: optional heading, buttons, paragraphs, bullets, facts, steps,
+     loop diagram, video, YouTube, pictures */
   function figHtml(f, layout) {
     var cap = f.caption ? "<figcaption>" + esc(f.caption) + "</figcaption>" : "";
     return '<figure class="pd-shot"><img src="' + esc(f.src) + '" alt="' + esc(f.alt || f.caption || "") + '" loading="lazy" data-zoom="1">' + cap + "</figure>";
   }
+  /* a loop of up to 6 steps drawn as a ring: 1 2 3 across the top, 4 5 6 back along the bottom */
+  function loopHtml(lp) {
+    var h = '<div class="pd-loop" role="img" aria-label="' + esc(lp.steps.map(function (st, n) { return (n + 1) + ". " + st.title; }).join(", ") + ", then " + (lp.center || "repeat")) + '">';
+    lp.steps.forEach(function (st, n) {
+      h += '<div class="pd-loop-node pd-loop-n' + (n + 1) + '" aria-hidden="true"><span class="pd-loop-num">' + (n + 1) + "</span><b>" + esc(st.title) + "</b><span>" + esc(st.text) + "</span></div>";
+    });
+    h += '<div class="pd-loop-down" aria-hidden="true"></div><div class="pd-loop-up" aria-hidden="true"></div>';
+    if (lp.center) h += '<div class="pd-loop-center" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>' + esc(lp.center) + "</span></div>";
+    return h + "</div>";
+  }
   function blockHtml(b, p, i, k, sub) {
     var h = "";
     if (sub && b.heading) h += '<h5 class="pd-sub">' + esc(b.heading) + "</h5>";
+    /* buttons without a url yet stay hidden until one is filled in */
+    var btns = (b.links || []).filter(function (l) { return l.url; });
+    if (btns.length) h += '<div class="pd-links pd-links-inline">' + btns.map(function (l, n) {
+      return '<a class="btn' + (n ? " btn-ghost" : "") + '" href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label) + " &#8599;</a>";
+    }).join("") + "</div>";
     (b.text || []).forEach(function (t) { h += "<p>" + esc(fill(t, p)) + "</p>"; });
     if (b.bullets && b.bullets.length) h += '<ul class="pd-list">' + b.bullets.map(function (x) { return "<li>" + esc(fill(x, p)) + "</li>"; }).join("") + "</ul>";
     if (b.facts && b.facts.length) h += '<dl class="pd-facts">' + b.facts.map(function (f) { return "<div><dt>" + esc(f.k) + "</dt><dd>" + esc(f.v) + "</dd></div>"; }).join("") + "</dl>";
     if (b.steps && b.steps.length) h += '<ol class="pd-steps">' + b.steps.map(function (st) { return "<li><b>" + esc(st.title) + "</b><span>" + esc(st.text) + "</span></li>"; }).join("") + "</ol>";
+    if (b.loop && b.loop.steps) h += loopHtml(b.loop);
     if (b.video) {
       h += '<figure class="pd-shot pd-video"><video src="' + esc(b.video.src) + '" poster="' + esc(b.video.poster || "") + '" ' + (reduced ? "" : "autoplay ") + 'loop muted playsinline controls preload="metadata" aria-label="' + esc(b.video.alt || "") + '"></video></figure>';
     }
@@ -378,6 +395,9 @@
     if (!btn) return;
     var i = +btn.getAttribute("data-i"), p = S.projects[i];
     $("#pd-thumb").innerHTML = thumbHtml(p, i);
+    /* thumbPos moves the header picture inside its frame, e.g. "50% 5%" shows more of the top */
+    var headImg = $("#pd-thumb img");
+    if (headImg && p.thumbPos) headImg.style.objectPosition = p.thumbPos;
     wireImgFallback($("#pd-thumb"));
     $("#pd-title").textContent = p.title;
     $("#pd-meta").textContent = [p.role, p.year, p.duration].filter(Boolean).join(" \u00b7 ");
@@ -398,6 +418,11 @@
       return h + "</section>";
     }).join("");
     wireImgFallback($("#pd-sections"));
+    /* "row" galleries: each picture gets width in proportion to its shape, so all end up the same height */
+    $$(".pd-gal-row img", pdMain).forEach(function (img) {
+      function size() { if (img.naturalWidth) img.parentNode.style.flexGrow = img.naturalWidth / img.naturalHeight; }
+      if (img.complete) size(); else img.addEventListener("load", size);
+    });
     secEls = $$(".pd-sec", pdMain);
     openDialog(pd);
     pdMain.scrollTop = 0;

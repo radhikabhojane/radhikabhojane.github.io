@@ -34,16 +34,19 @@ window.SITE = {
       duration: "2 weeks",
       tools: ["Unity", "Gemini", "ChatGPT"],
       thumb: "assets/projects/chor-bandar/scene-start.jpg",
+      thumbPos: "50% 5%",
       blurb: "A casual stealth-arcade platformer set in Indian urban streets. You play a mischievous monkey stealing fruit for its babies while dodging vendors and aunties. The brief was to design two levels for a game; I set them in an Indian context.",
       links: [],
       sections: [
         { title: "Overview",
+          /* paste the game's itch.io page link into url here and in Gameplay below; the button shows once it has a link */
+          links: [{ label: "Play on itch.io", url: "" }],
           text: [
             "Chor Bandar is a playful stealth-arcade game set in Indian urban environments, where the player controls a mischievous monkey stealing fruits while avoiding humans. The core experience revolves around timing, observation and quick movement, combined with a humorous story of feeding baby monkeys."
           ],
           facts: [
             { k: "Duration", v: "2 weeks" },
-            { k: "Design brief", v: "Design 2 levels for a game. I designed them in an Indian context." },
+            { k: "Design brief", v: "Design two levels for a game. I chose to set both in everyday Indian surroundings: a street fruit market and an apartment block." },
             { k: "Focus", v: "Level design" },
             { k: "Genre", v: "Casual / stealth-arcade platformer" },
             { k: "Target audience", v: "Casual players" },
@@ -52,6 +55,7 @@ window.SITE = {
           ] },
 
         { title: "Gameplay",
+          links: [{ label: "Play on itch.io", url: "" }],
           youtube: { url: "https://www.youtube.com/watch?v=8F53y0WHdxU", title: "Chor Bandar gameplay video" } },
 
         { title: "Goal & tone",
@@ -64,14 +68,17 @@ window.SITE = {
           ] },
 
         { title: "Core gameplay loop",
-          steps: [
-            { title: "Receive request", text: "The baby monkeys show which fruit they want." },
-            { title: "Plan movement", text: "Watch the NPC patterns (vendors and aunties)." },
-            { title: "Navigate", text: "Jump, climb and move across the level." },
-            { title: "Steal fruit", text: "Grab it from a stall or a home." },
-            { title: "Return & deliver", text: "Bring back the fruit that was asked for, for points." },
-            { title: "Avoid danger", text: "Escape before losing all your lives, and repeat until the goal is met." }
-          ] },
+          loop: {
+            center: "Repeat until the goal is met",
+            steps: [
+              { title: "Receive request", text: "The baby monkeys show which fruit they want" },
+              { title: "Plan movement", text: "Watch the vendors' and aunties' patterns" },
+              { title: "Navigate", text: "Jump, climb and move across the level" },
+              { title: "Steal fruit", text: "Grab it from a stall or a home" },
+              { title: "Return & deliver", text: "Bring back the right fruit for points" },
+              { title: "Avoid danger", text: "Escape before losing all 3 lives" }
+            ]
+          } },
 
         { title: "Rules & mechanics",
           blocks: [
@@ -103,7 +110,7 @@ window.SITE = {
             { src: "assets/projects/chor-bandar/scene-start.jpg", alt: "Start screen with the Chor Bandar logo, a Start button and the WASD and Space keys", caption: "Start scene" },
             { src: "assets/projects/chor-bandar/scene-try-again.jpg", alt: "Try Again screen with a sad monkey holding an empty basket and a Retry button", caption: "Try again scene" },
             { src: "assets/projects/chor-bandar/scene-win.jpg", alt: "You Won screen with happy monkeys, a basket of fruit and a Start Again button", caption: "Win scene" }
-          ], figLayout: "grid" },
+          ], figLayout: "row" },
 
         { title: "Design process",
           steps: [
@@ -127,11 +134,11 @@ window.SITE = {
 
         { title: "Next steps",
           bullets: [
-            "Add a short bridge level between the market and the apartments, so climbing and the aunty are introduced one at a time.",
-            "Add warning cues: a \"!\" and a sound when a vendor turns to chase, and a door animation before an aunty steps out.",
-            "Make the fruit drop on collision, with a few seconds to pick it back up.",
-            "Design a third level that mixes both: a market at street level with balconies above.",
-            "Playtest with casual players and tune patrol speeds, the timer and the number of fruits per level."
+            "A short bridge level between the market and the apartments would introduce climbing and the aunty one at a time, smoothing the jump between the two environments.",
+            "Warning cues, like a \"!\" and a sound when a vendor turns to chase, or a door animation before an aunty steps out, would let players react before they are caught.",
+            "Dropping the fruit on collision, with a few seconds to pick it back up, would make each hit easy to read and give the player a chance to recover.",
+            "A third level could bring both settings together: a market at street level with balconies above it.",
+            "Playtesting with casual players would show how patrol speeds, the timer and the number of fruits per level should be tuned."
           ] }
       ]
     },

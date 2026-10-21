@@ -568,8 +568,29 @@ dialog[open]::backdrop { animation: fade .3s both; }
 .pd-gal-side { display: grid; grid-template-columns: minmax(0, .5fr) minmax(0, 1.5fr); gap: 16px; align-items: center; }
 .pd-gal-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
 .pd-gal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; align-items: start; }
+.pd-gal-row { display: flex; gap: 14px; align-items: flex-start; max-width: none; }
+.pd-gal-row .pd-shot { flex: 1 1 0; min-width: 0; }
+.pd-links-inline { margin: 4px 0 16px; }
 .pd-video { margin: 12px 0 6px; max-width: 640px; }
-.pd-yt { aspect-ratio: 16 / 9; background: #000; }
+.pd-yt { aspect-ratio: 16 / 9; background: #000; max-width: none; }
+/* core loop diagram: three steps across the top, three back along the bottom, arrows between */
+.pd-loop { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-areas: "n1 n2 n3" "up mid down" "n6 n5 n4"; column-gap: 36px; max-width: 720px; margin: 16px 0 10px; }
+.pd-loop-n1 { grid-area: n1; } .pd-loop-n2 { grid-area: n2; } .pd-loop-n3 { grid-area: n3; }
+.pd-loop-n4 { grid-area: n4; } .pd-loop-n5 { grid-area: n5; } .pd-loop-n6 { grid-area: n6; }
+.pd-loop-node { position: relative; display: grid; gap: 2px; align-content: start; padding: 14px 14px 15px; border: 2px solid var(--ink); border-radius: 14px; background: #fbf8f0; box-shadow: 4px 5px 0 rgba(43, 34, 48, .18); }
+.pd-loop-node b { font-family: var(--font-display); font-weight: 500; font-size: 1.04rem; line-height: 1.2; }
+.pd-loop-node > span:last-child { font-size: .88rem; line-height: 1.35; color: var(--soft-ink); }
+.pd-loop-num { width: 30px; height: 30px; margin-bottom: 6px; border-radius: 50%; display: grid; place-items: center; background: var(--coral); color: var(--cream); font-family: var(--font-display); font-weight: 600; }
+.pd-loop-node::after, .pd-loop-up, .pd-loop-down { content: ""; background: no-repeat center / contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 14'%3E%3Cpath d='M2 7h18M14 2l6 5-6 5' fill='none' stroke='%23c8603f' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+.pd-loop-node::after { position: absolute; top: 50%; width: 26px; height: 16px; margin-top: -8px; }
+.pd-loop-n1::after, .pd-loop-n2::after { right: -33px; }
+.pd-loop-n4::after, .pd-loop-n5::after { left: -33px; transform: rotate(180deg); }
+.pd-loop-n3::after, .pd-loop-n6::after { display: none; }
+.pd-loop-down, .pd-loop-up { height: 58px; transform: rotate(90deg); background-size: 26px 16px; }
+.pd-loop-down { grid-area: down; }
+.pd-loop-up { grid-area: up; transform: rotate(-90deg); }
+.pd-loop-center { grid-area: mid; display: flex; align-items: center; justify-content: center; gap: 8px; text-align: center; font-family: var(--font-display); font-weight: 500; font-size: .95rem; color: var(--teal-2); }
+.pd-loop-center svg { flex: none; width: 22px; height: 22px; }
 .pd-yt iframe { display: block; width: 100%; height: 100%; border: 0; }
 .pd-yt-link { position: relative; display: block; height: 100%; color: #fff; }
 .pd-yt .pd-yt-link img { height: 100%; object-fit: cover; cursor: pointer; }
@@ -737,6 +758,13 @@ dialog[open]::backdrop { animation: fade .3s both; }
   .pd-gal-masonry .pd-shot { margin-bottom: 10px; }
   .pd-gal-side { grid-template-columns: minmax(0, .6fr) minmax(0, 1.4fr); gap: 10px; }
   .pd-gal-pair, .pd-gal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .pd-gal-row { flex-direction: column; gap: 10px; }
+  .pd-gal-row .pd-shot { width: 100%; }
+  /* the loop becomes one column, each step pointing down to the next */
+  .pd-loop { grid-template-columns: minmax(0, 1fr); grid-template-areas: "n1" "n2" "n3" "n4" "n5" "n6" "mid"; row-gap: 30px; }
+  .pd-loop-up, .pd-loop-down { display: none; }
+  .pd-loop-node::after, .pd-loop-n3::after, .pd-loop-n6::after { display: block; top: auto; right: auto; left: 50%; bottom: -25px; margin: 0 0 0 -13px; transform: rotate(90deg); }
+  .pd-loop-center { justify-content: flex-start; margin-top: -8px; }
   .pd-sec h4 { font-size: 1.4rem; }
   .pd-links-end { display: flex; padding: 24px 18px 0; }
 }
