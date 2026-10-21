@@ -27,15 +27,112 @@ window.SITE = {
             Leave it "" to show the drawn placeholder art. */
   projects: [
     {
-      title: "Project Title 01",
-      role: "Game Designer",
-      year: "2026",
-      tools: ["Unity", "Figma"],
-      thumb: "",
-      blurb: "Two or three sentences: what the game is, what problem you were solving, and what you personally designed.",
-      links: [
-        { label: "Play on itch.io", url: "https://your-name.itch.io/" },
-        { label: "Design doc", url: "#" }
+      /* Project 1: level design (from chor_bandar.pptx) */
+      title: "Chor Bandar",
+      role: "Level Design",
+      year: "",
+      duration: "2 weeks",
+      tools: ["Unity", "Gemini", "ChatGPT"],
+      thumb: "assets/projects/chor-bandar/scene-start.jpg",
+      blurb: "A casual stealth-arcade platformer set in Indian urban streets. You play a mischievous monkey stealing fruit for its babies while dodging vendors and aunties. The brief was to design two levels for a game; I set them in an Indian context.",
+      links: [],
+      sections: [
+        { title: "Overview",
+          text: [
+            "Chor Bandar is a playful stealth-arcade game set in Indian urban environments, where the player controls a mischievous monkey stealing fruits while avoiding humans. The core experience revolves around timing, observation and quick movement, combined with a humorous story of feeding baby monkeys."
+          ],
+          facts: [
+            { k: "Duration", v: "2 weeks" },
+            { k: "Design brief", v: "Design 2 levels for a game. I designed them in an Indian context." },
+            { k: "Focus", v: "Level design" },
+            { k: "Genre", v: "Casual / stealth-arcade platformer" },
+            { k: "Target audience", v: "Casual players" },
+            { k: "Software", v: "Unity, Gemini, ChatGPT" },
+            { k: "AI disclosure", v: "AI was used for the background art and for coding." }
+          ] },
+
+        { title: "Gameplay",
+          youtube: { url: "https://www.youtube.com/watch?v=8F53y0WHdxU", title: "Chor Bandar gameplay video" } },
+
+        { title: "Goal & tone",
+          text: ["The player must collect and deliver the fruits the baby monkeys ask for, while avoiding detection and collisions with people."],
+          bullets: [
+            "Light-hearted and humorous",
+            "Mischief-driven gameplay",
+            "Tension through stealth and avoidance",
+            "Rewarding through successful delivery loops"
+          ] },
+
+        { title: "Core gameplay loop",
+          steps: [
+            { title: "Receive request", text: "The baby monkeys show which fruit they want." },
+            { title: "Plan movement", text: "Watch the NPC patterns (vendors and aunties)." },
+            { title: "Navigate", text: "Jump, climb and move across the level." },
+            { title: "Steal fruit", text: "Grab it from a stall or a home." },
+            { title: "Return & deliver", text: "Bring back the fruit that was asked for, for points." },
+            { title: "Avoid danger", text: "Escape before losing all your lives, and repeat until the goal is met." }
+          ] },
+
+        { title: "Rules & mechanics",
+          blocks: [
+            { heading: "Game rules", bullets: [
+              "The player starts each level with 3 lives.",
+              "Each collision with an NPC costs 1 life.",
+              "Losing all lives restarts the level.",
+              "The player must deliver a set number of correct fruits to complete the level." ] },
+            { heading: "Who does what", facts: [
+              { k: "Monkey", v: "Walks sideways, jumps, climbs and grabs fruit" },
+              { k: "Vendor", v: "Patrols sideways along his cart and sells fruit to customers" },
+              { k: "Customers", v: "Walk sideways and buy fruit" },
+              { k: "Aunty (level 2)", v: "Patrols her balcony sideways and disappears inside the house for a few seconds" }
+            ] }
+          ] },
+
+        { title: "The two levels",
+          blocks: [
+            { heading: "Level 1: the fruit market",
+              text: ["A street market with three fruit carts. Vendors patrol their carts and customers walk past, so the player has to time each grab. An electric pole leads up to the rooftops, where the baby monkeys wait. Deliver 5 fruits to win."],
+              figures: [{ src: "assets/projects/chor-bandar/level-1.jpg", alt: "Level 1: a street with three fruit carts, vendors and customers, an electric pole, and baby monkeys on a rooftop asking for grapes", caption: "Level 1: the fruit market" }], figLayout: "stack" },
+            { heading: "Level 2: the apartment balconies",
+              text: ["Two apartment buildings with fruit on every balcony. Aunties patrol the balconies and pop back inside, so the player has to read their rhythm. Pipes and electric wires connect the buildings for climbing and crossing. Deliver 8 fruits to win."],
+              figures: [{ src: "assets/projects/chor-bandar/level-2.jpg", alt: "Level 2: two apartment buildings with aunties on the balconies, fruit baskets, pipes and wires, and the monkey climbing a pipe", caption: "Level 2: the apartment balconies" }], figLayout: "stack" }
+          ] },
+
+        { title: "Scenes",
+          figures: [
+            { src: "assets/projects/chor-bandar/scene-start.jpg", alt: "Start screen with the Chor Bandar logo, a Start button and the WASD and Space keys", caption: "Start scene" },
+            { src: "assets/projects/chor-bandar/scene-try-again.jpg", alt: "Try Again screen with a sad monkey holding an empty basket and a Retry button", caption: "Try again scene" },
+            { src: "assets/projects/chor-bandar/scene-win.jpg", alt: "You Won screen with happy monkeys, a basket of fruit and a Start Again button", caption: "Win scene" }
+          ], figLayout: "grid" },
+
+        { title: "Design process",
+          steps: [
+            { title: "Brief", text: "Design two levels for a game." },
+            { title: "Setting", text: "Took the brief into an Indian context: monkeys stealing fruit from street markets and balconies is an everyday, funny sight." },
+            { title: "Core loop & rules", text: "Defined the request, steal and deliver loop, the 3 lives, and how the monkey, vendors, customers and aunties move." },
+            { title: "Level layouts", text: "Level 1 on the ground in a fruit market, with vendors to time around. Level 2 goes vertical across two apartment buildings, adding climbing and the aunties' appear-and-disappear pattern." },
+            { title: "Build in Unity", text: "Built both levels and the start, try again and win scenes, using AI for the background art and the code." },
+            { title: "Play & review", text: "Played through both levels to see what worked and what to improve." }
+          ] },
+
+        { title: "Learnings",
+          bullets: [
+            "The level breakdown could be more gradual, introducing one new idea at a time.",
+            "There is a jump when the new environment is introduced: level 2 changes the setting, the layout and the threat all at once.",
+            "Visually alerting the player when the vendor runs up behind them and shoos them could be clearer.",
+            "On collision, the fruit could drop to the floor, so the player sees what they lost and can try to grab it back.",
+            "NPC patterns need to be readable before they become a threat, so that getting caught feels fair rather than random.",
+            "Where the delivery point sits shapes every route: putting the baby monkeys up high turns each delivery into a climb and sets the pace of the level."
+          ] },
+
+        { title: "Next steps",
+          bullets: [
+            "Add a short bridge level between the market and the apartments, so climbing and the aunty are introduced one at a time.",
+            "Add warning cues: a \"!\" and a sound when a vendor turns to chase, and a door animation before an aunty steps out.",
+            "Make the fruit drop on collision, with a few seconds to pick it back up.",
+            "Design a third level that mixes both: a market at street level with balconies above.",
+            "Playtest with casual players and tune patrol speeds, the timer and the number of fruits per level."
+          ] }
       ]
     },
     {

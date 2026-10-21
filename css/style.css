@@ -540,7 +540,7 @@ dialog[open]::backdrop { animation: fade .3s both; }
 .pd-side .pd-links { margin-top: auto; padding-top: 14px; }
 .pd-links-end { display: none; }
 .pd-main { position: relative; min-width: 0; min-height: 0; overflow-y: auto; padding-bottom: 56px; overscroll-behavior: contain; }
-.pd-thumb { aspect-ratio: 16 / 7; background: #d8ccb4; overflow: hidden; }
+.pd-thumb { aspect-ratio: 16 / 5; background: #d8ccb4; overflow: hidden; }
 .pd-thumb > * { display: block; width: 100%; height: 100%; object-fit: cover; }
 .pd-sec { padding: 38px 48px 0; }
 .pd-sec h4 { font-family: var(--font-display); font-weight: 500; font-size: 1.7rem; line-height: 1.15; margin-bottom: 10px; }
@@ -557,7 +557,7 @@ dialog[open]::backdrop { animation: fade .3s both; }
 .pd-steps li { counter-increment: st; position: relative; display: grid; gap: 2px; padding-left: 52px; }
 .pd-steps li::before { content: counter(st); position: absolute; left: 0; top: 0; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--ink); color: var(--cream); font-family: var(--font-display); font-weight: 500; }
 .pd-steps b { font-family: var(--font-display); font-weight: 500; font-size: 1.08rem; }
-.pd-gal { margin: 12px 0 6px; }
+.pd-gal { margin: 12px 0 6px; max-width: 640px; }
 .pd-shot { margin: 0; overflow: hidden; border-radius: 6px; background: #fbf8f0; box-shadow: 4px 6px 0 rgba(43, 34, 48, .2); }
 .pd-shot img, .pd-shot video { display: block; width: 100%; height: auto; cursor: zoom-in; }
 .pd-shot video { cursor: default; }
@@ -566,9 +566,9 @@ dialog[open]::backdrop { animation: fade .3s both; }
 .pd-gal-masonry .pd-shot { break-inside: avoid; margin: 0 0 14px; }
 .pd-gal-stack { display: grid; gap: 16px; }
 .pd-gal-side { display: grid; grid-template-columns: minmax(0, .5fr) minmax(0, 1.5fr); gap: 16px; align-items: center; }
-.pd-gal-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; max-width: 760px; }
+.pd-gal-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
 .pd-gal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; align-items: start; }
-.pd-video { margin: 12px 0 6px; }
+.pd-video { margin: 12px 0 6px; max-width: 640px; }
 .pd-yt { aspect-ratio: 16 / 9; background: #000; }
 .pd-yt iframe { display: block; width: 100%; height: 100%; border: 0; }
 .pd-yt-link { position: relative; display: block; height: 100%; color: #fff; }
