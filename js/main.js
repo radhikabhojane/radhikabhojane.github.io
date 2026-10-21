@@ -330,7 +330,7 @@
     var el = document.getElementById(b.getAttribute("data-target"));
     if (el) pdMain.scrollTo({ top: Math.max(0, el.offsetTop - 12), behavior: reduced ? "auto" : "smooth" });
   });
-  /* one block of a project section: optional heading, paragraphs, bullets, facts, steps, video, pictures */
+  /* one block of a project section: optional heading, paragraphs, bullets, facts, steps, video, YouTube, pictures */
   function figHtml(f, layout) {
     var cap = f.caption ? "<figcaption>" + esc(f.caption) + "</figcaption>" : "";
     return '<figure class="pd-shot"><img src="' + esc(f.src) + '" alt="' + esc(f.alt || f.caption || "") + '" loading="lazy" data-zoom="1">' + cap + "</figure>";
@@ -344,6 +344,14 @@
     if (b.steps && b.steps.length) h += '<ol class="pd-steps">' + b.steps.map(function (st) { return "<li><b>" + esc(st.title) + "</b><span>" + esc(st.text) + "</span></li>"; }).join("") + "</ol>";
     if (b.video) {
       h += '<figure class="pd-shot pd-video"><video src="' + esc(b.video.src) + '" poster="' + esc(b.video.poster || "") + '" ' + (reduced ? "" : "autoplay ") + 'loop muted playsinline controls preload="metadata" aria-label="' + esc(b.video.alt || "") + '"></video></figure>';
+    }
+    if (b.youtube) {
+      /* accepts a youtu.be / youtube.com link or the bare video id */
+      var yt = (b.youtube.url.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/) || [])[1] || b.youtube.url;
+      /* opened by double-clicking index.html there is no web address to send, and YouTube
+         refuses to play embeds without one (Error 153), so link out to YouTube instead */
+      if (location.protocol === "file:") h += '<figure class="pd-shot pd-video pd-yt"><a class="pd-yt-link" href="https://www.youtube.com/watch?v=' + esc(yt) + '" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi/' + esc(yt) + '/hqdefault.jpg" alt="' + esc(b.youtube.title || "Video") + '"><span>Watch on YouTube &#8599;</span></a></figure>';
+      else h += '<figure class="pd-shot pd-video pd-yt"><iframe src="https://www.youtube-nocookie.com/embed/' + esc(yt) + '?rel=0" title="' + esc(b.youtube.title || "Video") + '" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe></figure>';
     }
     if (b.image) h += '<figure class="pd-fig"><img src="' + esc(b.image) + '" alt="" loading="lazy" data-art="' + (i + k + 1) + '"></figure>';
     else if (b.art) h += '<figure class="pd-fig">' + artSvg(i + k + 1) + "</figure>";

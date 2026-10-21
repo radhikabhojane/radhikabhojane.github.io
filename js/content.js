@@ -185,13 +185,138 @@ window.SITE = {
       links: [{ label: "Case study", url: "#" }]
     },
     {
-      title: "Project Title 04",
-      role: "Game Jam Team",
-      year: "2025",
-      tools: ["Unity", "Blender"],
-      thumb: "",
-      blurb: "A jam game: the theme, the team size, how many hours you had and what you shipped.",
-      links: [{ label: "Play on itch.io", url: "https://your-name.itch.io/" }]
+      /* Project 4: board game (from Killer_Buzz_boardgame.pptx; pictures cropped as on the slides) */
+      title: "Killer Buzz",
+      role: "Board Game Design",
+      year: "",
+      duration: "4 weeks",
+      tools: [],
+      thumb: "assets/projects/killer-buzz/board-hero.jpg",
+      blurb: "A two-player strategy board game where each player controls a Honeybee and a Hornet. You collect flowers with your bee and use your hornet to sabotage your opponent, so every turn asks the same question: collect or attack?",
+      links: [],
+      sections: [
+        { title: "Overview",
+          text: [
+            "Killer Buzz is a two-player strategic board game where each player controls a Honeybee and a Hornet.",
+            "The goal is to collect flowers while using your hornet to sabotage your opponent. Every turn demands tactical choices: whether to advance your bee toward sweet success or unleash your hornet's sting to disrupt the rival hive."
+          ],
+          facts: [
+            { k: "Duration", v: "4 weeks" },
+            { k: "Players", v: "2" },
+            { k: "Age", v: "10+" },
+            { k: "Play time", v: "20–30 minutes" },
+            { k: "Core idea", v: "A tense balance between creation and destruction: collect or attack?" },
+            { k: "Target audience", v: "Casual players, families and friends who enjoy quick, competitive strategy games; people who like chess-like tactics with short play sessions; and design, ecology and nature enthusiasts, thanks to its theme." }
+          ] },
+
+        { title: "Components",
+          facts: [
+            { k: "Game board (1)", v: "Hexagonal, 18\" side, with paths, a central hub, teleport spots and bee hives on opposite sides" },
+            { k: "Honeybee tokens (2)", v: "Pawns with blue and red markings" },
+            { k: "Hornet tokens (2)", v: "Pawns with blue and red markings" },
+            { k: "Flower tokens (15)", v: "Small MDF flower-shaped punch-out discs" },
+            { k: "Dice (2)", v: "Standard D6 dice" },
+            { k: "Rulebook (1)", v: "A4 folded reference sheet" }
+          ],
+          figures: [
+            { src: "assets/projects/killer-buzz/board-hero.jpg", alt: "The finished wooden hexagonal board with pink flower tokens, wooden pawns on the yellow hives and the red central hexagon", caption: "The finished board" },
+            { src: "assets/projects/killer-buzz/components.jpg", alt: "Top view of the board with labels pointing to the honeybee, hornet, flower, teleportation spots, board and dice", caption: "Honeybee, hornet, flowers, teleport spots and dice" }
+          ], figLayout: "pair" },
+
+        { title: "Rules",
+          blocks: [
+            { heading: "Goal", text: ["Collect 8 flowers before your opponent, or strategically sting and steal to get ahead."] },
+            { heading: "Turn structure",
+              text: ["Each player gets two moves per turn. For each move, the player must choose:"],
+              bullets: ["Which character to move: Honeybee or Hornet", "How many dice to roll: 1 die or 2 dice", "You cannot move the same character twice in one turn."] },
+            { heading: "Honeybee", bullets: ["Moves according to the number rolled.", "Can land on flowers to collect them.", "Can teleport when landing on a teleport tile.", "Cannot attack."] },
+            { heading: "Hornet", bullets: ["Moves according to the number rolled.", "Can sting the honeybee when close enough.", "Cannot collect flowers.", "Cannot use teleport spots."] },
+            { heading: "Teleport mechanic (Honeybee only)",
+              text: ["If a Honeybee lands on a teleport space, roll one die. The bee teleports to the flower or spot labelled with the number rolled. Teleportation adds unpredictability, but can help escape danger."] },
+            { heading: "Flowers & safe zones", bullets: [
+              "Flower tiles are safe zones for Honeybees.",
+              "Hornets cannot sting or kill honeybees standing on flowers.",
+              "If a hornet reaches a flower before the honeybee, that flower can't be collected for the rest of that round." ] },
+            { heading: "Conflict & stinging", facts: [
+              { k: "Stinging distance", v: "If the hornet is within 3 spaces of a honeybee, it gets one extra dice roll and must roll a 3 to sting. If it fails, the hornet stays in place." },
+              { k: "When a sting happens", v: "The opponent's honeybee returns to its hive (starting point), and the stinging player takes half of the opponent's flower tokens. If the number is odd, round up (5 flowers: take 3)." }
+            ] }
+          ] },
+
+        { title: "How to play",
+          text: ["Board setup: the honeybees start at the two opposite yellow hives and the hornets at the central red hexagon. Flowers are placed on the yellow dots."],
+          figures: [{ src: "assets/projects/killer-buzz/setup.jpg", alt: "Top view of the board set up with pawns on the hives and the centre, flowers on the paths and two dice", caption: "Board setup" }],
+          figLayout: "pair",
+          blocks: [
+            { heading: "A round, step by step", figLayout: "grid", figures: [
+              { src: "assets/projects/killer-buzz/play-1.jpg", alt: "A hand holding two wooden dice next to the board", caption: "1. Player 1 rolls both dice" },
+              { src: "assets/projects/killer-buzz/play-2.jpg", alt: "A hand moving a honeybee pawn along the path", caption: "2. Move the honeybee by the number on the dice" },
+              { src: "assets/projects/killer-buzz/play-3.jpg", alt: "A hand holding two dice beside the board", caption: "3. Player 1 rolls both dice again for the hornet" },
+              { src: "assets/projects/killer-buzz/play-4.jpg", alt: "A finger pushing a hornet pawn across the board", caption: "4. Move the hornet by the number on the dice" },
+              { src: "assets/projects/killer-buzz/play-5.jpg", alt: "Two dice rolled onto the table beside the board", caption: "5. Player 2 rolls both dice" },
+              { src: "assets/projects/killer-buzz/play-6.jpg", alt: "Two hornet pawns on the red central hexagon surrounded by flowers", caption: "6. Player 2 moves their hornet and honeybee the same way" },
+              { src: "assets/projects/killer-buzz/play-7.jpg", alt: "A hand picking up a flower token from the board", caption: "7. A honeybee that lands on a flower collects it" },
+              { src: "assets/projects/killer-buzz/play-8.jpg", alt: "A honeybee pawn on its yellow hive with hornets in the distance", caption: "8. A stung bee goes back to its hive and gives up half its flowers" }
+            ] }
+          ] },
+
+        { title: "Gameplay",
+          youtube: { url: "https://www.youtube.com/watch?v=09TsFmhYT1o", title: "Killer Buzz gameplay video" } },
+
+        { title: "Design process",
+          text: [
+            "Ideation → prototype → playtesting → changes and a high-fidelity prototype.",
+            "The process began with exploring the idea of conflict in nature, particularly between honeybees and hornets. I researched their behaviours, territorial instincts and ecological roles to shape a meaningful play narrative.",
+            "I started with mind mapping and sketching early concepts, experimenting with how both species could coexist and compete within the same system. Through iterations, I focused on balancing strategy and chance, so that both characters had distinct advantages and constraints.",
+            "Multiple paper prototypes were tested to refine mechanics such as movement, resource collection (flowers) and conflict resolution. Playtesting helped simplify complex rules and create tension points, especially when the hornet nears the honeybee."
+          ] },
+
+        { title: "Prototyping",
+          blocks: [
+            { heading: "First prototype", figLayout: "stack", figures: [
+              { src: "assets/projects/killer-buzz/proto-1.jpg", alt: "Drawing of a vine-path board with pink flowers and a honey pot, beside drawn hornet and bee pawns and two dice" }
+            ] },
+            { heading: "Second prototype", figLayout: "pair", figures: [
+              { src: "assets/projects/killer-buzz/proto-2-tablet.jpg", alt: "The hexagonal board drawn on a tablet, with a hand moving a piece" },
+              { src: "assets/projects/killer-buzz/proto-2-board.jpg", alt: "Digital drawing of the hexagonal board with vine paths and an orange centre" }
+            ] },
+            { heading: "Final low-fidelity prototype", figLayout: "grid", figures: [
+              { src: "assets/projects/killer-buzz/proto-3-board.jpg", alt: "A hand-drawn paper hexagonal board with paper bee pawns, being played" },
+              { src: "assets/projects/killer-buzz/proto-3-tokens-1.jpg", alt: "Paper hornet and bee pawns labelled A and B" },
+              { src: "assets/projects/killer-buzz/proto-3-tokens-2.jpg", alt: "Four paper pawns, two hornets and two bees" }
+            ] }
+          ] },
+
+        { title: "Playtesting",
+          text: ["The game was playtested with different players across multiple rounds to observe player interactions and improve game balance."],
+          figures: [
+            { src: "assets/projects/killer-buzz/test-paper.jpg", alt: "The paper prototype mid-game with bee pawns and flower cut-outs" },
+            { src: "assets/projects/killer-buzz/test-players.jpg", alt: "Two players leaning over the paper board during a playtest" },
+            { src: "assets/projects/killer-buzz/test-close.jpg", alt: "A player moving a pawn on the paper board, with a dice app on a phone" },
+            { src: "assets/projects/killer-buzz/test-tablet.jpg", alt: "The digital version of the board being tested on a tablet" }
+          ] },
+
+        { title: "Making the board",
+          text: ["The final board was laser-cut and engraved in MDF."],
+          figures: [
+            { src: "assets/projects/killer-buzz/build-1.jpg", alt: "Close-up of an engraved MDF path with a flower token" },
+            { src: "assets/projects/killer-buzz/build-laser.jpg", alt: "The laser cutter engraving the board's paths" },
+            { src: "assets/projects/killer-buzz/build-2.jpg", alt: "Wooden pawns standing on the engraved MDF board" },
+            { src: "assets/projects/killer-buzz/build-final.jpg", alt: "Top view of the finished, unpainted MDF board with pawns, flowers and dice" },
+            { src: "assets/projects/killer-buzz/build-3.jpg", alt: "The unpainted board from an angle, with dice and pawns" },
+            { src: "assets/projects/killer-buzz/build-4.jpg", alt: "Pawns in the centre of the unpainted board" }
+          ] },
+
+        { title: "Learnings",
+          bullets: [
+            "How small changes in rules or starting positions affect balance and fairness.",
+            "How playtesting reveals both mechanical issues and player emotions.",
+            "The need for clear, consistent rules to keep gameplay enjoyable.",
+            "How cooperative and competitive elements shape player dynamics and strategy.",
+            "Experimenting with mechanics like teleportation and risk–reward to blend chance with strategy.",
+            "Stronger skills in iterative design, balancing, and using player feedback to refine the game."
+          ] }
+      ]
     },
     {
       title: "Project Title 05",
