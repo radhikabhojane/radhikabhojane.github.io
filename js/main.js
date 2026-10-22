@@ -374,6 +374,11 @@
       else if (location.protocol === "file:") h += '<figure class="pd-shot pd-video pd-yt"><a class="pd-yt-link" href="https://www.youtube.com/watch?v=' + esc(yt) + '" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi/' + esc(yt) + '/hqdefault.jpg" alt="' + esc(b.youtube.title || "Video") + '"><span>Watch on YouTube &#8599;</span></a></figure>';
       else h += '<figure class="pd-shot pd-video pd-yt"><iframe src="https://www.youtube-nocookie.com/embed/' + esc(yt) + '?rel=0" title="' + esc(b.youtube.title || "Video") + '" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe></figure>';
     }
+    /* a playable page shown inside the project, e.g. an HTML prototype */
+    if (b.embed) {
+      if (b.embed.note) h += '<p class="pd-embed-note"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10.5 18.5h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>' + esc(b.embed.note) + "</p>";
+      h += '<div class="pd-embed"><iframe src="' + esc(b.embed.src) + '" title="' + esc(b.embed.title || "Prototype") + '"></iframe></div>';
+    }
     if (b.image) h += '<figure class="pd-fig"><img src="' + esc(b.image) + '" alt="" loading="lazy" data-art="' + (i + k + 1) + '"></figure>';
     else if (b.art) h += '<figure class="pd-fig">' + artSvg(i + k + 1) + "</figure>";
     if (b.figures && b.figures.length) {

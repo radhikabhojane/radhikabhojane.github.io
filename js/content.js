@@ -680,13 +680,107 @@ window.SITE = {
       ]
     },
     {
-      title: "Project Title 06",
-      role: "Narrative Designer",
-      year: "2024",
-      tools: ["Twine", "Miro"],
-      thumb: "",
-      blurb: "The story structure, the choices you gave the player, and how the writing supports the mechanics.",
-      links: [{ label: "Read it", url: "#" }]
+      /* Project 6: live-ops event concept for Coin Master (Design Management course, group of 3) */
+      title: "Piggy's Minefield Scan",
+      role: "Live-Ops Event Concept",
+      year: "",
+      tools: [],
+      thumb: "assets/projects/minefield-scan/cover.jpg",
+      thumbPos: "50% 22%",
+      blurb: "A daily risk-and-reward mini-game event for Coin Master, designed to make veteran players stay a little longer in each session. Every spin earns a Scanner Point; spend it to uncover a tile and hope for a reward, not a mine.",
+      links: [],
+      sections: [
+        { title: "Overview",
+          text: ["Coin Master's veteran players open the game often but leave after about 4 minutes. We designed a Minesweeper-style event that gives them a reason to linger, without asking them to open the app more often."],
+          facts: [
+            { k: "Type", v: "Live-ops event concept" },
+            { k: "Game", v: "Coin Master" },
+            { k: "Course", v: "Design Management" },
+            { k: "Team", v: "Group project, 3 members" },
+            { k: "Platform", v: "Web prototype" },
+            { k: "AI disclosure", v: "This prototype uses AI-generated art, and AI tools were used to assist with its coding." }
+          ] },
+
+        { title: "Play the prototype",
+          embed: { src: "prototypes/minefield-scanner/index.html", title: "Minefield Scanner playable prototype", note: "It is recommended to play this prototype on a mobile device." },
+          blocks: [
+            { heading: "How to play", bullets: [
+              "Tap SPIN until you pass 4,000 stars; the event icon appears on the right.",
+              "Open the event, start, and pick a sector on the map.",
+              "Each tile costs 1 Scanner Point. Green: no mine nearby. Red: a mine is close. Yellow: a mine and a reward are both close.",
+              "Find every reward before you hit a mine." ] }
+          ] },
+
+        { title: "The problem",
+          facts: [
+            { k: "Who", v: "Veterans (31+ days): 31% of daily players, about 174,000 a day" },
+            { k: "Today", v: "7.6 short sessions a day, about 4 minutes each" },
+            { k: "Goal", v: "Raise average session length from 4.0 to 5.5 minutes (+37.5%) in 3 weeks" },
+            { k: "Guardrail", v: "Sessions per day must not drop below 7.6" }
+          ],
+          text: ["Success means a longer, more deliberate visit, not more visits."] },
+
+        { title: "The idea",
+          text: ["Every tap is a small bet. The fun comes from anticipation (what's under the tile?) and loss aversion (don't lose the run), so even a 30–60 second session feels charged."],
+          loop: {
+            center: "Clear a grid to move up a level",
+            steps: [
+              { title: "Spin", text: "Play Coin Master's slot as usual" },
+              { title: "Earn", text: "Every spin gives 1 Scanner Point" },
+              { title: "Scan", text: "Spend 1 point to reveal a tile" },
+              { title: "Resolve", text: "Safe tile: a reward. Mine: the level restarts" },
+              { title: "Progress", text: "Clear every safe tile to reach a bigger grid" }
+            ]
+          } },
+
+        { title: "Event structure",
+          facts: [
+            { k: "Unlock", v: "At 4,000 stars, just above what most 30-day players have, so it feels within reach" },
+            { k: "Length", v: "A 24-hour window with 6 levels, then a 24-hour cooldown" },
+            { k: "Levels", v: "Two 4×4, two 5×5 and two 6×6 grids, with 2 to 7 mines" },
+            { k: "Rewards", v: "Free spins, growing from 5 to 25 per tile as levels get harder" },
+            { k: "Losing", v: "A mine restarts only the current level; cleared levels are never lost" }
+          ],
+          blocks: [
+            { heading: "Fair, but still a pinch", text: ["Scanner Points can't be bought inside the event. The only way to get more is to spin, so players who want to go faster buy energy in the main shop. The mini-game stays fair while still feeding the existing purchase funnel."] }
+          ] },
+
+        { title: "Screens",
+          text: ["The event lives inside Coin Master's existing screens: a new icon on the side rail glows whenever there are Scanner Points to spend."],
+          figures: [
+            { src: "prototypes/minefield-scanner/assets/event_poster.jpg", alt: "Event poster announcing Treasure Scan with the pig mascot as a soldier", caption: "Event announcement" },
+            { src: "prototypes/minefield-scanner/assets/tutorial_screen.jpg", alt: "Entry screen explaining how to scan tiles, with a Start button", caption: "Entry screen" },
+            { src: "prototypes/minefield-scanner/assets/level_map.jpg", alt: "Map of six sectors connected by a dashed path, each marked by a treasure chest", caption: "Sector map" }
+          ], figLayout: "grid",
+          blocks: [
+            { heading: "Win and lose", figLayout: "pair", figures: [
+              { src: "prototypes/minefield-scanner/assets/win_popup.png", alt: "Level complete pop-up with the rewards won and a Next button", caption: "Level complete" },
+              { src: "prototypes/minefield-scanner/assets/lost_popup.png", alt: "Lost pop-up with the pig covered in soot and Retry and Map buttons", caption: "Hit a mine: light and comic, never harsh" }
+            ] }
+          ] },
+
+        { title: "Art direction",
+          bullets: [
+            "Military theme, with the Coin Master pig as a battlefield scout.",
+            "Bright and casual, never dark or gritty, to match Coin Master's warmth.",
+            "Tiles read instantly as safe or dangerous, without any text.",
+            "Losing is comic (a soot-covered pig), not punishing.",
+            "The top bar, side rail and buttons match the main game, so the event never feels bolted on."
+          ] },
+
+        { title: "Measuring success",
+          facts: [
+            { k: "Primary", v: "Average session length for 31+ day players, 4.0 → 5.5 min over 3 weeks" },
+            { k: "Guardrail", v: "Sessions per day stay at 7.6 or more" },
+            { k: "Secondary", v: "Completion rate per level (where the difficulty breaks) and energy purchases during the event" }
+          ],
+          blocks: [
+            { heading: "Levers to tune", bullets: [
+              "Mines per level: the main control over risk and pace",
+              "Reward size, so the event feels generous without inflating the economy",
+              "Cooldown, anywhere from 24 to 72 hours" ] }
+          ] }
+      ]
     },
     {
       title: "Project Title 07",
