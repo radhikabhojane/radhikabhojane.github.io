@@ -377,7 +377,9 @@
     /* a playable page shown inside the project, e.g. an HTML prototype */
     if (b.embed) {
       if (b.embed.note) h += '<p class="pd-embed-note"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10.5 18.5h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>' + esc(b.embed.note) + "</p>";
-      h += '<div class="pd-embed"><iframe src="' + esc(b.embed.src) + '" title="' + esc(b.embed.title || "Prototype") + '"></iframe></div>';
+      h += '<div class="pd-embed"><iframe src="' + esc(b.embed.src) + '" title="' + esc(b.embed.title || "Prototype") + '"></iframe>' +
+        '<button class="btn pd-embed-exit" type="button">&times; Exit full screen</button></div>' +
+        '<button class="btn btn-ghost pd-embed-full" type="button">&#x26F6; Play full screen</button>';
     }
     if (b.image) h += '<figure class="pd-fig"><img src="' + esc(b.image) + '" alt="" loading="lazy" data-art="' + (i + k + 1) + '"></figure>';
     else if (b.art) h += '<figure class="pd-fig">' + artSvg(i + k + 1) + "</figure>";
@@ -387,6 +389,25 @@
     }
     return h;
   }
+  /* embedded prototype: real full screen where the browser allows it, otherwise fill the window */
+  function fsEl() { return document.fullscreenElement || document.webkitFullscreenElement; }
+  $("#pd-sections").addEventListener("click", function (e) {
+    var go = e.target.closest(".pd-embed-full"), stop = e.target.closest(".pd-embed-exit");
+    if (go) {
+      var box = go.previousElementSibling, req = box.requestFullscreen || box.webkitRequestFullscreen;
+      box.classList.add("is-full");
+      if (req) { var r = req.call(box); if (r && r.catch) r.catch(function () {}); }
+    } else if (stop) {
+      var full = stop.closest(".pd-embed");
+      if (fsEl() === full) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+      full.classList.remove("is-full");
+    }
+  });
+  ["fullscreenchange", "webkitfullscreenchange"].forEach(function (ev) {
+    document.addEventListener(ev, function () {
+      if (!fsEl()) $$(".pd-embed.is-full").forEach(function (el) { el.classList.remove("is-full"); });
+    });
+  });
   /* click a picture to see it large */
   var lb = $("#lightbox");
   $("#pd-sections").addEventListener("click", function (e) {
@@ -403,7 +424,8 @@
     var btn = e.target.closest(".card");
     if (!btn) return;
     var i = +btn.getAttribute("data-i"), p = S.projects[i];
-    $("#pd-thumb").innerHTML = thumbHtml(p, i);
+    /* cover: an optional different picture for the top of the opened project (the card keeps thumb) */
+    $("#pd-thumb").innerHTML = thumbHtml({ thumb: p.cover || p.thumb }, i);
     /* thumbPos moves the header picture inside its frame, e.g. "50% 5%" shows more of the top */
     var headImg = $("#pd-thumb img");
     if (headImg && p.thumbPos) headImg.style.objectPosition = p.thumbPos;

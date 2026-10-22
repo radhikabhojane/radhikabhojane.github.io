@@ -685,19 +685,25 @@ window.SITE = {
       role: "Live-Ops Event Concept",
       year: "",
       tools: [],
-      thumb: "assets/projects/minefield-scan/cover.jpg",
+      thumb: "assets/projects/minefield-scan/thumb.jpg",
+      cover: "assets/projects/minefield-scan/cover.jpg",
       thumbPos: "50% 22%",
       blurb: "A daily risk-and-reward mini-game event for Coin Master, designed to make veteran players stay a little longer in each session. Every spin earns a Scanner Point; spend it to uncover a tile and hope for a reward, not a mine.",
       links: [],
       sections: [
         { title: "Overview",
-          text: ["Coin Master's veteran players open the game often but leave after about 4 minutes. We designed a Minesweeper-style event that gives them a reason to linger, without asking them to open the app more often."],
+          text: [
+            "A daily risk-and-reward mini-game event for Coin Master, built to re-engage veteran players in short, high-frequency sessions.",
+            "Every spin of Coin Master's slot earns a Scanner Point. Players spend those points to uncover tiles on a Minesweeper-style grid, hoping to find rewards and not a mine."
+          ],
           facts: [
             { k: "Type", v: "Live-ops event concept" },
             { k: "Game", v: "Coin Master" },
             { k: "Course", v: "Design Management" },
             { k: "Team", v: "Group project, 3 members" },
             { k: "Platform", v: "Web prototype" },
+            { k: "Event type", v: "Daily / time-boxed mini-game" },
+            { k: "Owner", v: "Live Ops / Game Design" },
             { k: "AI disclosure", v: "This prototype uses AI-generated art, and AI tools were used to assist with its coding." }
           ] },
 
@@ -711,74 +717,151 @@ window.SITE = {
               "Find every reward before you hit a mine." ] }
           ] },
 
-        { title: "The problem",
+        { title: "Goal",
           facts: [
-            { k: "Who", v: "Veterans (31+ days): 31% of daily players, about 174,000 a day" },
-            { k: "Today", v: "7.6 short sessions a day, about 4 minutes each" },
-            { k: "Goal", v: "Raise average session length from 4.0 to 5.5 minutes (+37.5%) in 3 weeks" },
-            { k: "Guardrail", v: "Sessions per day must not drop below 7.6" }
+            { k: "Avg. session length (D30+)", v: "4.0 → 5.5 min" },
+            { k: "Target uplift", v: "+37.5%" },
+            { k: "Measurement window", v: "3 weeks" }
           ],
-          text: ["Success means a longer, more deliberate visit, not more visits."] },
+          text: ["Raise average session length for players past Day 30 from 4.0 to 5.5 minutes over a three-week window, without reducing their existing session frequency of 7.6 sessions a day. Success is a longer, more deliberate visit per session, not more visits: the event should give veterans a reason to linger, not a reason to open the app more often."] },
 
-        { title: "The idea",
-          text: ["Every tap is a small bet. The fun comes from anticipation (what's under the tile?) and loss aversion (don't lose the run), so even a 30–60 second session feels charged."],
+        { title: "Target players",
+          facts: [
+            { k: "Who", v: "Veteran players (31+ days): 31% of daily active users, about 174,000 players a day" },
+            { k: "Current behaviour", v: "7.6 sessions a day averaging 4.0 minutes each (about 30 minutes a day in total, taken in very small bites)" },
+            { k: "Typical D30 economy", v: "Earning roughly 1,000–3,000 stars on average (Google Play statistics)" }
+          ] },
+
+        { title: "Player fantasy",
+          bullets: ["\"I hope I find the right rewards.\"", "\"I hope I don't click on a bomb tile.\""],
+          text: ["The tension is deliberately simple and readable at a glance: every tap is a small bet. The fantasy leans on anticipation (what's under the tile?) and loss aversion (don't lose the run), which is what makes short 30–60 second sessions still feel charged."] },
+
+        { title: "Core loop",
           loop: {
-            center: "Clear a grid to move up a level",
+            center: "Clear a level to reach a bigger grid",
             steps: [
-              { title: "Spin", text: "Play Coin Master's slot as usual" },
-              { title: "Earn", text: "Every spin gives 1 Scanner Point" },
-              { title: "Scan", text: "Spend 1 point to reveal a tile" },
-              { title: "Resolve", text: "Safe tile: a reward. Mine: the level restarts" },
-              { title: "Progress", text: "Clear every safe tile to reach a bigger grid" }
+              { title: "Spin", text: "The player spins the slot in Coin Master's main loop (existing core loop, no changes)" },
+              { title: "Earn", text: "Every spin awards 1 Scanner Point, the event currency, whatever the slot result" },
+              { title: "Scan", text: "Spend 1 Scanner Point to reveal one tile on the current grid" },
+              { title: "Resolve", text: "Safe tile: a reward (spins, gold, pet food, chest). Mine: the run ends and the level restarts" },
+              { title: "Progress", text: "Clearing all safe tiles on a level moves the player to the next, larger grid" }
             ]
           } },
 
-        { title: "Event structure",
+        { title: "Entry & exit",
           facts: [
-            { k: "Unlock", v: "At 4,000 stars, just above what most 30-day players have, so it feels within reach" },
-            { k: "Length", v: "A 24-hour window with 6 levels, then a 24-hour cooldown" },
-            { k: "Levels", v: "Two 4×4, two 5×5 and two 6×6 grids, with 2 to 7 mines" },
-            { k: "Rewards", v: "Free spins, growing from 5 to 25 per tile as levels get harder" },
-            { k: "Losing", v: "A mine restarts only the current level; cleared levels are never lost" }
-          ],
-          blocks: [
-            { heading: "Fair, but still a pinch", text: ["Scanner Points can't be bought inside the event. The only way to get more is to spin, so players who want to go faster buy energy in the main shop. The mini-game stays fair while still feeding the existing purchase funnel."] }
+            { k: "Entry", v: "The event unlocks at 4,000 stars, a threshold set just above the typical D30 range (1,000–3,000 stars), so it reads as an achievable, near-term milestone rather than a distant one. On crossing it, an intro screen announces the mini-game and hands the player into Level 1." },
+            { k: "Exit", v: "The event runs on a 24-hour timer with 6 levels: two 4×4 grids, two 5×5 grids and two 6×6 grids. Completing all 6 levels within the window clears the event. On completion (or when the timer runs out) the player enters a 24-hour cooldown before the event can trigger again." }
           ] },
 
-        { title: "Screens",
-          text: ["The event lives inside Coin Master's existing screens: a new icon on the side rail glows whenever there are Scanner Points to spend."],
-          figures: [
-            { src: "prototypes/minefield-scanner/assets/event_poster.jpg", alt: "Event poster announcing Treasure Scan with the pig mascot as a soldier", caption: "Event announcement" },
-            { src: "prototypes/minefield-scanner/assets/tutorial_screen.jpg", alt: "Entry screen explaining how to scan tiles, with a Start button", caption: "Entry screen" },
-            { src: "prototypes/minefield-scanner/assets/level_map.jpg", alt: "Map of six sectors connected by a dashed path, each marked by a treasure chest", caption: "Sector map" }
-          ], figLayout: "grid",
+        { title: "Levels & rewards",
+          facts: [
+            { k: "Level 1", v: "4×4 grid · 16 tiles · 2 mines · 1 Scanner Point per tile · Reward: 5 spins" },
+            { k: "Level 2", v: "4×4 grid · 16 tiles · 3 mines · 1 Scanner Point per tile · Reward: 10 spins" },
+            { k: "Level 3", v: "5×5 grid · 25 tiles · 4 mines · 1 Scanner Point per tile · Rewards: 10 spins ×1, 15 spins ×2" },
+            { k: "Level 4", v: "5×5 grid · 25 tiles · 5 mines · 1 Scanner Point per tile · Rewards: 10 spins ×2, 15 spins ×3" },
+            { k: "Level 5", v: "6×6 grid · 36 tiles · 6 mines · 1 Scanner Point per tile · Rewards: 15 spins ×3, 25 spins ×3" },
+            { k: "Level 6", v: "6×6 grid · 36 tiles · 7 mines · 1 Scanner Point per tile · Rewards: 15 spins ×3, 25 spins ×4" }
+          ],
+          text: ["Mine counts are a proposed starting point, tuned so difficulty scales roughly in line with grid size, at about 12–19% of tiles. That is steep enough to keep the \"pinch\" meaningful without making early levels punishing for new participants. They are the first thing to A/B test."],
           blocks: [
-            { heading: "Win and lose", figLayout: "pair", figures: [
-              { src: "prototypes/minefield-scanner/assets/win_popup.png", alt: "Level complete pop-up with the rewards won and a Next button", caption: "Level complete" },
-              { src: "prototypes/minefield-scanner/assets/lost_popup.png", alt: "Lost pop-up with the pig covered in soot and Retry and Map buttons", caption: "Hit a mine: light and comic, never harsh" }
+            { heading: "Progression rules", bullets: [
+              "Progress is level-based: clearing a grid advances the player, and hitting a mine restarts only the current level. Cleared levels are never lost.",
+              "Scanner Points are earned only by spinning the slot (1 per spin), tying the mini-game directly back to Coin Master's core loop.",
+              "A run's outcome is visible at a glance: safe tiles show their rewards immediately, so players always know their risk before the next tap.",
+              "The event UI shows a live 24-hour countdown and the current level, keeping urgency visible without needing push notifications." ] }
+          ] },
+
+        { title: "Monetisation",
+          text: ["There is no direct monetisation inside the mini-game: no offer to buy Scanner Points outright. Instead, the pinch is routed back through the core game. The only way to get more Scanner Points is to spend more energy spinning the slot, so a player who wants to push further into the event faster has to buy energy in the main shop. This keeps the mini-game feeling fair and skill/luck-driven, while still connecting event engagement to the existing energy-purchase funnel."],
+          blocks: [
+            { heading: "Levers to tune", facts: [
+              { k: "Reward scaling", v: "How spin rewards on the ladder scale against the core loop's energy economy, so the event feels rewarding but not inflationary" },
+              { k: "Cooldown length", v: "Adjustable between 24 and 72 hours, depending on observed session length and re-entry data" },
+              { k: "Difficulty", v: "The number of mines per level (see the table above): the main lever for pacing and perceived risk" }
             ] }
           ] },
 
+        { title: "Screen flow",
+          text: ["The UI specification covers the key screens in the player's journey, element by element, for the prototyping team."],
+          figures: [
+            { src: "prototypes/minefield-scanner/assets/event_poster.jpg", alt: "Event poster announcing Treasure Scan with the pig mascot as a soldier", caption: "Event announcement" },
+            { src: "prototypes/minefield-scanner/assets/tutorial_screen.jpg", alt: "Entry screen explaining how to scan tiles, with a Start button", caption: "Entry screen" },
+            { src: "prototypes/minefield-scanner/assets/level_map.jpg", alt: "Map of six sectors connected by a dashed path, each marked by a treasure chest", caption: "Level selection" }
+          ], figLayout: "grid",
+          blocks: [
+            { heading: "1. Main game screen", text: ["The existing Coin Master main screen gets one addition: a new icon button that is the way into the mini-game."], facts: [
+              { k: "Placement", v: "A new icon button on the right-side vertical toolbar, below the existing event icons" },
+              { k: "Glow state", v: "The icon glows whenever the player has 1 or more unused Scanner Points, signalling there's a session to spend" },
+              { k: "Idle state", v: "The icon sits dim when the Scanner Point balance is 0" },
+              { k: "Point acquisition", v: "Every Spin earns +1 Scanner Point, whatever the slot result" },
+              { k: "Tap behaviour", v: "Tapping the icon opens the Entry Screen the first time, and goes straight to Level Selection or the Game Event screen after that" }
+            ] },
+            { heading: "2. Entry screen", text: ["A themed intro screen shown the first time a player enters the event (or once per event window)."], facts: [
+              { k: "Theme", v: "Military throughout, with a minimal background in the same art style as the base game" },
+              { k: "Mascot", v: "The Coin Master pig re-skinned in a military uniform (scout/soldier framing)" },
+              { k: "Background", v: "Military but uncluttered, so it doesn't compete with the mascot or the button" },
+              { k: "CTA", v: "A single Start button, the primary action, leading to Level Selection" },
+              { k: "Art style", v: "Must match the existing game's illustration style, with no mismatch against core Coin Master art" }
+            ] },
+            { heading: "3. Level selection screen", text: ["Laid out like an \"Explore\" map from another mobile game, used purely as a layout and interaction reference."], facts: [
+              { k: "Theme per level", v: "The same military theme, but each level re-skinned as a different battleground (desert outpost, snowy front, jungle base)" },
+              { k: "Selection", v: "The player can tap any unlocked level to enter it directly" },
+              { k: "Locking", v: "Levels unlock in order: only the next level is available, and later levels look locked (dimmed, padlock or fog-of-war)" },
+              { k: "Progress path", v: "A dashed route links the level nodes to reinforce the order" }
+            ] },
+            { heading: "4. Game event screen (core gameplay)", text: [
+              "The main gameplay surface: the Minesweeper-style deduction board. The first time, a short interactive tutorial explains tile tap → clue → deduction → reward or mine before the player's first real attempt.",
+              "The layout follows an existing Coin Master event board, reusing its placement conventions so the screen feels native to the game."
+            ], facts: [
+              { k: "Info button (top left)", v: "Opens a rules/help overlay explaining the clue system" },
+              { k: "Close button (top right)", v: "Exits to the main game screen; the level in progress is kept" },
+              { k: "Goal banner (top centre)", v: "States the level's win condition and shows the milestone reward" },
+              { k: "Reward milestones (right)", v: "Icon markers along the progress bar for the rewards ahead" },
+              { k: "Progress bar (below banner)", v: "Progress towards the level's rewards (e.g. \"3/7\") plus the current level label" },
+              { k: "Game board (centre)", v: "The tile grid, re-themed with military icons (sandbags, dog tags, compass); grows from 4×4 to 6×6 by level" },
+              { k: "Scanner balance (bottom right)", v: "The remaining Scanner Points: the \"energy\" for revealing tiles" },
+              { k: "Bank / chest (bottom left)", v: "Access to rewards banked in the current session" }
+            ] },
+            { heading: "5. Rewards & end states", facts: [
+              { k: "Level win pop-up", v: "When the player finds the reward tile: a pop-up sums up the rewards with a Next Level button, and a small celebration plays on the winning tile" },
+              { k: "Tile reveal feedback", v: "Any neutral tile: a small animation confirms the tap and reveals the clue" },
+              { k: "Loss pop-up", v: "When the player taps a mine: the mascot appears covered in black soot, with a Retry button to restart the level" },
+              { k: "Milestone calendar", v: "An optional day-by-day reward calendar pattern, for a possible longer future event" },
+              { k: "Tone", v: "The loss state should read as light and comic (a soot-covered mascot), not punishing, in keeping with Coin Master's casual tone" }
+            ],
+              figLayout: "pair", figures: [
+                { src: "prototypes/minefield-scanner/assets/win_popup.png", alt: "Level complete pop-up with the rewards won and a Next button", caption: "Level complete" },
+                { src: "prototypes/minefield-scanner/assets/lost_popup.png", alt: "Lost pop-up with the pig covered in soot and Retry and Map buttons", caption: "Hit a mine" }
+              ] }
+          ] },
+
         { title: "Art direction",
+          text: ["Military-themed, starring the Coin Master piggy as a battlefield scout on a minefield. Tile art should read instantly as safe or dangerous (sandbags, dog tags, ration crates vs. mines), so the core tension is clear without text. The structural inspiration is Minesweeper (Windows XP) and its tile-reveal risk."],
           bullets: [
-            "Military theme, with the Coin Master pig as a battlefield scout.",
-            "Bright and casual, never dark or gritty, to match Coin Master's warmth.",
-            "Tiles read instantly as safe or dangerous, without any text.",
-            "Losing is comic (a soot-covered pig), not punishing.",
-            "The top bar, side rail and buttons match the main game, so the event never feels bolted on."
+            "Approachable, casual and bright: even in the military re-skin, avoid a dark or gritty tone that breaks from Coin Master's warmth.",
+            "Clear gameplay feedback: icons and effects should read instantly, matching the existing game's clarity.",
+            "Reward icons follow the chest and reward language already used in Coin Master, without inventing a new style.",
+            "The soldier piggy follows the mascot's costume formula (Viking, leprechaun, tank rider): recognisable pig face + themed outfit + a signature prop.",
+            "The top bar, bottom action button and side icon rail match the main screen exactly, so the mini-game never feels like a separate, bolted-on app."
           ] },
 
         { title: "Measuring success",
           facts: [
-            { k: "Primary", v: "Average session length for 31+ day players, 4.0 → 5.5 min over 3 weeks" },
-            { k: "Guardrail", v: "Sessions per day stay at 7.6 or more" },
-            { k: "Secondary", v: "Completion rate per level (where the difficulty breaks) and energy purchases during the event" }
-          ],
-          blocks: [
-            { heading: "Levers to tune", bullets: [
-              "Mines per level: the main control over risk and pace",
-              "Reward size, so the event feels generous without inflating the economy",
-              "Cooldown, anywhere from 24 to 72 hours" ] }
+            { k: "Primary", v: "Average session length for the D31+ segment over a 3-week rolling window (target 4.0 → 5.5 min)" },
+            { k: "Guardrail", v: "Sessions per day for the same segment must not drop below 7.6" },
+            { k: "Secondary", v: "Completion rate per level (to find where the difficulty curve breaks) and energy-purchase conversion during active event windows" },
+            { k: "Open question", v: "Should uncleared levels carry over into the next daily event, or reset? Carry-over may protect low-frequency veterans from feeling penalised for short sessions." }
+          ] },
+
+        { title: "Open items",
+          text: ["Points the UI spec left for the team to settle before building:"],
+          steps: [
+            { title: "Level count", text: "The UI reference shows 5 levels while the mechanics one-pager specifies 6; reconcile before locking the level-select layout. (The prototype uses 6.)" },
+            { title: "Tutorial frequency", text: "Once ever, once per event cycle, or skippable and reopenable from the Info button?" },
+            { title: "Locked levels", text: "Settle one locked-state look (padlock, fog/dim overlay or greyscale) for every level node." },
+            { title: "Reward calendar", text: "Is the day-by-day reward calendar in scope here, or kept for a future event type?" },
+            { title: "Entry screen re-trigger", text: "Does the Entry Screen show every time the player opens the event mid-cycle, or only on first entry per window?" }
           ] }
       ]
     },
