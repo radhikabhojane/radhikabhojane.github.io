@@ -361,6 +361,10 @@
     if (b.facts && b.facts.length) h += '<dl class="pd-facts">' + b.facts.map(function (f) { return "<div><dt>" + esc(f.k) + "</dt><dd>" + esc(f.v) + "</dd></div>"; }).join("") + "</dl>";
     if (b.steps && b.steps.length) h += '<ol class="pd-steps">' + b.steps.map(function (st) { return "<li><b>" + esc(st.title) + "</b><span>" + esc(st.text) + "</span></li>"; }).join("") + "</ol>";
     if (b.loop && b.loop.steps) h += loopHtml(b.loop);
+    /* flow: a one-way chain of stages, e.g. a design process */
+    if (b.flow && b.flow.length) h += '<div class="pd-flow" role="img" aria-label="' + esc(b.flow.join(", then ")) + '">' + b.flow.map(function (s) {
+      return '<span class="pd-flow-step" aria-hidden="true">' + esc(s) + "</span>";
+    }).join('<span class="pd-flow-arrow" aria-hidden="true"></span>') + "</div>";
     if (b.video) {
       h += '<figure class="pd-shot pd-video"><video src="' + esc(b.video.src) + '" poster="' + esc(b.video.poster || "") + '" ' + (reduced ? "" : "autoplay ") + 'loop muted playsinline controls preload="metadata" aria-label="' + esc(b.video.alt || "") + '"></video></figure>';
     }
@@ -386,7 +390,8 @@
     else if (b.art) h += '<figure class="pd-fig">' + artSvg(i + k + 1) + "</figure>";
     if (b.figures && b.figures.length) {
       var lay = b.figLayout || (b.figures.length > 2 ? "masonry" : "stack");
-      h += '<div class="pd-gal pd-gal-' + lay + '">' + b.figures.map(figHtml).join("") + "</div>";
+      /* figMax: a narrower gallery for pictures that should stay small */
+      h += '<div class="pd-gal pd-gal-' + lay + '"' + (b.figMax ? ' style="max-width:' + (+b.figMax) + 'px"' : "") + ">" + b.figures.map(figHtml).join("") + "</div>";
     }
     return h;
   }

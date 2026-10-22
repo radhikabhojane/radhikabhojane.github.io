@@ -902,16 +902,7 @@ window.SITE = {
             "Designing systems that emerge from these observations"
           ],
           blocks: [
-            { heading: "Design process", loop: {
-              center: "Iterate and repeat",
-              steps: [
-                { title: "Research", text: "How and why people play casual games" },
-                { title: "Insights", text: "What players want, and what puts them off" },
-                { title: "Concept", text: "A system rooted in an everyday Indian routine" },
-                { title: "Prototype", text: "A playable build of the core mechanic" },
-                { title: "Playtesting", text: "Watching people play and gathering feedback" },
-                { title: "Iteration", text: "Refining mechanics, pacing and clarity" }
-              ] } }
+            { heading: "Design process", flow: ["Research", "Insights", "Concept", "Prototype", "Playtesting", "Iteration"] }
           ] },
 
         { title: "Understanding casual play",
@@ -1030,19 +1021,18 @@ window.SITE = {
           figures: [
             { src: "assets/projects/dabba-express/assets.jpg", alt: "Game assets: colour-coded crates (D-11, TNA-20, AD-1, BD-5, VP-3, BVI-12, MLD-11), the dabbawala on his bicycle, a traffic signal, sound and pause buttons, coded dabbas, the sun, clouds and the trolley", caption: "Crates, dabbas, the dabbawala, UI buttons and the trolley" },
             { src: "assets/projects/dabba-express/cycle-frames.jpg", alt: "Ten animation frames of the dabbawala pedalling his bicycle", caption: "Cycling animation frames" }
-          ], figLayout: "stack" },
-
-        { title: "Prototypes",
-          figures: [
-            { src: "assets/projects/dabba-express/prototype-1.jpg", alt: "First prototype: a timer bar, a round button and two coloured crates on a black screen", caption: "Prototype 1" },
-            { src: "assets/projects/dabba-express/final-game.jpg", alt: "Prototype 2 start screen: the Dabba Express logo, a Start sign, and the dabbawala cycling past a Mumbai bus stop", caption: "Prototype 2" }
-          ], figLayout: "pair" },
+          ], figLayout: "stack",
+          blocks: [
+            { heading: "Cycling animation", figMax: 420, figLayout: "stack", figures: [
+              { src: "assets/projects/dabba-express/cycling.gif", alt: "Looping animation of the dabbawala pedalling his bicycle" }
+            ] }
+          ] },
 
         { title: "Playtesting",
           figures: [
             { src: "assets/projects/dabba-express/playtest-1.jpg", alt: "A player trying the game on a laptop", caption: "" },
             { src: "assets/projects/dabba-express/playtest-2.jpg", alt: "Another player sorting dabbas on a laptop in the studio", caption: "" }
-          ], figLayout: "pair",
+          ], figLayout: "pair", figMax: 460,
           blocks: [
             { heading: "Feedback", bullets: [
               "Add feedback UI: \"Delivered\", \"Amazing\", etc.",

@@ -605,6 +605,10 @@ dialog[open]::backdrop { animation: fade .3s both; }
 .pd-loop-down, .pd-loop-up { height: 58px; transform: rotate(90deg); background-size: 26px 16px; }
 .pd-loop-down { grid-area: down; }
 .pd-loop-up { grid-area: up; transform: rotate(-90deg); }
+/* flow: hexagon stages joined by arrows, wrapping onto new lines when space runs out */
+.pd-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 6px; margin: 14px 0 10px; }
+.pd-flow-step { padding: 12px 24px; background: #e8d6a8; font-family: var(--font-display); font-weight: 500; font-size: 1rem; clip-path: polygon(16px 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 16px 100%, 0 50%); }
+.pd-flow-arrow { width: 26px; height: 16px; background: no-repeat center / contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 14'%3E%3Cpath d='M2 7h18M14 2l6 5-6 5' fill='none' stroke='%23c8603f' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
 /* five steps: the fifth card stretches along the bottom-left and the arrow climbs back to 1 */
 .pd-loop-5 { grid-template-areas: "n1 n2 n3" "up mid down" "n5 n5 n4"; }
 .pd-loop-5 .pd-loop-n5::after { display: none; }
