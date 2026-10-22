@@ -866,13 +866,212 @@ window.SITE = {
       ]
     },
     {
-      title: "Project Title 07",
-      role: "Prototype",
-      year: "2024",
-      tools: ["Unity", "C#"],
-      thumb: "",
-      blurb: "A small experiment: the one idea you wanted to test and what you learned from building it.",
-      links: [{ label: "Play on itch.io", url: "https://your-name.itch.io/" }]
+      /* Project 7: Design Project 1 (from dabba_express.pptx) */
+      title: "Dabba Express",
+      role: "2D Casual Game",
+      year: "",
+      duration: "6 weeks",
+      tools: [],
+      thumb: "assets/projects/dabba-express/final-game.jpg",
+      thumbPos: "50% 30%",
+      blurb: "A 2D casual sorting game inspired by Mumbai's dabbawala system, where players quickly sort incoming dabbas into the right delivery crates under time pressure, with a trolley-based unloading system that adds realism and flow.",
+      links: [],
+      sections: [
+        { title: "Overview",
+          text: ["A 2D casual sorting game inspired by Mumbai's dabbawala system, where players quickly organise incoming dabbas into the correct delivery crates under time pressure. The game features a trolley-based unloading system, adding a sense of realism and flow."],
+          facts: [
+            { k: "Duration", v: "6 weeks" },
+            { k: "Module", v: "Design Project 1" },
+            { k: "Brief", v: "Design a 2D casual game rooted in the Indian context, with at least 5 minutes of engaging gameplay, without relying on existing formats." },
+            { k: "Genre", v: "2D casual sorting game" },
+            { k: "Platform", v: "PC, played with the mouse (drag and drop)" },
+            { k: "Target audience", v: "PC gamers who like casual, cozy games; achiever-type players; players who like casual strategy games" }
+          ] },
+
+        { title: "Gameplay",
+          youtube: { url: "https://www.youtube.com/watch?v=22dWtSywGbU", title: "Dabba Express gameplay video" } },
+
+        { title: "Design brief",
+          text: [
+            "The brief was to design a 2D casual game with a minimum of 5 minutes of gameplay, set in the Indian context. The project explores player behaviour, everyday contexts and cultural environments to find insights and create original casual play experiences.",
+            "The project emphasised:"
+          ],
+          bullets: [
+            "Understanding how people play in everyday situations",
+            "Studying behaviour, context and motivations",
+            "Designing systems that emerge from these observations"
+          ],
+          blocks: [
+            { heading: "Design process", loop: {
+              center: "Iterate and repeat",
+              steps: [
+                { title: "Research", text: "How and why people play casual games" },
+                { title: "Insights", text: "What players want, and what puts them off" },
+                { title: "Concept", text: "A system rooted in an everyday Indian routine" },
+                { title: "Prototype", text: "A playable build of the core mechanic" },
+                { title: "Playtesting", text: "Watching people play and gathering feedback" },
+                { title: "Iteration", text: "Refining mechanics, pacing and clarity" }
+              ] } }
+          ] },
+
+        { title: "Understanding casual play",
+          text: ["Casual games are deeply embedded in everyday life and are often played in short, in-between moments."],
+          blocks: [
+            { heading: "When people play", bullets: ["Waiting during commutes", "Taking short breaks between tasks", "Passing time when bored"] },
+            { heading: "What casual games are like", bullets: ["Easy to learn and quick to start", "Low in cognitive load", "Designed for short, repeatable sessions"],
+              text: ["They are less about mastery and more about accessibility and habit."] },
+            { heading: "PC casual players", facts: [
+              { k: "Sessions", v: "Slightly longer (5–20 minutes), but still low commitment" },
+              { k: "What they enjoy", v: "Relaxing, cozy, non-competitive games, with mouse-based interactions like dragging, sorting and organising" },
+              { k: "What they value", v: "Clear visuals and satisfying feedback" },
+              { k: "How they play", v: "While multitasking (music, videos, background activity), to unwind rather than to compete" },
+              { k: "Popular experiences", v: "Sorting and organising games, simulation-lite or management games, puzzle-based interactions" }
+            ],
+              figures: [{ src: "assets/projects/dabba-express/casual-games.jpg", alt: "A strip of screenshots from popular casual sorting, puzzle and management games", caption: "Casual game references" }], figLayout: "stack" }
+          ] },
+
+        { title: "Research insights",
+          blocks: [
+            { heading: "Players prefer", bullets: ["Low-effort interactions that don't need intense focus", "Quick entry and exit from gameplay", "Repetitive but satisfying actions"] },
+            { heading: "Motivations", bullets: ["Passing time", "Relaxation and stress relief", "Habitual engagement"] },
+            { heading: "Common frustrations", bullets: ["Overly complex systems", "Poor visual clarity"] },
+            { heading: "What players said", bullets: ["Stress relief: \"Just want to pass time\"", "\"Don't want to think too much\"", "\"Play with friends/family\"", "\"Winning feels good\""] },
+            { heading: "Opportunity space",
+              text: ["Based on these insights, there was an opportunity to design a system that:"],
+              bullets: [
+                "Supports short, repeatable gameplay loops",
+                "Gives players control over how fast or slow they play",
+                "Builds engagement through simple but evolving mechanics",
+                "Connects to familiar, real-world behaviours" ] },
+            { text: ["This led to exploring systems that combine simplicity with decision-making under constraints."] }
+          ] },
+
+        { title: "Concept ideation",
+          facts: [
+            { k: "Exploration", v: "Everyday Indian systems, sorting and organising tasks, routine workflows, time-based activities" },
+            { k: "Identified patterns", v: "Flow of objects and movement, decision-making under time pressure, repetitive but engaging actions, simple systems with high efficiency" },
+            { k: "Gameplay possibilities", v: "Sorting mechanics, drag-and-drop interaction, controlled pacing, increasing constraints" },
+            { k: "Direction", v: "A dabbawala-inspired sorting system: a real-world coding system, time-bound delivery logic, and flow + sorting + constraints" }
+          ],
+          figures: [
+            { src: "assets/projects/dabba-express/ideation-1.jpg", alt: "Notes on a mechanics-driven rhythm game idea" },
+            { src: "assets/projects/dabba-express/ideation-2.jpg", alt: "Sketches of a dabbawala sorting system with parts A, B and C" },
+            { src: "assets/projects/dabba-express/ideation-3.jpg", alt: "Level-by-level notes for pick-up, segregation and delivery" },
+            { src: "assets/projects/dabba-express/ideation-4.jpg", alt: "Mind map of what makes a casual game" }
+          ] },
+
+        { title: "Dabbawala system study",
+          text: ["A highly efficient lunch delivery system in Mumbai that uses a simple, non-digital colour-coded system to move meals across the city within strict time limits."],
+          figures: [{ src: "assets/projects/dabba-express/dabbawala-banner.jpg", alt: "Illustrated banner of Mumbai with the Dabbawala logo and Chhatrapati Shivaji Terminus", caption: "" }], figLayout: "stack",
+          blocks: [
+            { heading: "Key characteristics", bullets: ["Colour-coded identification system", "Multi-step sorting and distribution", "Operates under strict time deadlines", "Extremely high accuracy and reliability"] },
+            { heading: "Coding system", facts: [
+              { k: "Abbreviations", v: "Pickup location" },
+              { k: "Colours / symbols", v: "Origin area" },
+              { k: "Numbers", v: "Destination station" },
+              { k: "Letters / codes", v: "Final delivery details" }
+            ] },
+            { heading: "Design takeaways", bullets: ["Simple coding enables quick recognition", "Sorting happens across multiple stages", "Continuous flow under time pressure", "The system works through human coordination"] }
+          ] },
+
+        { title: "Game concept",
+          bullets: [
+            "Dabbas arrive in a continuous flow from a trolley, which the player controls by clicking a button",
+            "The player drags and drops them into the correct crates",
+            "Each crate accepts only one type of dabba",
+            "Each crate has limited capacity",
+            "The player must sort all the dabbas before time runs out"
+          ],
+          figures: [{ src: "assets/projects/dabba-express/concept-visuals.jpg", alt: "The dabbawala on his bicycle, a red VP-3 crate with a matching dabba, and a trolley loaded with coded dabbas", caption: "" }], figLayout: "stack" },
+
+        { title: "Core game loop",
+          text: ["The core loop is designed to be simple and repeatable."],
+          loop: {
+            center: "Repeat",
+            steps: [
+              { title: "Observe", text: "Watch the incoming dabbas" },
+              { title: "Advance", text: "Move the flow forward when needed" },
+              { title: "Pick", text: "Pick up a dabba" },
+              { title: "Decide", text: "Work out the correct crate from its code" },
+              { title: "Drop", text: "Drop the dabba into the crate" },
+              { title: "Feedback", text: "Get an immediate response" }
+            ]
+          },
+          blocks: [
+            { heading: "Player actions", facts: [
+              { k: "Drag & drop", v: "Pick dabbas and place them into the correct crates" },
+              { k: "Manual flow control (key mechanic)", v: "The player taps the dabbawala (the cycle button) to advance the dabbas. Movement happens in steps, not automatically." }
+            ] }
+          ] },
+
+        { title: "Level design & progression",
+          facts: [
+            { k: "Level 1: Introduction", v: "Sort dabbas into 3 crates · 3 dabba types · the button controls the flow" },
+            { k: "Level 2: Flow + interruption", v: "Dynamic crates (a new crate appears when one fills) · a traffic signal is introduced: red blocks the flow, green allows it" },
+            { k: "Level 3: Multi-tasking", v: "5 crates in total (3 visible at a time) · multiple traffic signals · more coordination" },
+            { k: "Level 4: Rush hour", v: "The flow is temporarily disabled (5–8 seconds) · the player must wait and manage timing · builds pressure using existing systems" },
+            { k: "Level 5: Lock & unlock", v: "Some dabbas are locked · unlock them by completing a column · adds planning and strategy" }
+          ],
+          blocks: [
+            { heading: "Progression strategy: difficulty scales through", bullets: [
+              "More crates, which increase complexity",
+              "Restricted input (signals, rush hour), which reduces control",
+              "Locked elements, which add strategy",
+              "Time pressure, which increases urgency" ] }
+          ] },
+
+        { title: "Moodboard",
+          figures: [{ src: "assets/projects/dabba-express/moodboard.jpg", alt: "Moodboard of dabbawalas on bicycles, dabbas on carts, colourful Indian illustration and Mumbai street scenes" }], figLayout: "stack" },
+
+        { title: "Design explorations",
+          figures: [{ src: "assets/projects/dabba-express/design-explorations.jpg", alt: "Pen sketches of a dabbawala, level-1 screen layouts with the cycle button, conveyor belt and sorting crates, and a dabba" }], figLayout: "stack" },
+
+        { title: "Assets",
+          figures: [
+            { src: "assets/projects/dabba-express/assets.jpg", alt: "Game assets: colour-coded crates (D-11, TNA-20, AD-1, BD-5, VP-3, BVI-12, MLD-11), the dabbawala on his bicycle, a traffic signal, sound and pause buttons, coded dabbas, the sun, clouds and the trolley", caption: "Crates, dabbas, the dabbawala, UI buttons and the trolley" },
+            { src: "assets/projects/dabba-express/cycle-frames.jpg", alt: "Ten animation frames of the dabbawala pedalling his bicycle", caption: "Cycling animation frames" }
+          ], figLayout: "stack" },
+
+        { title: "Prototypes",
+          figures: [
+            { src: "assets/projects/dabba-express/prototype-1.jpg", alt: "First prototype: a timer bar, a round button and two coloured crates on a black screen", caption: "Prototype 1" },
+            { src: "assets/projects/dabba-express/final-game.jpg", alt: "Prototype 2 start screen: the Dabba Express logo, a Start sign, and the dabbawala cycling past a Mumbai bus stop", caption: "Prototype 2" }
+          ], figLayout: "pair" },
+
+        { title: "Playtesting",
+          figures: [
+            { src: "assets/projects/dabba-express/playtest-1.jpg", alt: "A player trying the game on a laptop", caption: "" },
+            { src: "assets/projects/dabba-express/playtest-2.jpg", alt: "Another player sorting dabbas on a laptop in the studio", caption: "" }
+          ], figLayout: "pair",
+          blocks: [
+            { heading: "Feedback", bullets: [
+              "Add feedback UI: \"Delivered\", \"Amazing\", etc.",
+              "The colours of the codes are confusing and not very visible",
+              "The delivery part needs to be more visible, clear and deliberate",
+              "Onboarding: show what to do, step by step",
+              "Increase the time in levels 1 and 2",
+              "The tags on the dabbas overlap, which makes the codes hard to read",
+              "Add money as a reward, or a score or star system",
+              "The background behind the cycle doesn't feel like India or Mumbai",
+              "A level map with a star system would increase replayability" ] }
+          ] },
+
+        { title: "Challenges & learnings",
+          blocks: [
+            { heading: "Challenges", bullets: [
+              "Translating a real-world system like the dabbawala network into a simple, intuitive gameplay mechanic.",
+              "Balancing simplicity with engagement: the game had to stay easy to understand while remaining interesting over time.",
+              "Designing clear visual communication, especially for the colour coding and sorting logic, which took multiple iterations.",
+              "Managing difficulty progression without overwhelming the player, particularly in early levels.",
+              "Making the flow-control mechanic feel meaningful rather than confusing, which needed careful tuning and playtesting." ] },
+            { heading: "Learnings", bullets: [
+              "How to derive game mechanics from real-world systems instead of starting with predefined ideas.",
+              "The importance of clarity in casual games, where small usability issues can affect the whole experience.",
+              "Iteration through playtesting is essential to refine mechanics, pacing and player understanding.",
+              "Simplicity in design takes deliberate decisions and careful balancing of systems.",
+              "How player behaviour can directly inform gameplay design." ] }
+          ] }
+      ]
     }
   ],
 
