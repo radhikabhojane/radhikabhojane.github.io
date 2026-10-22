@@ -772,7 +772,7 @@ window.SITE = {
               "The event UI shows a live 24-hour countdown and the current level, keeping urgency visible without needing push notifications." ] }
           ] },
 
-        { title: "Monetisation",
+        { title: "Monetizing Pinch",
           text: ["There is no direct monetisation inside the mini-game: no offer to buy Scanner Points outright. Instead, the pinch is routed back through the core game. The only way to get more Scanner Points is to spend more energy spinning the slot, so a player who wants to push further into the event faster has to buy energy in the main shop. This keeps the mini-game feeling fair and skill/luck-driven, while still connecting event engagement to the existing energy-purchase funnel."],
           blocks: [
             { heading: "Levers to tune", facts: [
@@ -828,11 +828,13 @@ window.SITE = {
               { k: "Tile reveal feedback", v: "Any neutral tile: a small animation confirms the tap and reveals the clue" },
               { k: "Loss pop-up", v: "When the player taps a mine: the mascot appears covered in black soot, with a Retry button to restart the level" },
               { k: "Milestone calendar", v: "An optional day-by-day reward calendar pattern, for a possible longer future event" },
+              { k: "Out of Scanner Points", v: "When the balance runs out mid-level: a pop-up sends the player back to spin the slot for more points" },
               { k: "Tone", v: "The loss state should read as light and comic (a soot-covered mascot), not punishing, in keeping with Coin Master's casual tone" }
             ],
-              figLayout: "pair", figures: [
+              figLayout: "grid", figures: [
                 { src: "prototypes/minefield-scanner/assets/win_popup.png", alt: "Level complete pop-up with the rewards won and a Next button", caption: "Level complete" },
-                { src: "prototypes/minefield-scanner/assets/lost_popup.png", alt: "Lost pop-up with the pig covered in soot and Retry and Map buttons", caption: "Hit a mine" }
+                { src: "prototypes/minefield-scanner/assets/lost_popup.png", alt: "Lost pop-up with the pig covered in soot and Retry and Map buttons", caption: "Hit a mine" },
+                { src: "prototypes/minefield-scanner/assets/spin_popup.png", alt: "Out of Scanner Points pop-up with a Spin button", caption: "Out of Scanner Points" }
               ] }
           ] },
 
@@ -844,6 +846,14 @@ window.SITE = {
             "Reward icons follow the chest and reward language already used in Coin Master, without inventing a new style.",
             "The soldier piggy follows the mascot's costume formula (Viking, leprechaun, tank rider): recognisable pig face + themed outfit + a signature prop.",
             "The top bar, bottom action button and side icon rail match the main screen exactly, so the mini-game never feels like a separate, bolted-on app."
+          ],
+          blocks: [
+            { heading: "UI examples", figLayout: "pair", figures: [
+              { src: "assets/projects/minefield-scan/ui-logo.png", alt: "Treasure Scan event logo with binoculars, a map, coins and a shovel", caption: "Event logo" },
+              { src: "assets/projects/minefield-scan/ui-tiles.png", alt: "Green, yellow and red cracked stone tiles", caption: "Clue tiles: safe, risky, danger" },
+              { src: "assets/projects/minefield-scan/ui-chests.png", alt: "Three treasure chests: chained, closed and open", caption: "Level nodes: locked, current, cleared" },
+              { src: "assets/projects/minefield-scan/ui-mine-rewards.png", alt: "A green grenade mine beside two blue spin-reward capsules marked 10 and 25", caption: "A mine and spin rewards" }
+            ] }
           ] },
 
         { title: "Measuring success",
@@ -852,16 +862,6 @@ window.SITE = {
             { k: "Guardrail", v: "Sessions per day for the same segment must not drop below 7.6" },
             { k: "Secondary", v: "Completion rate per level (to find where the difficulty curve breaks) and energy-purchase conversion during active event windows" },
             { k: "Open question", v: "Should uncleared levels carry over into the next daily event, or reset? Carry-over may protect low-frequency veterans from feeling penalised for short sessions." }
-          ] },
-
-        { title: "Open items",
-          text: ["Points the UI spec left for the team to settle before building:"],
-          steps: [
-            { title: "Level count", text: "The UI reference shows 5 levels while the mechanics one-pager specifies 6; reconcile before locking the level-select layout. (The prototype uses 6.)" },
-            { title: "Tutorial frequency", text: "Once ever, once per event cycle, or skippable and reopenable from the Info button?" },
-            { title: "Locked levels", text: "Settle one locked-state look (padlock, fog/dim overlay or greyscale) for every level node." },
-            { title: "Reward calendar", text: "Is the day-by-day reward calendar in scope here, or kept for a future event type?" },
-            { title: "Entry screen re-trigger", text: "Does the Entry Screen show every time the player opens the event mid-cycle, or only on first entry per window?" }
           ] }
       ]
     },

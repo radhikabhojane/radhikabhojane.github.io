@@ -376,10 +376,11 @@
     }
     /* a playable page shown inside the project, e.g. an HTML prototype */
     if (b.embed) {
+      h += '<div class="pd-embed-wrap">';
       if (b.embed.note) h += '<p class="pd-embed-note"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10.5 18.5h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>' + esc(b.embed.note) + "</p>";
       h += '<div class="pd-embed"><iframe src="' + esc(b.embed.src) + '" title="' + esc(b.embed.title || "Prototype") + '"></iframe>' +
         '<button class="btn pd-embed-exit" type="button">&times; Exit full screen</button></div>' +
-        '<button class="btn btn-ghost pd-embed-full" type="button">&#x26F6; Play full screen</button>';
+        '<button class="btn btn-ghost pd-embed-full" type="button">&#x26F6; Play full screen</button></div>';
     }
     if (b.image) h += '<figure class="pd-fig"><img src="' + esc(b.image) + '" alt="" loading="lazy" data-art="' + (i + k + 1) + '"></figure>';
     else if (b.art) h += '<figure class="pd-fig">' + artSvg(i + k + 1) + "</figure>";

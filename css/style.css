@@ -517,8 +517,8 @@ dialog[open]::backdrop { animation: fade .3s both; }
 .pd-links { display: flex; flex-wrap: wrap; gap: 10px; }
 
 /* ---------- Project dialog: section index on the left, the write-up on the right ---------- */
-.project-dialog { width: min(1180px, calc(100vw - 24px)); }
-.modal-project { width: 100%; display: grid; grid-template-columns: 272px minmax(0, 1fr); height: min(90svh, 860px); max-height: none; overflow: hidden; }
+.project-dialog { width: min(1340px, calc(100vw - 32px)); }
+.modal-project { width: 100%; display: grid; grid-template-columns: 260px minmax(0, 1fr); height: min(92svh, 940px); max-height: none; overflow: hidden; }
 .modal-project .x { top: 12px; right: 14px; }
 .pd-side {
   min-width: 0; display: flex; flex-direction: column; gap: 12px; min-height: 0; overflow-y: auto;
@@ -542,22 +542,22 @@ dialog[open]::backdrop { animation: fade .3s both; }
 .pd-main { position: relative; min-width: 0; min-height: 0; overflow-y: auto; padding-bottom: 56px; overscroll-behavior: contain; }
 .pd-thumb { aspect-ratio: 16 / 5; background: #d8ccb4; overflow: hidden; }
 .pd-thumb > * { display: block; width: 100%; height: 100%; object-fit: cover; }
-.pd-sec { padding: 38px 48px 0; }
+.pd-sec { padding: 38px clamp(28px, 4vw, 56px) 0; }
 .pd-sec h4 { font-family: var(--font-display); font-weight: 500; font-size: 1.7rem; line-height: 1.15; margin-bottom: 10px; }
-.pd-sec p { margin: 0 0 12px; max-width: 64ch; }
-.pd-list { display: grid; gap: 8px; margin: 4px 0 14px 4px; }
+.pd-sec p { margin: 0 0 12px; max-width: 76ch; }
+.pd-list { display: grid; gap: 8px; margin: 4px 0 14px 4px; max-width: 900px; }
 .pd-list li { position: relative; padding-left: 22px; }
 .pd-list li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 8px; height: 8px; border-radius: 2px; background: var(--coral); transform: rotate(45deg); }
 .pd-sub { font-family: var(--font-display); font-weight: 500; font-size: 1.12rem; margin: 26px 0 10px; color: var(--teal-2); }
-.pd-facts { display: grid; gap: 0; margin: 6px 0 10px; max-width: 760px; }
-.pd-facts > div { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 16px; padding: 9px 0; border-bottom: 2px dotted rgba(43, 34, 48, .25); }
+.pd-facts { display: grid; gap: 0; margin: 6px 0 10px; max-width: 900px; }
+.pd-facts > div { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 16px; padding: 9px 0; border-bottom: 2px dotted rgba(43, 34, 48, .25); }
 .pd-facts dt { font-family: var(--font-display); font-weight: 500; }
 .pd-facts dd { margin: 0; }
-.pd-steps { counter-reset: st; display: grid; gap: 14px; margin: 8px 0 8px; max-width: 760px; list-style: none; padding: 0; }
+.pd-steps { counter-reset: st; display: grid; gap: 14px; margin: 8px 0 8px; max-width: 900px; list-style: none; padding: 0; }
 .pd-steps li { counter-increment: st; position: relative; display: grid; gap: 2px; padding-left: 52px; }
 .pd-steps li::before { content: counter(st); position: absolute; left: 0; top: 0; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--ink); color: var(--cream); font-family: var(--font-display); font-weight: 500; }
 .pd-steps b { font-family: var(--font-display); font-weight: 500; font-size: 1.08rem; }
-.pd-gal { margin: 12px 0 6px; max-width: 640px; }
+.pd-gal { margin: 12px 0 6px; max-width: 760px; }
 .pd-shot { margin: 0; overflow: hidden; border-radius: 6px; background: #fbf8f0; box-shadow: 4px 6px 0 rgba(43, 34, 48, .2); }
 .pd-shot img, .pd-shot video { display: block; width: 100%; height: auto; cursor: zoom-in; }
 .pd-shot video { cursor: default; }
@@ -576,20 +576,21 @@ dialog[open]::backdrop { animation: fade .3s both; }
 .pd-gal-collage .pd-shot img { height: 100%; object-fit: cover; }
 .pd-links-inline { margin: 4px 0 16px; }
 /* embedded prototype: sized to a phone, with a short note above */
+.pd-embed-wrap { display: flex; flex-direction: column; align-items: center; text-align: center; }
 .pd-embed-note { display: inline-flex; align-items: center; gap: 8px; margin: 4px 0 10px !important; padding: 7px 14px 7px 10px; border-radius: 999px; background: #fbf8f0; box-shadow: inset 0 0 0 2px rgba(43, 34, 48, .18); font-size: .9rem; font-weight: 600; }
 .pd-embed-note svg { flex: none; width: 18px; height: 18px; color: var(--coral); }
 /* sized so the whole phone, spin button included, fits on screen without scrolling */
-.pd-embed { position: relative; height: min(600px, 68vh); aspect-ratio: 406 / 860; max-width: 100%; margin: 6px 0 10px; }
+.pd-embed { position: relative; height: min(700px, 76vh); aspect-ratio: 9 / 16; max-width: 100%; margin: 6px 0 10px; }
 .pd-embed iframe { display: block; width: 100%; height: 100%; border: 0; }
 .pd-embed-full { margin-bottom: 6px; }
 .pd-embed .pd-embed-exit { display: none; position: absolute; top: 12px; right: 12px; z-index: 2; }
 .pd-embed.is-full { position: fixed; inset: 0; z-index: 1000; width: 100%; height: 100%; max-width: none; margin: 0; aspect-ratio: auto; background: #241d26; }
 .pd-embed:fullscreen { width: 100%; height: 100%; background: #241d26; }
 .pd-embed.is-full .pd-embed-exit { display: inline-flex; }
-.pd-video { margin: 12px 0 6px; max-width: 640px; }
+.pd-video { margin: 12px 0 6px; max-width: 760px; }
 .pd-yt { aspect-ratio: 16 / 9; background: #000; max-width: none; }
 /* core loop diagram: three steps across the top, three back along the bottom, arrows between */
-.pd-loop { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-areas: "n1 n2 n3" "up mid down" "n6 n5 n4"; column-gap: 36px; max-width: 720px; margin: 16px 0 10px; }
+.pd-loop { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-areas: "n1 n2 n3" "up mid down" "n6 n5 n4"; column-gap: 36px; max-width: 860px; margin: 16px 0 10px; }
 .pd-loop-n1 { grid-area: n1; } .pd-loop-n2 { grid-area: n2; } .pd-loop-n3 { grid-area: n3; }
 .pd-loop-n4 { grid-area: n4; } .pd-loop-n5 { grid-area: n5; } .pd-loop-n6 { grid-area: n6; }
 .pd-loop-node { position: relative; display: grid; gap: 2px; align-content: start; padding: 14px 14px 15px; border: 2px solid var(--ink); border-radius: 14px; background: #fbf8f0; box-shadow: 4px 5px 0 rgba(43, 34, 48, .18); }
@@ -758,8 +759,8 @@ dialog[open]::backdrop { animation: fade .3s both; }
   .modal-skills { padding-inline: 20px; }
 }
 @media (max-width: 760px) {
-  .project-dialog { width: calc(100vw - 16px); }
-  .modal-project { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); height: min(92svh, 800px); }
+  .project-dialog { width: calc(100vw - 10px); }
+  .modal-project { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); height: min(95svh, 900px); }
   .pd-side { overflow: visible; gap: 6px; padding: 16px 52px 10px 16px; border-right: 0; border-bottom: 2px solid rgba(43, 34, 48, .16); }
   .pd-side h3 { font-size: 1.3rem; }
   .pd-meta { margin-top: -2px; }
@@ -770,8 +771,8 @@ dialog[open]::backdrop { animation: fade .3s both; }
   .pd-nav button { width: auto; flex: none; white-space: nowrap; padding: 7px 14px; border-radius: 999px; box-shadow: inset 0 0 0 2px rgba(43, 34, 48, .3); font-size: .92rem; }
   .pd-nav button[aria-current="true"] { box-shadow: none; }
   .pd-nav .n { display: none; }
-  .pd-thumb { aspect-ratio: 16 / 9; }
-  .pd-sec { padding: 26px 18px 0; }
+  .pd-thumb { aspect-ratio: 2 / 1; }
+  .pd-sec { padding: 24px 15px 0; }
   .pd-facts > div { grid-template-columns: 1fr; gap: 2px; }
   .pd-gal-masonry { column-count: 2; column-gap: 10px; }
   .pd-gal-masonry .pd-shot { margin-bottom: 10px; }
@@ -789,7 +790,7 @@ dialog[open]::backdrop { animation: fade .3s both; }
   .pd-loop-node::after, .pd-loop-n3::after, .pd-loop-n6::after, .pd-loop-5 .pd-loop-n5::after { display: block; top: auto; right: auto; left: 50%; bottom: -25px; margin: 0 0 0 -13px; transform: rotate(90deg); }
   .pd-loop-center { justify-content: flex-start; margin-top: -8px; }
   .pd-sec h4 { font-size: 1.4rem; }
-  .pd-links-end { display: flex; padding: 24px 18px 0; }
+  .pd-links-end { display: flex; padding: 24px 15px 0; }
 }
 @media (max-width: 720px) {
   .book-dialog { width: min(480px, calc(100vw - 20px)); }
