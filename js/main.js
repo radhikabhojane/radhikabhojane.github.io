@@ -481,18 +481,32 @@
   });
 
   /* sketchbook dialog */
-  var A = S.about;
-  $("#page-l").innerHTML = "<h3>" + esc(A.greeting) + "</h3>" + A.paragraphs.map(function (t) { return "<p>" + esc(t) + "</p>"; }).join("");
-  $("#page-r").innerHTML =
-    '<h3>at a glance</h3><ul class="glance">' +
-    A.glance.map(function (g) { return "<li><b>" + esc(g.k) + "</b><span>" + esc(g.v) + "</span></li>"; }).join("") +
-    '</ul><a class="btn" href="' + esc(A.resume) + '" download="' + esc(A.resumeFileName || "resume.pdf") + '">Download resume &#8595;</a>' +
-    '<br><span class="page-note">thanks for stopping by!</span>';
+  /* the text runs across the spread: the first leftPage paragraphs on the left, the rest on the right */
+  var A = S.about, split = A.leftPage || 2;
+  function paras(list) { return list.map(function (t) { return "<p>" + esc(t) + "</p>"; }).join(""); }
+  $("#page-l").innerHTML = "<h3>" + esc(A.greeting) + "</h3>" + paras(A.paragraphs.slice(0, split));
+  $("#page-r").innerHTML = paras(A.paragraphs.slice(split)) +
+    (A.resume ? '<a class="btn" href="' + esc(A.resume) + '" download="' + esc(A.resumeFileName || "resume.pdf") + '">Download Resume (PDF) &#8595;</a>' : "") +
+    (A.signoff ? '<br><span class="page-note">' + esc(A.signoff) + "</span>" : "");
+
+  /* a book doesn't scroll: if the words don't fit, the type gets a little smaller until they do */
+  var phoneBook = window.matchMedia("(max-width: 720px)");
+  function fitText(el) {
+    el.style.fontSize = "";
+    var size = parseFloat(getComputedStyle(el).fontSize);
+    while (el.scrollHeight > el.clientHeight + 1 && size > 10) { size -= 0.5; el.style.fontSize = size + "px"; }
+  }
+  function fitBook() {
+    if (phoneBook.matches) { $$(".page").forEach(function (p) { p.style.fontSize = ""; }); fitText($("#spread")); }
+    else { $("#spread").style.fontSize = ""; $$(".page").forEach(fitText); }
+  }
+  window.addEventListener("resize", function () { if (book.open) fitBook(); });
 
   var book = $("#book-dialog"), spread = $("#spread"), flipTimer;
   $("#open-book").addEventListener("click", function () {
     spread.classList.remove("is-open");
     openDialog(book);
+    fitBook();
     clearTimeout(flipTimer);
     flipTimer = setTimeout(function () { spread.classList.add("is-open"); }, reduced ? 0 : 300);
   });

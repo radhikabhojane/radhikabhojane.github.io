@@ -1084,19 +1084,17 @@ window.SITE = {
 
   /* The sketchbook (About) */
   about: {
-    greeting: "Hi, I'm Radhika.",
+    greeting: "Hi, I'm Radhika,",
     paragraphs: [
-      "Write two or three short paragraphs about yourself here: what kind of games you love, how you got into design, and what you are looking for next.",
-      "Mention one small, specific detail that is only true of you. It is what people remember."
+      "a designer with a background in Graphic Design and a growing passion for game design. I’m fascinated by how visuals, stories, and interactions come together to create meaningful experiences.",
+      "I’m particularly interested in narrative and game design, exploring how gameplay mechanics, level design, and environmental storytelling can bring worlds to life. I enjoy creating experiences that spark curiosity, encourage exploration, and leave players with something to feel and remember.",
+      "When I’m not designing, you’ll find me sketching, exploring art and films, or collecting little details from everyday life that might inspire worlds and games."
     ],
-    glance: [
-      { k: "Based in", v: "Your city" },
-      { k: "Focus", v: "Level & systems design" },
-      { k: "Tools", v: "Unity, Unreal, Figma" },
-      { k: "Open to", v: "Internships, jobs, collabs" }
-    ],
+    /* how many paragraphs go on the left page; the rest continue on the right */
+    leftPage: 2,
     resume: "assets/resume.pdf",
-    resumeFileName: "Radhika-Bhojane-Resume.pdf"
+    resumeFileName: "Radhika-Bhojane-Resume.pdf",
+    signoff: "thanks for stopping by!"
   },
 
   /* The stylus (Skills). level is 1-5. */

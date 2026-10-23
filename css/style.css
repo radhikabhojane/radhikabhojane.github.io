@@ -201,6 +201,14 @@ img, svg { max-width: 100%; }
   color: #f6e7c8; text-shadow: 0 2px 6px rgba(20, 8, 14, .6); transform: rotate(-1.5deg);
   animation: fade .8s .5s both;
 }
+/* tagline in two steps under the name: a handwritten line, then a smaller list of disciplines */
+/* sized as a fixed fraction (0.38) of the name, so the line always sits just inside the name's width */
+.role-line { display: block; white-space: nowrap; font-family: var(--font-display); font-weight: 500; font-size: clamp(.65rem, 3.27cqw, 1.75rem); line-height: 1.25; letter-spacing: .005em; }
+.role-tags {
+  display: block; margin-top: 10px; font-family: var(--font-body); font-size: clamp(.6rem, 2.15cqw, 1.1rem); font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase; line-height: 1.5; color: rgba(246, 231, 200, .78); transform: rotate(1.5deg);
+}
+.role-tags span { white-space: nowrap; }
 
 /* sticky note button */
 .sticky {
@@ -659,7 +667,7 @@ dialog[open]::backdrop { animation: fade .3s both; }
 }
 .spread.is-open { transform: none; }
 .page {
-  position: absolute; top: 0; bottom: 0; width: 50%; overflow: auto; padding: 38px 38px 34px;
+  position: absolute; top: 0; bottom: 0; width: 50%; overflow: hidden; padding: 38px 38px 34px;
   background:
     var(--grain-soft),
     repeating-linear-gradient(transparent 0 31px, rgba(110, 140, 180, .3) 31px 32px) 0 56px / 100% 100% no-repeat,
@@ -679,14 +687,12 @@ dialog[open]::backdrop { animation: fade .3s both; }
 .spread.is-open .leaf { animation: cover-swing .6s .08s cubic-bezier(.5, 0, .8, .5) both; }
 .cover-band { position: absolute; top: 0; bottom: 0; right: 10%; width: 14px; background: var(--coral); }
 .cover-title { position: relative; font-family: var(--font-display); font-weight: 500; font-size: 2.1rem; transform: rotate(-3deg); background: var(--paper); color: var(--ink); padding: 6px 20px; box-shadow: 4px 5px 0 rgba(0, 0, 0, .25); }
-.page h3 { font-family: var(--font-display); font-weight: 500; font-size: 2rem; line-height: 1.1; margin-bottom: 20px; }
+.page h3 { font-family: var(--font-display); font-weight: 500; font-size: 2em; line-height: 1.1; margin-bottom: 20px; }
 .page p { margin-bottom: 14px; line-height: 32px; }
-.page .glance { display: grid; margin-bottom: 20px; }
-.glance li { display: flex; justify-content: space-between; gap: 14px; line-height: 32px; border-bottom: 2px dotted rgba(43, 34, 48, .3); }
-.glance b { font-family: var(--font-display); font-weight: 500; font-size: 1rem; }
-.glance span { text-align: right; font-weight: 600; }
+/* the right page continues the text, starting level with the first paragraph on the left */
+.page-r p:first-child { margin-top: 55px; }
 .page .btn { margin-top: 6px; }
-.page-note { font-family: var(--font-pencil); font-size: 1.9rem; color: var(--graphite); transform: rotate(-2deg); display: inline-block; margin-top: 18px; line-height: 1; }
+.page-note { font-family: var(--font-pencil); font-size: 1.9em; color: var(--graphite); transform: rotate(-2deg); display: inline-block; margin-top: 18px; line-height: 1; }
 
 /* ==========================================================
    Animations
@@ -724,8 +730,12 @@ dialog[open]::backdrop { animation: fade .3s both; }
   .desk-content { grid-template-columns: 1fr; gap: 46px; padding: calc(var(--nav-h) + 34px) 20px 58px; }
   .intro { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 12px; }
   .slip { grid-column: 1 / -1; justify-self: start; }
-  .role { grid-column: 1; margin: 20px 0 0 6px; font-size: 2.1rem; }
-  .sticky { grid-column: 2; width: 128px; margin: 22px 2px 0 0; padding: 10px; font-size: 2.3rem; }
+  /* bigger name on narrow screens, with the tagline on its own full-width row beneath it */
+  .name { font-size: clamp(1.7rem, 11.8cqw, 4.6rem); }
+  .role-line { font-size: clamp(.65rem, 4.48cqw, 1.75rem); }
+  .role-tags { font-size: clamp(.6rem, 2.95cqw, 1.1rem); }
+  .role { grid-column: 1 / -1; margin: 18px 0 0 6px; font-size: 2.1rem; }
+  .sticky { grid-column: 1 / -1; justify-self: end; width: 128px; margin: 14px 2px 0 0; padding: 10px; font-size: 2.3rem; }
   .papers { width: min(92%, 420px); }
   .s1 { transform: translate(-14px, 14px) rotate(-8deg); }
   .s2 { transform: translate(14px, -6px) rotate(6deg); }
@@ -798,11 +808,13 @@ dialog[open]::backdrop { animation: fade .3s both; }
 }
 @media (max-width: 720px) {
   .book-dialog { width: min(480px, calc(100vw - 20px)); }
-  .spread, .spread.is-open { transform: none; transition: none; height: auto; max-height: calc(100svh - 40px); perspective: none; display: flex; flex-direction: column; overflow: auto; background: var(--grain-soft), var(--paper); border-radius: 10px; box-shadow: 8px 11px 0 rgba(0, 0, 0, .4); }
+  .spread, .spread.is-open { transform: none; transition: none; height: auto; max-height: calc(100svh - 40px); perspective: none; display: flex; flex-direction: column; overflow: hidden; background: var(--grain-soft), var(--paper); border-radius: 10px; box-shadow: 8px 11px 0 rgba(0, 0, 0, .4); }
   .leaf { display: none; }
   .page, .page-l, .page-r { position: static; width: 100%; overflow: visible; padding: 26px 22px; box-shadow: none; border-radius: 0; background: none; opacity: 1; visibility: visible; transform: none; animation: none !important; }
   .page-r { padding-top: 0; padding-bottom: 34px; }
-  .page p, .glance li { line-height: 1.6; }
+  .page p { line-height: 1.6; }
+  .page-r p:first-child { margin-top: 0; }
+  .page-l { padding-bottom: 0; }
   .x-float { top: -12px; right: -6px; }
 }
 @media (max-width: 400px) {
