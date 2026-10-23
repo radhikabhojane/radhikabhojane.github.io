@@ -14,11 +14,12 @@ window.SITE = {
 
   /* Pencil scribbles on the papers (keep it to 5-7 short lines) */
   interests: [
-    "level design & flow",
-    "game feel / juice",
+    "Game Narrative",
+    "Visual Design",
     "systems that surprise",
     "cozy + weird worlds",
-    "watching playtests",
+    "level design & flow",
+    "game feel / juice",
     "UI that feels good"
   ],
 
@@ -1100,14 +1101,14 @@ window.SITE = {
   /* The stylus (Skills). level is 1-5. */
   skillsIntro: "Software I use most, and what I use it for.",
   skills: [
-    { name: "Unity",         cat: "Engine",   level: 4, note: "Prototyping mechanics, level blockouts and playable builds." },
-    { name: "Unreal Engine", cat: "Engine",   level: 3, note: "Level layout and lighting passes." },
-    { name: "Blender",       cat: "3D",       level: 3, note: "Props and greybox environments." },
-    { name: "Photoshop",     cat: "2D",       level: 4, note: "Concept sketches, UI art and texture touch-ups." },
-    { name: "Figma",         cat: "UI / UX",  level: 4, note: "Menu flows, HUD layouts and clickable mockups." },
-    { name: "Miro",          cat: "Planning", level: 4, note: "Flowcharts, design maps and player journeys." },
-    { name: "C#",            cat: "Code",     level: 3, note: "Gameplay scripting and quick tools." },
-    { name: "Git / GitHub",  cat: "Workflow", level: 3, note: "Version control for team projects." }
+    { name: "Unity",            cat: "Engine",       level: 3, note: "Prototyping mechanics and building playable levels." },
+    { name: "Blender",          cat: "3D",           level: 2, note: "Simple 3D models and props." },
+    { name: "Figma",            cat: "UI / UX",      level: 3, note: "Menu flows, HUD layouts and clickable mockups." },
+    { name: "Photoshop",        cat: "2D",           level: 4, note: "Concept art, UI art and image editing." },
+    { name: "Illustrator",      cat: "Vector",       level: 4, note: "Icons, logos and vector illustration." },
+    { name: "Adobe Substance",  cat: "3D texturing", level: 2, note: "Texturing 3D assets." },
+    { name: "Microsoft Office", cat: "Documents",    level: 3, note: "Design documents, spreadsheets and presentations." },
+    { name: "Procreate",        cat: "Illustration", level: 4, note: "Sketching, concept art and character design." }
   ],
 
   /* The bottom of the cabinet. Remove a line (or set href to "") to hide that button. */

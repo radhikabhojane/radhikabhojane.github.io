@@ -82,24 +82,18 @@
   }).join("");
   wireImgFallback(cardsEl);
 
-  /* ---------- Skills: chips around the pen (kept clear of the pen itself) ---------- */
+  /* ---------- Skills: chips around the pen ----------
+     The pen lies on a diagonal, so the chips step up a staircase parallel to it: the first half
+     above-left of the pen (right edges lined up on the stairs), the rest below-right (left edges).
+     One chip per row means they can't overlap each other or the pen. */
   (function () {
-    var n = S.skills.length, penDeg = -26, margin = 30;
-    var nA = Math.ceil(n / 2), nB = n - nA;
-    var arcs = [
-      { from: penDeg + margin, span: 180 - 2 * margin, count: nA },
-      { from: penDeg + 180 + margin, span: 180 - 2 * margin, count: nB }
-    ];
-    var pts = [];
-    arcs.forEach(function (arc) {
-      for (var k = 0; k < arc.count; k++) {
-        var a = (arc.from + ((k + 0.5) / arc.count) * arc.span) * Math.PI / 180;
-        pts.push({ ux: Math.cos(a), uy: Math.sin(a) });
-      }
-    });
+    var n = S.skills.length, nA = Math.ceil(n / 2), rowGap = 40;
     $("#orbit").innerHTML = S.skills.map(function (s, i) {
-      var p = pts[i], tilt = ((i * 37) % 9) - 4;
-      return '<li style="--n:' + i + ";--ux:" + p.ux.toFixed(3) + ";--uy:" + p.uy.toFixed(3) + ";--tilt:" + tilt + 'deg">' + esc(s.name) + "</li>";
+      var top = i < nA, k = top ? i : i - nA, rows = top ? nA : n - nA;
+      var y = (52 + k * rowGap) * (top ? -1 : 1);
+      var x = (10 + k * (120 / Math.max(rows - 1, 1))) * (top ? 1 : -1);
+      var tilt = ((i * 37) % 7) - 3;
+      return '<li style="--n:' + i + ";--x:" + x + "px;--y:" + y + "px;--ax:" + (top ? "-100%" : "0%") + ";--tilt:" + tilt + 'deg">' + esc(s.name) + "</li>";
     }).join("");
   })();
 
@@ -500,7 +494,9 @@
     if (phoneBook.matches) { $$(".page").forEach(function (p) { p.style.fontSize = ""; }); fitText($("#spread")); }
     else { $("#spread").style.fontSize = ""; $$(".page").forEach(fitText); }
   }
-  window.addEventListener("resize", function () { if (book.open) fitBook(); });
+  // wait a moment so the new layout (phone or desktop) has applied before measuring
+  var refit;
+  window.addEventListener("resize", function () { clearTimeout(refit); refit = setTimeout(function () { if (book.open) fitBook(); }, 60); });
 
   var book = $("#book-dialog"), spread = $("#spread"), flipTimer;
   $("#open-book").addEventListener("click", function () {
