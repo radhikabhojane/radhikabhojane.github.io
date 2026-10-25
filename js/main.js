@@ -97,15 +97,18 @@
     }).join("");
   })();
 
-  /* ---------- "Explore my other works" polaroid at the end of the Works drawer ---------- */
+  /* ---------- A sticky note after the last card, linking to the rest of my work ----------
+     It takes the next free spot in the grid, so with 7 projects it fills the gap in the second row. */
   (function () {
-    var m = S.moreWork, el = $("#more-work");
+    var m = S.moreWork;
     if (!m || !m.url) return;
-    var thumbs = S.projects.filter(function (p) { return p.thumb; }).slice(0, 4);
-    el.href = m.url;
-    el.innerHTML = '<span class="more-work-photo">' + thumbs.map(function (p) { return '<img src="' + esc(p.thumb) + '" alt="" loading="lazy">'; }).join("") + "</span>" +
-      '<span class="more-work-cap">' + esc(m.label) + ' <span aria-hidden="true">&#8599;</span></span><span class="sr">(opens in a new tab)</span>';
-    el.hidden = false;
+    var note = document.createElement("div");
+    note.className = "more-note";
+    note.style.setProperty("--i", S.projects.length);
+    note.innerHTML = "<p>" + esc(m.note) + "</p>" +
+      '<a class="btn" href="' + esc(m.url) + '" target="_blank" rel="noopener">' + esc(m.label) +
+      ' <span aria-hidden="true">&#8599;</span><span class="sr">(opens in a new tab)</span></a>';
+    cardsEl.appendChild(note);
   })();
 
   /* ---------- Contact buttons ---------- */

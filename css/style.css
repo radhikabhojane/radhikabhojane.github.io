@@ -229,14 +229,6 @@ img, svg { max-width: 100%; }
   animation: fade 1s .9s both;
 }
 
-/* game controller, only partly on the desk: the right edge of the screen cuts it off */
-.console {
-  position: absolute; z-index: 0; right: calc(clamp(260px, 22vw, 360px) * -.38); bottom: 7%;
-  width: clamp(260px, 22vw, 360px); transform: rotate(-24deg);
-  filter: brightness(.8) saturate(.9);
-  animation: fade 1s 1.1s both;
-}
-
 /* papers (outside the light, so they sit back in the shade) */
 .papers {
   position: relative; justify-self: center; width: min(100%, 480px); aspect-ratio: 20 / 25;
@@ -375,23 +367,20 @@ img, svg { max-width: 100%; }
 .drawer.is-open .cue svg { transform: rotate(180deg); animation-name: bob-up; }
 
 /* ---------- Work cards ---------- */
-/* polaroid link to the rest of my work, pinned below the cards */
-.more-work {
-  position: relative; display: block; width: 190px; margin: clamp(26px, 3vw, 40px) auto 4px; padding: 10px 10px 0;
-  background: #fbf8f0; color: var(--ink); text-decoration: none;
-  box-shadow: 6px 8px 0 rgba(20, 8, 14, .32); transform: rotate(-3deg);
-  transition: transform .3s cubic-bezier(.3, 1.4, .5, 1), box-shadow .3s;
+/* a sticky note at the end of the cards, linking to the rest of my work */
+.more-note {
+  flex: 0 0 calc((100% - 3 * var(--gap)) / 4); min-width: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  padding: 24px 14px; text-align: center;
+  background: var(--sticky); color: #4f3608;
+  box-shadow: 6px 8px 0 rgba(12, 6, 14, .36), inset 0 -12px 0 rgba(168, 118, 20, .3);
+  transform: rotate(2deg);
+  transition: transform .3s cubic-bezier(.3, 1.3, .5, 1), opacity .5s;
 }
-.more-work::before { /* a strip of tape holding it to the drawer */
-  content: ""; position: absolute; top: -12px; left: 50%; width: 70px; height: 22px; margin-left: -35px;
-  background: rgba(236, 210, 154, .85); transform: rotate(4deg);
-}
-.more-work[hidden] { display: none; }
-.more-work:hover, .more-work:focus-visible { transform: rotate(0deg) translateY(-5px); box-shadow: 9px 12px 0 rgba(20, 8, 14, .32); }
-.more-work-photo { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; aspect-ratio: 1; padding: 3px; background: #2b2230; overflow: hidden; }
-.more-work-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.more-work-cap { display: block; padding: 10px 4px 12px; text-align: center; font-family: var(--font-pencil); font-size: 1.55rem; line-height: 1; color: var(--graphite); }
-.cards { --gap: clamp(14px, 2vw, 26px); display: flex; flex-wrap: wrap; justify-content: center; gap: var(--gap); }
+.more-note p { font-family: var(--font-pencil); font-size: clamp(1.6rem, 2.2vw, 2.15rem); line-height: .95; margin: 0; }
+.more-note .btn { font-size: .92rem; white-space: nowrap; }
+.drawer:not(.is-open) .more-note, .cards.reveal-pending .more-note { opacity: 0; transform: translateY(-46px) rotate(6deg); }
+.drawer.is-open .more-note { transition-delay: calc(.35s + var(--i, 0) * .1s); }.cards { --gap: clamp(14px, 2vw, 26px); display: flex; flex-wrap: wrap; justify-content: center; gap: var(--gap); }
 .card {
   flex: 0 0 calc((100% - 3 * var(--gap)) / 4); min-width: 0;
   appearance: none; border: 0; text-align: left; cursor: pointer;
@@ -744,7 +733,7 @@ dialog[open]::backdrop { animation: fade .3s both; }
    Tablets and small laptops
    ========================================================== */
 @media (max-width: 1000px) {
-  .card { flex-basis: calc((100% - 2 * var(--gap)) / 3); }
+  .card, .more-note { flex-basis: calc((100% - 2 * var(--gap)) / 3); }
 }
 
 /* ==========================================================
@@ -766,7 +755,6 @@ dialog[open]::backdrop { animation: fade .3s both; }
   .s2 { transform: translate(14px, -6px) rotate(6deg); }
   .s3 { transform: translate(-6px, 6px) rotate(-3deg); }
   .mug { display: none; }
-  .console { width: 170px; right: -58px; bottom: -1%; z-index: 2; filter: brightness(.85) saturate(.9); }
   .lamp-light { background: radial-gradient(ellipse 80% 40% at var(--lx) var(--ly), rgba(255, 232, 186, .6) 0, rgba(255, 208, 140, .3) 36%, rgba(255, 186, 104, .08) 62%, transparent 76%); }
   .desk-light { background: radial-gradient(ellipse 120% 70% at var(--lx) var(--ly), transparent 30%, rgba(22, 9, 20, .6) 100%); }
   /* taller plane so the wood reaches the very top of the screen behind the name and tagline */
@@ -778,6 +766,9 @@ dialog[open]::backdrop { animation: fade .3s both; }
   .tray-bed { padding: 36px 12px 20px; }
   .cards { --gap: 12px; }
   .card { flex-basis: calc((100% - var(--gap)) / 2); padding: 7px 7px 11px; gap: 8px; }
+  .more-note { flex-basis: calc((100% - var(--gap)) / 2); padding: 16px 8px; gap: 12px; }
+  .more-note p { font-size: 1.45rem; }
+  .more-note .btn { font-size: .78rem; padding-inline: 12px; white-space: normal; }
   .card-title { font-size: 1rem; }
   .card-meta { font-size: .74rem; }
   .drawer-front { min-height: 150px; }
