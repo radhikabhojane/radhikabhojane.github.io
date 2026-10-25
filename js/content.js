@@ -1066,6 +1066,9 @@ window.SITE = {
     }
   ],
 
+  /* The polaroid at the end of the Works drawer. Set url to your Behance page. */
+  moreWork: { label: "explore my other works", url: "https://www.behance.net/your-name" },
+
   /* What opens when someone clicks a project card: a write-up with a clickable section list.
      Every project uses these sections unless it has its own "sections" array (copy this
      shape into a project to customise it). Tokens {blurb} {role} {tools} fill themselves in.

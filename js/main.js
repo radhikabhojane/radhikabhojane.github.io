@@ -97,6 +97,17 @@
     }).join("");
   })();
 
+  /* ---------- "Explore my other works" polaroid at the end of the Works drawer ---------- */
+  (function () {
+    var m = S.moreWork, el = $("#more-work");
+    if (!m || !m.url) return;
+    var thumbs = S.projects.filter(function (p) { return p.thumb; }).slice(0, 4);
+    el.href = m.url;
+    el.innerHTML = '<span class="more-work-photo">' + thumbs.map(function (p) { return '<img src="' + esc(p.thumb) + '" alt="" loading="lazy">'; }).join("") + "</span>" +
+      '<span class="more-work-cap">' + esc(m.label) + ' <span aria-hidden="true">&#8599;</span></span><span class="sr">(opens in a new tab)</span>';
+    el.hidden = false;
+  })();
+
   /* ---------- Contact buttons ---------- */
   $("#pills").innerHTML = S.contact.filter(function (c) { return c.href; }).map(function (c) {
     var ext = /^https?:/.test(c.href);
