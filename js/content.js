@@ -16,7 +16,7 @@ window.SITE = {
   interests: [
     "Game Narrative",
     "Visual Design",
-    "systems that surprise",
+    "Character Design",
     "cozy + weird worlds",
     "level design & flow",
     "game feel / juice",
