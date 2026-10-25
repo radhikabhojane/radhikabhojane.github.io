@@ -1096,8 +1096,8 @@ window.SITE = {
     ],
     /* how many paragraphs go on the left page; the rest continue on the right */
     leftPage: 2,
-    resume: "assets/resume.pdf",
-    resumeFileName: "Radhika-Bhojane-Resume.pdf",
+    /* opens in a new tab (same link as the Resume button below) */
+    resume: "https://drive.google.com/file/d/1IpjzPT-0lBEFgWCENWjkmLi2WJnH-Yei/view?usp=sharing",
     signoff: "thanks for stopping by!"
   },
 
@@ -1127,6 +1127,6 @@ window.SITE = {
     { id: "linkedin", label: "LinkedIn",     href: "https://www.linkedin.com/in/radhika-bhojane-33b81122a/" },
     { id: "itch",     label: "itch.io",      href: "https://radhika9.itch.io/" },
     { id: "behance",  label: "Behance",      href: "https://www.behance.net/radhikabhojane_9" },
-    { id: "resume",   label: "Resume (PDF)", href: "assets/resume.pdf", download: "Radhika-Bhojane-Resume.pdf" }
+    { id: "resume",   label: "Resume (PDF)", href: "https://drive.google.com/file/d/1IpjzPT-0lBEFgWCENWjkmLi2WJnH-Yei/view?usp=sharing", main: true }
   ]
 };

@@ -158,9 +158,9 @@
     if (c.id === "email" && S.contactForm && S.contactForm.endpoint) {
       return '<li><button class="pill" type="button" data-open-mail aria-haspopup="dialog">' + esc(c.label) + "</button></li>";
     }
-    var ext = /^https?:/.test(c.href);
+    var ext = /^https?:/.test(c.href) || c.newTab;
     var extra = c.download ? ' download="' + esc(c.download) + '"' : (ext ? ' target="_blank" rel="noopener"' : "");
-    return '<li><a class="pill' + (c.download ? " pill-main" : "") + '" href="' + esc(c.href) + '"' + extra + ">" +
+    return '<li><a class="pill' + (c.main ? " pill-main" : "") + '" href="' + esc(c.href) + '"' + extra + ">" +
       esc(c.label) + (ext ? ' <span aria-hidden="true">&nbsp;&#8599;</span><span class="sr">(opens in a new tab)</span>' : "") + "</a></li>";
   }).join("");
   (function () {
@@ -193,8 +193,7 @@
     requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.remove("no-anim"); }); });
   }
   function cueText(d) {
-    if (d.open) { return MODE === "stack" ? "push in to see " + d.next.toLowerCase() : "push in to close"; }
-    return MODE === "stack" ? "pull out to see " + d.name.toLowerCase() : "pull out to open";
+    return "click to open/close ‘" + d.name.toLowerCase() + "’ drawer";
   }
   function updateCover() {
     if (MODE !== "stack") return;
@@ -570,7 +569,7 @@
   function paras(list) { return list.map(function (t) { return "<p>" + esc(t) + "</p>"; }).join(""); }
   $("#page-l").innerHTML = "<h3>" + esc(A.greeting) + "</h3>" + paras(A.paragraphs.slice(0, split));
   $("#page-r").innerHTML = paras(A.paragraphs.slice(split)) +
-    (A.resume ? '<a class="btn" href="' + esc(A.resume) + '" download="' + esc(A.resumeFileName || "resume.pdf") + '">Download Resume (PDF) &#8595;</a>' : "") +
+    (A.resume ? '<a class="btn" href="' + esc(A.resume) + '" target="_blank" rel="noopener">Open Resume (PDF) <span aria-hidden="true">&#8599;</span><span class="sr">(opens in a new tab)</span></a>' : "") +
     (A.signoff ? '<br><span class="page-note">' + esc(A.signoff) + "</span>" : "");
 
   /* a book doesn't scroll: if the words don't fit, the type gets a little smaller until they do */
