@@ -1067,7 +1067,7 @@ window.SITE = {
   ],
 
   /* The sticky note after the last project card. Set url to your Behance page. */
-  moreWork: { note: "there's more where these came from!", label: "Explore my other works", url: "https://www.behance.net/your-name" },
+  moreWork: { note: "there's more where these came from!", label: "Explore my other works", url: "https://www.behance.net/radhikabhojane_9" },
 
   /* What opens when someone clicks a project card: a write-up with a clickable section list.
      Every project uses these sections unless it has its own "sections" array (copy this
@@ -1115,11 +1115,18 @@ window.SITE = {
   ],
 
   /* The bottom of the cabinet. Remove a line (or set href to "") to hide that button. */
+  /* The "Send a message" form the Email button opens. Messages go to your inbox through FormSubmit
+     (formsubmit.co): the very first message sends you a one-time "activate" email, click it once. */
+  contactForm: {
+    endpoint: "https://formsubmit.co/ajax/radhikabhojane18@gmail.com",
+    subject: "New message from your portfolio"
+  },
+
   contact: [
-    { id: "email",    label: "Email",        href: "mailto:you@example.com", display: "you@example.com" },
-    { id: "linkedin", label: "LinkedIn",     href: "https://www.linkedin.com/in/your-name/" },
-    { id: "itch",     label: "itch.io",      href: "https://your-name.itch.io/" },
-    { id: "behance",  label: "Behance",      href: "https://www.behance.net/your-name" },
+    { id: "email",    label: "Email",        href: "mailto:radhikabhojane18@gmail.com", display: "radhikabhojane18@gmail.com" },
+    { id: "linkedin", label: "LinkedIn",     href: "https://www.linkedin.com/in/radhika-bhojane-33b81122a/" },
+    { id: "itch",     label: "itch.io",      href: "https://radhika9.itch.io/" },
+    { id: "behance",  label: "Behance",      href: "https://www.behance.net/radhikabhojane_9" },
     { id: "resume",   label: "Resume (PDF)", href: "assets/resume.pdf", download: "Radhika-Bhojane-Resume.pdf" }
   ]
 };

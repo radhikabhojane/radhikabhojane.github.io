@@ -259,6 +259,33 @@
     </article>
   </dialog>
 
+  <dialog id="mail-dialog" aria-labelledby="mail-title">
+    <article class="modal modal-mail">
+      <button class="x" type="button" data-close aria-label="Close the message form">&times;</button>
+      <h3 id="mail-title">Send a message</h3>
+      <p class="mail-intro">A quick way to reach me. I'll reply to the email address you leave here.</p>
+      <form id="mail-form" novalidate>
+        <div class="mail-row">
+          <label><span class="lbl">Full name <span class="req" aria-hidden="true">*</span></span><input name="name" autocomplete="name" required></label>
+          <label><span class="lbl">Company <span class="opt">(optional)</span></span><input name="company" autocomplete="organization"></label>
+        </div>
+        <label><span class="lbl">Email address <span class="req" aria-hidden="true">*</span></span><input type="email" name="email" autocomplete="email" required></label>
+        <label><span class="lbl">Message <span class="req" aria-hidden="true">*</span></span><textarea name="message" rows="5" required></textarea></label>
+        <!-- spam trap: people never see or fill this, bots usually do -->
+        <input class="mail-honey" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="mail-actions">
+          <button class="btn" type="submit">Send message</button>
+          <p class="mail-status" id="mail-status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+      <div class="mail-done" id="mail-done" hidden>
+        <p class="mail-done-title">Message sent, thank you!</p>
+        <p>I'll get back to you soon.</p>
+        <button class="btn btn-ghost" type="button" data-close>Close</button>
+      </div>
+    </article>
+  </dialog>
+
   <dialog id="book-dialog" class="book-dialog" aria-label="About me">
     <button class="x x-float" type="button" data-close aria-label="Close About me">&times;</button>
     <div class="spread" id="spread">

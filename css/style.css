@@ -367,20 +367,22 @@ img, svg { max-width: 100%; }
 .drawer.is-open .cue svg { transform: rotate(180deg); animation-name: bob-up; }
 
 /* ---------- Work cards ---------- */
-/* a sticky note at the end of the cards, linking to the rest of my work */
+/* a sticky note at the end of the cards, linking to the rest of my work: about 3/4 the size of a card,
+   sitting in the middle of its row */
 .more-note {
-  flex: 0 0 calc((100% - 3 * var(--gap)) / 4); min-width: 0;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
-  padding: 24px 14px; text-align: center;
+  flex: 0 0 calc((100% - 3 * var(--gap)) / 4 * .74); min-width: 0; align-self: center; aspect-ratio: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  padding: 16px 12px; text-align: center;
   background: var(--sticky); color: #4f3608;
   box-shadow: 6px 8px 0 rgba(12, 6, 14, .36), inset 0 -12px 0 rgba(168, 118, 20, .3);
   transform: rotate(2deg);
   transition: transform .3s cubic-bezier(.3, 1.3, .5, 1), opacity .5s;
 }
-.more-note p { font-family: var(--font-pencil); font-size: clamp(1.6rem, 2.2vw, 2.15rem); line-height: .95; margin: 0; }
-.more-note .btn { font-size: .92rem; white-space: nowrap; }
+.more-note p { font-family: var(--font-pencil); font-size: clamp(1.4rem, 1.8vw, 1.8rem); line-height: .95; margin: 0; }
+.more-note .btn { font-size: .82rem; padding: 8px 14px; white-space: normal; }
 .drawer:not(.is-open) .more-note, .cards.reveal-pending .more-note { opacity: 0; transform: translateY(-46px) rotate(6deg); }
-.drawer.is-open .more-note { transition-delay: calc(.35s + var(--i, 0) * .1s); }.cards { --gap: clamp(14px, 2vw, 26px); display: flex; flex-wrap: wrap; justify-content: center; gap: var(--gap); }
+.drawer.is-open .more-note { transition-delay: calc(.35s + var(--i, 0) * .1s); }
+.cards { --gap: clamp(14px, 2vw, 26px); display: flex; flex-wrap: wrap; justify-content: center; gap: var(--gap); }
 .card {
   flex: 0 0 calc((100% - 3 * var(--gap)) / 4); min-width: 0;
   appearance: none; border: 0; text-align: left; cursor: pointer;
@@ -402,7 +404,7 @@ img, svg { max-width: 100%; }
 
 /* ---------- About: the drawing pad ---------- */
 .pad {
-  position: relative; display: flex; width: 100%; max-width: 700px; margin-inline: auto;
+  position: relative; display: flex; width: 100%; max-width: 880px; margin-inline: auto;
   padding: 18px 18px 18px 14px; border-radius: 18px;
   background: #3d3a78;
   box-shadow: inset 0 -10px 0 var(--indigo-2), 9px 13px 0 rgba(12, 6, 14, .4);
@@ -411,8 +413,8 @@ img, svg { max-width: 100%; }
 .pad-keys { display: grid; align-content: center; gap: 14px; padding: 0 12px 0 4px; }
 .pad-keys i { width: 18px; height: 34px; border-radius: 6px; background: #5a5799; box-shadow: 0 3px 0 var(--indigo-2); }
 .pad-area {
-  flex: 1; min-width: 0; min-height: 400px;
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center;
+  flex: 1; min-width: 0; min-height: 480px;
+  display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); align-items: center;
   padding: 26px; border-radius: 8px;
   background:
     radial-gradient(circle at 1px 1px, rgba(70, 67, 138, .24) 1.2px, transparent 1.6px) 0 0 / 22px 22px,
@@ -445,7 +447,7 @@ img, svg { max-width: 100%; }
 .sb-label b { font-weight: 500; }
 .sb-doodle { position: absolute; left: 14%; right: 26%; bottom: 14%; }
 
-.pen-slot { min-height: 340px; justify-content: center; }
+.pen-slot { min-height: 440px; justify-content: center; }
 .pen {
   position: relative; z-index: 2; cursor: pointer; padding: 0; border: 0; background: none;
   width: min(340px, 100%); transform: rotate(-26deg);
@@ -472,12 +474,12 @@ img, svg { max-width: 100%; }
 .orbit li:nth-child(3n+1) { background: #bcd3c9; }
 .pen:focus-visible ~ .orbit li {
   opacity: 1;
-  transform: translate(calc(var(--ax) + var(--x)), calc(-50% + var(--y))) rotate(var(--tilt)) scale(1);
+  transform: translate(calc(-50% + var(--x, 0px)), calc(-50% + var(--y, 0px))) rotate(var(--tilt)) scale(1);
 }
 @media (hover: hover) and (pointer: fine) {
   .pen:hover ~ .orbit li {
     opacity: 1;
-    transform: translate(calc(var(--ax) + var(--x)), calc(-50% + var(--y))) rotate(var(--tilt)) scale(1);
+    transform: translate(calc(-50% + var(--x, 0px)), calc(-50% + var(--y, 0px))) rotate(var(--tilt)) scale(1);
   }
 }
 .pen-hint { display: none; }
@@ -485,11 +487,11 @@ img, svg { max-width: 100%; }
 /* everyday design tools around the drawing pad: decoration only, behind the pad */
 .tray-bed > .desk-props { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 .prop { position: absolute; filter: drop-shadow(5px 7px 0 rgba(20, 8, 14, .28)); }
-.prop-swatches { width: 150px; left: calc(50% - 350px - 150px); top: 12%; transform: rotate(-10deg); }
-.prop-ruler { width: 260px; left: calc(50% - 350px - 200px); bottom: 14%; transform: rotate(62deg); }
-.prop-pencils { width: 190px; right: calc(50% - 350px - 175px); top: 14%; transform: rotate(-28deg); }
-.prop-eraser { width: 92px; right: calc(50% - 350px - 110px); bottom: 16%; transform: rotate(14deg); }
-@media (max-width: 1100px) { .tray-bed > .desk-props { display: none; } }
+.prop-swatches { width: 150px; left: calc(50% - 440px - 150px); top: 12%; transform: rotate(-10deg); }
+.prop-ruler { width: 260px; left: calc(50% - 440px - 200px); bottom: 14%; transform: rotate(62deg); }
+.prop-pencils { width: 190px; right: calc(50% - 440px - 175px); top: 14%; transform: rotate(-28deg); }
+.prop-eraser { width: 92px; right: calc(50% - 440px - 110px); bottom: 16%; transform: rotate(14deg); }
+@media (max-width: 1240px) { .tray-bed > .desk-props { display: none; } }
 
 /* ---------- Contact: base of the cabinet ---------- */
 .base {
@@ -509,6 +511,36 @@ img, svg { max-width: 100%; }
 .pill:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--ink); }
 .pill-main { background: var(--coral); color: #fff6e8; }
 .pill-main:hover { background: #d26e4d; }
+button.pill { cursor: pointer; }
+
+/* "Send a message" form */
+.modal-mail { width: min(560px, calc(100vw - 24px)); padding: 30px clamp(18px, 4vw, 34px) 28px; }
+.modal-mail h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.7rem; line-height: 1.1; margin: 0 40px 6px 0; }
+.mail-intro { margin: 0 0 18px; color: var(--soft-ink); font-size: .95rem; }
+#mail-form { display: grid; gap: 14px; }
+#mail-form[hidden] { display: none; }
+.mail-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+#mail-form label { display: grid; gap: 6px; font-family: var(--font-display); font-weight: 500; font-size: .95rem; }
+#mail-form .req { color: var(--coral); }
+#mail-form .opt { font-family: var(--font-body); font-weight: 600; font-size: .78rem; color: var(--soft-ink); }
+#mail-form input, #mail-form textarea {
+  width: 100%; padding: 10px 12px; border: 2px solid var(--ink); border-radius: 8px;
+  background: #fbf8f0; color: var(--ink); font: inherit; font-family: var(--font-body); font-weight: 500; font-size: 1rem;
+}
+#mail-form textarea { resize: vertical; min-height: 120px; }
+#mail-form input:focus-visible, #mail-form textarea:focus-visible { outline: 3px solid var(--teal); outline-offset: 1px; }
+.mail-honey { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.mail-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 4px; }
+.mail-actions .btn[disabled] { opacity: .6; cursor: progress; }
+.mail-status { margin: 0; font-size: .9rem; font-weight: 600; color: var(--soft-ink); }
+.mail-status.is-error { color: #a63d22; }
+.mail-done { display: grid; gap: 8px; justify-items: start; padding: 6px 0 2px; }
+.mail-done[hidden] { display: none; }
+.mail-done-title { font-family: var(--font-display); font-weight: 500; font-size: 1.3rem; margin: 0; }
+.mail-done p { margin: 0; }
+.mail-done .btn { margin-top: 10px; }
+@media (max-width: 520px) { .mail-row { grid-template-columns: 1fr; } }
+
 .email-line { font-size: .95rem; font-weight: 600; color: var(--ink); }
 .email-line a { text-underline-offset: 3px; }
 .foot { text-align: center; padding: 34px 16px 0; font-size: .85rem; font-weight: 600; color: rgba(242, 230, 208, .55); }
@@ -733,7 +765,8 @@ dialog[open]::backdrop { animation: fade .3s both; }
    Tablets and small laptops
    ========================================================== */
 @media (max-width: 1000px) {
-  .card, .more-note { flex-basis: calc((100% - 2 * var(--gap)) / 3); }
+  .card { flex-basis: calc((100% - 2 * var(--gap)) / 3); }
+  .more-note { flex-basis: calc((100% - 2 * var(--gap)) / 3 * .74); }
 }
 
 /* ==========================================================
@@ -760,15 +793,28 @@ dialog[open]::backdrop { animation: fade .3s both; }
   /* taller plane so the wood reaches the very top of the screen behind the name and tagline */
   .desk-plane { top: -60%; transform: perspective(900px) rotateX(20deg); }
 }
+/* phones and tablets: no room (or no hover) for the ring, so the skills sit in a tidy row under the
+   stylus, and a tap opens the details */
+@media (max-width: 980px) {
+  .pen-slot { min-height: 0; gap: 14px; padding-top: 6px; }
+  .pen { width: min(250px, 78%); transform: rotate(-12deg); }
+  .pen:hover, .pen:focus-visible { transform: rotate(-9deg) translateY(-3px); }
+  .orbit { position: static; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 6px; padding: 0 4px; }
+  .orbit li, .pen:focus-visible ~ .orbit li, .pen:hover ~ .orbit li {
+    position: static; opacity: 1; transform: rotate(var(--tilt)); transition: none;
+    font-size: .84rem; padding: 4px 11px 5px; box-shadow: 2px 3px 0 rgba(47, 44, 102, .4);
+  }
+  .pen-hint { display: block; font-size: 1.5rem; }
+}
 @media (max-width: 760px) {
   .cabinet-frame { padding: 16px 12px 18px; box-shadow: inset 8px 0 0 var(--cab-dark), inset -8px 0 0 var(--cab-dark), 12px 16px 0 rgba(0, 0, 0, .28); }
   .slot-inner > * { margin-top: 12px; }
   .tray-bed { padding: 36px 12px 20px; }
   .cards { --gap: 12px; }
   .card { flex-basis: calc((100% - var(--gap)) / 2); padding: 7px 7px 11px; gap: 8px; }
-  .more-note { flex-basis: calc((100% - var(--gap)) / 2); padding: 16px 8px; gap: 12px; }
-  .more-note p { font-size: 1.45rem; }
-  .more-note .btn { font-size: .78rem; padding-inline: 12px; white-space: normal; }
+  .more-note { flex-basis: calc((100% - var(--gap)) / 2 * .8); padding: 10px 8px; gap: 8px; }
+  .more-note p { font-size: 1.15rem; }
+  .more-note .btn { font-size: .7rem; padding: 6px 10px; line-height: 1.2; white-space: normal; }
   .card-title { font-size: 1rem; }
   .card-meta { font-size: .74rem; }
   .drawer-front { min-height: 150px; }
@@ -779,17 +825,7 @@ dialog[open]::backdrop { animation: fade .3s both; }
   .pad-keys { display: none; }
   .pad-area { grid-template-columns: 1fr; gap: 20px; padding: 22px 12px 18px; min-height: 0; }
   .sketchbook { width: min(176px, 60%); }
-  /* phones can't hover: the skills sit in a tidy row under the stylus, and a tap opens the details */
   .pad-area { gap: 26px; }
-  .pen-slot { min-height: 0; gap: 14px; padding-top: 6px; }
-  .pen { width: min(250px, 78%); transform: rotate(-12deg); }
-  .pen:hover, .pen:focus-visible { transform: rotate(-9deg) translateY(-3px); }
-  .orbit { position: static; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 6px; padding: 0 4px; }
-  .orbit li, .pen:focus-visible ~ .orbit li {
-    position: static; opacity: 1; transform: rotate(var(--tilt)); transition: none;
-    font-size: .84rem; padding: 4px 11px 5px; box-shadow: 2px 3px 0 rgba(47, 44, 102, .4);
-  }
-  .pen-hint { display: block; font-size: 1.5rem; }
 
   .base { padding: 26px 14px 28px; }
   .pills { gap: 10px; }

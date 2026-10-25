@@ -82,20 +82,61 @@
   }).join("");
   wireImgFallback(cardsEl);
 
-  /* ---------- Skills: chips around the pen ----------
-     The pen lies on a diagonal, so the chips step up a staircase parallel to it: the first half
-     above-left of the pen (right edges lined up on the stairs), the rest below-right (left edges).
-     One chip per row means they can't overlap each other or the pen. */
-  (function () {
-    var n = S.skills.length, nA = Math.ceil(n / 2), rowGap = 40;
-    $("#orbit").innerHTML = S.skills.map(function (s, i) {
-      var top = i < nA, k = top ? i : i - nA, rows = top ? nA : n - nA;
-      var y = (52 + k * rowGap) * (top ? -1 : 1);
-      var x = (10 + k * (120 / Math.max(rows - 1, 1))) * (top ? 1 : -1);
-      var tilt = ((i * 37) % 7) - 3;
-      return '<li style="--n:' + i + ";--x:" + x + "px;--y:" + y + "px;--ax:" + (top ? "-100%" : "0%") + ";--tilt:" + tilt + 'deg">' + esc(s.name) + "</li>";
-    }).join("");
-  })();
+  /* ---------- Skills: chips circling the pen ----------
+     Each chip is measured, then walked round an ellipse around the pen until it finds a spot that
+     doesn't touch another chip, the pen or the notebook. If they don't all fit, the ellipse grows
+     a little and they try again. Leftover room is shared out so the gaps come out even. */
+  $("#orbit").innerHTML = S.skills.map(function (s, i) {
+    return '<li style="--n:' + i + ";--tilt:" + (((i * 37) % 7) - 3) + 'deg">' + esc(s.name) + "</li>";
+  }).join("");
+  function layoutOrbit() {
+    var slot = $("#pen-slot"), pen = $(".pen"), book = $(".sketchbook"), area = $(".pad-area");
+    var chips = $$("#orbit li", slot);
+    if (!slot.offsetWidth || getComputedStyle($("#orbit")).position !== "absolute") return; // phones: chips sit in a row instead
+    var sr = slot.getBoundingClientRect(), cx = sr.left + sr.width / 2, cy = sr.top + sr.height / 2;
+    function rel(r, pad) { return { l: r.left - cx - pad, r: r.right - cx + pad, t: r.top - cy - pad, b: r.bottom - cy + pad }; }
+    var bookR = rel(book.getBoundingClientRect(), 10), areaR = rel(area.getBoundingClientRect(), -8);
+    var penHalf = pen.offsetWidth / 2, penThick = pen.offsetWidth * 44 / 380 / 2 + 8, penA = -24 * Math.PI / 180;
+    var sizes = chips.map(function (c) { return { w: c.offsetWidth + 10, h: c.offsetHeight + 8 }; });
+    function hit(a, b) { return a.l < b.r && b.l < a.r && a.t < b.b && b.t < a.b; }
+    function hitsPen(r) {
+      for (var d = -penHalf; d <= penHalf; d += 8) {
+        var px = d * Math.cos(penA), py = d * Math.sin(penA);
+        if (px > r.l - penThick && px < r.r + penThick && py > r.t - penThick && py < r.b + penThick) return true;
+      }
+      return false;
+    }
+    function rectAt(deg, s, rx, ry) {
+      var a = deg * Math.PI / 180, x = rx * Math.cos(a), y = ry * Math.sin(a);
+      return { x: x, y: y, l: x - s.w / 2, r: x + s.w / 2, t: y - s.h / 2, b: y + s.h / 2 };
+    }
+    function ok(r, placed) {
+      if (hitsPen(r) || hit(r, bookR)) return false;
+      if (r.l < areaR.l || r.r > areaR.r || r.t < areaR.t || r.b > areaR.b) return false;
+      return placed.every(function (p) { return !hit(r, p); });
+    }
+    // walk round from just past the pen's tip; each chip takes the first free spot at least `gap` degrees on
+    function pack(rx, ry, gap) {
+      var placed = [], deg = -24 + 14, end = -24 + 360 - 14;
+      for (var i = 0; i < chips.length; i++) {
+        while (deg < end && !ok(rectAt(deg, sizes[i], rx, ry), placed)) deg += 1;
+        if (deg >= end) return null;
+        placed.push(rectAt(deg, sizes[i], rx, ry)); deg += gap;
+      }
+      return placed;
+    }
+    var rx = Math.min(sr.width * 0.42, 190), ry = Math.min(sr.height * 0.38, 150), best = null;
+    for (var tries = 0; tries < 30 && !best; tries++, rx += 6, ry += 5) {
+      // the widest even spacing that still fits everyone, so the gaps come out as equal as possible
+      for (var gap = 40; gap >= 1 && !best; gap -= 1) best = pack(rx, ry, gap);
+    }
+    if (!best) return;
+    chips.forEach(function (c, i) { c.style.setProperty("--x", best[i].x.toFixed(1) + "px"); c.style.setProperty("--y", best[i].y.toFixed(1) + "px"); });
+  }
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(layoutOrbit);
+  // the drawer may have been closed (or resized) when the page loaded, so lay out again just before they show
+  ["mouseenter", "focus"].forEach(function (ev) { $(".pen").addEventListener(ev, layoutOrbit); });
+  window.addEventListener("resize", function () { clearTimeout(layoutOrbit.t); layoutOrbit.t = setTimeout(layoutOrbit, 120); });
 
   /* ---------- A sticky note after the last card, linking to the rest of my work ----------
      It takes the next free spot in the grid, so with 7 projects it fills the gap in the second row. */
@@ -113,6 +154,10 @@
 
   /* ---------- Contact buttons ---------- */
   $("#pills").innerHTML = S.contact.filter(function (c) { return c.href; }).map(function (c) {
+    // with a message form set up, Email opens the form instead of relying on a mail app being installed
+    if (c.id === "email" && S.contactForm && S.contactForm.endpoint) {
+      return '<li><button class="pill" type="button" data-open-mail aria-haspopup="dialog">' + esc(c.label) + "</button></li>";
+    }
     var ext = /^https?:/.test(c.href);
     var extra = c.download ? ' download="' + esc(c.download) + '"' : (ext ? ' target="_blank" rel="noopener"' : "");
     return '<li><a class="pill' + (c.download ? " pill-main" : "") + '" href="' + esc(c.href) + '"' + extra + ">" +
@@ -315,6 +360,37 @@
     dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
     $$("[data-close]", dlg).forEach(function (b) { b.addEventListener("click", function () { dlg.close(); }); });
   });
+
+  /* "Send a message": the Email button's form, posted to the form service in content.js */
+  (function () {
+    var F = S.contactForm, dlg = $("#mail-dialog"), form = $("#mail-form"), status = $("#mail-status"), done = $("#mail-done");
+    if (!F || !F.endpoint) return;
+    var mail = (S.contact.filter(function (c) { return c.id === "email"; })[0] || {}).display || "";
+    $$("[data-open-mail]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        form.hidden = false; done.hidden = true; status.textContent = ""; status.className = "mail-status";
+        openDialog(dlg);
+      });
+    });
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      var btn = $("button[type=submit]", form), data = new FormData(form);
+      var body = {
+        name: data.get("name"), company: data.get("company") || "-", email: data.get("email"), message: data.get("message"),
+        _subject: F.subject + " (" + data.get("name") + ")", _template: "table", _captcha: "false", _honey: data.get("_honey")
+      };
+      btn.disabled = true; status.className = "mail-status"; status.textContent = "Sending…";
+      fetch(F.endpoint, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(body) })
+        .then(function (r) { return r.json().then(function (j) { if (!r.ok || String(j.success) !== "true") throw new Error(j.message || "failed"); }); })
+        .then(function () { form.reset(); form.hidden = true; done.hidden = false; status.textContent = ""; })
+        .catch(function () {
+          status.className = "mail-status is-error";
+          status.innerHTML = "Sorry, that didn't go through. Please try again, or email me at " + (mail ? '<a href="mailto:' + esc(mail) + '">' + esc(mail) + "</a>" : "my email address") + ".";
+        })
+        .then(function () { btn.disabled = false; });
+    });
+  })();
 
   /* project dialog: section list on the left, write-up on the right */
   var pd = $("#project-dialog"), pdMain = $("#pd-main"), pdNav = $("#pd-nav"), secEls = [];
